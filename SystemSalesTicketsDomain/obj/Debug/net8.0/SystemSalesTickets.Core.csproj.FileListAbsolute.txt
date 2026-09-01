@@ -1,0 +1,11 @@
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\bin\Debug\net8.0\SystemSalesTickets.Core.deps.json
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\bin\Debug\net8.0\SystemSalesTickets.Core.dll
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\bin\Debug\net8.0\SystemSalesTickets.Core.pdb
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.AssemblyInfoInputs.cache
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.AssemblyInfo.cs
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.csproj.CoreCompileInputs.cache
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.dll
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\refint\SystemSalesTickets.Core.dll
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.pdb
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\ref\SystemSalesTickets.Core.dll

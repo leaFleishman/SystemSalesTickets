@@ -1,0 +1,40 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "SystemSalesTickets.Service/1.0.0": {
+        "dependencies": {
+          "SystemSalesTickets.Core": "1.0.0",
+          "SystemSalesTicketsDomain": "1.0.0"
+        },
+        "runtime": {
+          "SystemSalesTickets.Service.dll": {}
+        }
+      },
+      "SystemSalesTickets.Core/1.0.0": {
+        "runtime": {
+          "SystemSalesTickets.Core.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SystemSalesTickets.Service/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SystemSalesTickets.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
