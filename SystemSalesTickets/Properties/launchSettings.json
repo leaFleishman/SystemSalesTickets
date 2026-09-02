@@ -37,10 +37,5 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-
-  }
-}, {
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=SystemSalesTickets;Username=postgres;Password=123456"
   }
 }

@@ -1,4 +1,5 @@
-﻿using SystemSalesTicketsCore.Repository;
+﻿using AutoMapper;
+using SystemSalesTicketsCore.Repository;
 using SystemSalesTicketsDomain.models;
 using SystemSalesTicketsPresentation.Interfaces;
 
@@ -8,9 +9,12 @@ namespace SystemSalesTickets.Service.Service
     {
         private readonly ISeatRepository _seatRepository;
 
-        public SeatService(ISeatRepository seatRepository)
+        private readonly IMapper _mapper;
+
+        public SeatService(ISeatRepository seatRepository,IMapper mapper)
         {
             _seatRepository = seatRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Seat>> GetAll()

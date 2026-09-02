@@ -1,4 +1,5 @@
-﻿using SystemSalesTicketsCore.Repository;
+﻿using AutoMapper;
+using SystemSalesTicketsCore.Repository;
 using SystemSalesTicketsDomain.models;
 using SystemSalesTicketsPresentation.Interfaces;
 
@@ -8,9 +9,12 @@ namespace SystemSalesTickets.Service.Service
     {
         private readonly IOrderRepository _orderRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        private readonly IMapper _mapper;
+
+        public OrderService(IOrderRepository orderRepository,IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _mapper = mapper;
         }
 
         public async Task<Order> AddOrder(Order order)

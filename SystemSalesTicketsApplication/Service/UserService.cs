@@ -1,4 +1,5 @@
-﻿using SystemSalesTicketsCore.Repository;
+﻿using AutoMapper;
+using SystemSalesTicketsCore.Repository;
 using SystemSalesTicketsDomain.models;
 using SystemSalesTicketsPresentation.Interfaces;
 
@@ -6,13 +7,14 @@ namespace SystemSalesTickets.Service.Service
 {
     public class UserService : IUserService
     {
-
+        private readonly IMapper _mapper;
 
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository,IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper=mapper;
         }
 
         public async Task<User> AddUser(User user)

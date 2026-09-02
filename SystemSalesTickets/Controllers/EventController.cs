@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SystemSalesTickets.Service.Service;
 using SystemSalesTicketsDomain.models;
 using SystemSalesTicketsPresentation.Interfaces;
 
@@ -20,13 +19,13 @@ namespace SystemSalesTickets.Api.Controllers
         [HttpGet("GetEvents")]
         public async Task<IEnumerable<Event>> GetEvents()
         {
-            return await _eventService.GetEvents();
+            return await _eventService.GetAll();
         }
 
         [HttpPost("AddEvent")]
         public async Task<ActionResult<Event>> AddEvent([FromBody] Event e)
         {
-            await _eventService.AddEvent(e);
+            await _eventService.Add(e);
             return Created();
         }
 

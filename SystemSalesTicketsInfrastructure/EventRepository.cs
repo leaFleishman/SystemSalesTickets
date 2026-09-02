@@ -17,17 +17,7 @@ namespace SystemSalesTicketsData
 
 
 
-        public async Task AddEvent(Event e)
-        {
-            await _dbSet.AddAsync(e);
-            await _dataContext.SaveChangesAsync();
-        }
-
-
-        public async Task<IEnumerable<Event>> GetEvents()
-        {
-            return await _dbSet.ToListAsync();
-        }
+        
 
 
     }

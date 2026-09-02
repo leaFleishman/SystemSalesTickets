@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59DF6-8CB3-475F-B195-50F6C9F6238C}|Solution Items{5DB59DF6-8CB3-475F-B195-50F6C9F6238C}|C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{5DB59DF6-8CB3-475F-B195-50F6C9F6238C}|Solution Items{5DB59DF6-8CB3-475F-B195-50F6C9F6238C}|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3EFF8DF6-CB24-4C3B-BE62-2EAD05434A47}|SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsapplication\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3EFF8DF6-CB24-4C3B-BE62-2EAD05434A47}|SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj|solutionrelative:systemsalesticketsapplication\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,6 +43,86 @@
       "RelativeMoniker": "D:0:0:{3EFF8DF6-CB24-4C3B-BE62-2EAD05434A47}|SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj|solutionrelative:systemsalesticketsapplication\\service\\eventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\seat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\seat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\dtos\\seatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\dtos\\seatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\dtos\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\dtos\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\dtos\\eventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\dtos\\eventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\repository\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\repository\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\migrations\\20260901212736_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\migrations\\20260901212736_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\systemsalestickets.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\systemsalestickets.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\systemsalestickets.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\systemsalestickets.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\interfaces\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\interfaces\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,32 +131,12 @@
       "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\seatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\interfaces\\iseatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\interfaces\\iseatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\interfaces\\iorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\interfaces\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\interfaces\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\middleware\\checkshabatmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -71,28 +155,8 @@
       "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\controllers\\seatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3EFF8DF6-CB24-4C3B-BE62-2EAD05434A47}|SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsapplication\\systemsalestickets.service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{3EFF8DF6-CB24-4C3B-BE62-2EAD05434A47}|SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj|solutionrelative:systemsalesticketsapplication\\systemsalestickets.service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\systemsalestickets.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\systemsalestickets.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\repository\\iseatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -103,36 +167,12 @@
       "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\repository\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\repository\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\repository\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\repository\\iorderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\repository\\iorderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsinfrastructure\\orderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5D7E20EC-D7F0-4BC2-9A75-03E7970636B2}|SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj|solutionrelative:systemsalesticketsinfrastructure\\orderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalesticketsdomain\\models\\seat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F782FA91-DF02-48A5-9A87-7190BD52E51B}|SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj|solutionrelative:systemsalesticketsdomain\\models\\seat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|c:\\users\\user1\\desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\systemsalestickets\\systemsalestickets\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{B26D41E5-278F-4583-B8AC-36D6FBF33F62}|SystemSalesTickets\\SystemSalesTickets.Api.csproj|solutionrelative:systemsalestickets\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -154,111 +194,345 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "EventRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\EventRepository.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\EventRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\EventRepository.cs",
-              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\EventRepository.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:36:49.281Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Repository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\Repository.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\Repository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\Repository.cs",
-              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\Repository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:50:14.258Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SeatRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SeatRepository.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\SeatRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SeatRepository.cs",
-              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\SeatRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:37:36.121Z",
+              "DocumentIndex": 2,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "SystemSalesTickets\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\appsettings.Development.json",
+              "RelativeToolTip": "SystemSalesTickets\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-02T21:03:27.359Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\UserRepository.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\UserRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\UserRepository.cs",
-              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\UserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "SystemSalesTickets\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Properties\\launchSettings.json",
+              "RelativeToolTip": "SystemSalesTickets\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-02T21:02:49.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-09-02T21:02:22.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\User.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\User.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:37:20.293Z",
+              "WhenOpened": "2026-08-31T13:16:30.597Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Event.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Event.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\Event.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Event.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\Event.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T13:18:13.239Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Program.cs",
+              "RelativeDocumentMoniker": "SystemSalesTickets\\Program.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Program.cs",
+              "RelativeToolTip": "SystemSalesTickets\\Program.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAACsAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T18:09:15.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "EventService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\EventService.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsApplication\\Service\\EventService.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\EventService.cs",
               "RelativeToolTip": "SystemSalesTicketsApplication\\Service\\EventService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-01T15:31:33.855Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\appsettings.json",
+              "RelativeDocumentMoniker": "SystemSalesTickets\\appsettings.json",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\appsettings.json",
+              "RelativeToolTip": "SystemSalesTickets\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-31T13:11:31.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\UserDTO.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\DTOs\\UserDTO.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\UserDTO.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\DTOs\\UserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T17:20:08.708Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "OrderService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\OrderService.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsApplication\\Service\\OrderService.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\OrderService.cs",
               "RelativeToolTip": "SystemSalesTicketsApplication\\Service\\OrderService.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAArwB8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAArwBAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-01T16:18:50.711Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\MappingProfile.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\MappingProfile.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\MappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T19:21:37.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "SeatService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\SeatService.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsApplication\\Service\\SeatService.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\SeatService.cs",
               "RelativeToolTip": "SystemSalesTicketsApplication\\Service\\SeatService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-01T16:55:08.311Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsApplication\\Service\\UserService.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\Service\\UserService.cs",
               "RelativeToolTip": "SystemSalesTicketsApplication\\Service\\UserService.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-01T16:25:38.339Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
+              "Title": "SeatDTO.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\SeatDTO.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\DTOs\\SeatDTO.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\SeatDTO.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\DTOs\\SeatDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T17:20:53.256Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "OrderDTO.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\OrderDTO.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\DTOs\\OrderDTO.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\OrderDTO.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\DTOs\\OrderDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T17:21:12.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "EventDTO.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\EventDTO.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\DTOs\\EventDTO.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\DTOs\\EventDTO.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\DTOs\\EventDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-02T17:20:25.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\Order.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Order.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T13:22:19.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IEventRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T21:38:23.474Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Seat.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Seat.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\Seat.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Seat.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\Seat.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T13:21:11.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "20260901212736_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\Migrations\\20260901212736_InitialCreate.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\Migrations\\20260901212736_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\Migrations\\20260901212736_InitialCreate.cs",
+              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\Migrations\\20260901212736_InitialCreate.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAABRwDgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-01T21:27:37.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "SystemSalesTickets.Data.csproj",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
+              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
+              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-08-31T13:29:09.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "SystemSalesTickets.Core.csproj",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-09-02T15:19:39.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IOrderService.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T21:34:00.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "SystemSalesTickets\\Controllers\\OrderController.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "SystemSalesTickets\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAIBZwBwAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T13:57:37.037Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "EventController.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\EventController.cs",
+              "RelativeDocumentMoniker": "SystemSalesTickets\\Controllers\\EventController.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\EventController.cs",
+              "RelativeToolTip": "SystemSalesTickets\\Controllers\\EventController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T14:28:45.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "IEventService.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-01T14:53:04.548Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
               "Title": "DataContext.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\DataContext.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\DataContext.cs",
@@ -271,7 +545,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 29,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\Repository.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\Repository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\Repository.cs",
+              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\Repository.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAiwCwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T21:50:14.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "IRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IRepository.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Repository\\IRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IRepository.cs",
+              "RelativeToolTip": "SystemSalesTicketsDomain\\Repository\\IRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-01T16:38:31.027Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "EventRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\EventRepository.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\EventRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\EventRepository.cs",
+              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\EventRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwBMAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T21:36:49.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\UserRepository.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\UserRepository.cs",
+              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T21:37:20.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "SeatRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SeatRepository.cs",
+              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\SeatRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SeatRepository.cs",
+              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\SeatRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-31T21:37:36.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
               "Title": "IUserService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IUserService.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Interfaces\\IUserService.cs",
@@ -284,7 +623,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 33,
               "Title": "ISeatService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\ISeatService.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Interfaces\\ISeatService.cs",
@@ -297,123 +636,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "IOrderService.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Interfaces\\IOrderService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:34:00.387Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "IEventService.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Interfaces\\IEventService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-01T14:53:04.548Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 34,
               "Title": "CheckShabatMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Middleware\\CheckShabatMiddleware.cs",
               "RelativeDocumentMoniker": "SystemSalesTickets\\Middleware\\CheckShabatMiddleware.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Middleware\\CheckShabatMiddleware.cs",
               "RelativeToolTip": "SystemSalesTickets\\Middleware\\CheckShabatMiddleware.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAwAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAABhwAwAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-31T18:05:32.72Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 35,
               "Title": "CatchErorrsMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Middleware\\CatchErorrsMiddleware.cs",
               "RelativeDocumentMoniker": "SystemSalesTickets\\Middleware\\CatchErorrsMiddleware.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Middleware\\CatchErorrsMiddleware.cs",
               "RelativeToolTip": "SystemSalesTickets\\Middleware\\CatchErorrsMiddleware.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBZwBoAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-31T18:20:12.198Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 36,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "SystemSalesTickets\\Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\UserController.cs",
               "RelativeToolTip": "SystemSalesTickets\\Controllers\\UserController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAABhwAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-31T13:32:26.793Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 37,
               "Title": "SeatController.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\SeatController.cs",
               "RelativeDocumentMoniker": "SystemSalesTickets\\Controllers\\SeatController.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\SeatController.cs",
               "RelativeToolTip": "SystemSalesTickets\\Controllers\\SeatController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAABhwBkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-31T14:29:14.13Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "OrderController.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\OrderController.cs",
-              "RelativeDocumentMoniker": "SystemSalesTickets\\Controllers\\OrderController.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\OrderController.cs",
-              "RelativeToolTip": "SystemSalesTickets\\Controllers\\OrderController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T13:57:37.037Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "EventController.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\EventController.cs",
-              "RelativeDocumentMoniker": "SystemSalesTickets\\Controllers\\EventController.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Controllers\\EventController.cs",
-              "RelativeToolTip": "SystemSalesTickets\\Controllers\\EventController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T14:28:45.376Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Program.cs",
-              "RelativeDocumentMoniker": "SystemSalesTickets\\Program.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\Program.cs",
-              "RelativeToolTip": "SystemSalesTickets\\Program.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAADEAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T18:09:15.931Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 39,
               "Title": "ISeatRepository.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\ISeatRepository.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Repository\\ISeatRepository.cs",
@@ -421,23 +696,12 @@
               "RelativeToolTip": "SystemSalesTicketsDomain\\Repository\\ISeatRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:39:01.394Z"
+              "WhenOpened": "2026-08-31T21:39:01.394Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "IRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IRepository.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Repository\\IRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IRepository.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Repository\\IRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-01T16:38:31.027Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 40,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IUserRepository.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Repository\\IUserRepository.cs",
@@ -445,23 +709,12 @@
               "RelativeToolTip": "SystemSalesTicketsDomain\\Repository\\IUserRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:38:45.827Z"
+              "WhenOpened": "2026-08-31T21:38:45.827Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "IEventRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Repository\\IEventRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:38:23.474Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 41,
               "Title": "IOrderRepository.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Repository\\IOrderRepository.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Repository\\IOrderRepository.cs",
@@ -469,11 +722,12 @@
               "RelativeToolTip": "SystemSalesTicketsDomain\\Repository\\IOrderRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:38:05.788Z"
+              "WhenOpened": "2026-08-31T21:38:05.788Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 42,
               "Title": "OrderRepository.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\OrderRepository.cs",
               "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\OrderRepository.cs",
@@ -481,47 +735,12 @@
               "RelativeToolTip": "SystemSalesTicketsInfrastructure\\OrderRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAkwAcAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T21:37:05.001Z"
+              "WhenOpened": "2026-08-31T21:37:05.001Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "Order.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Order.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\Order.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Order.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\Order.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T13:22:19.223Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "Event.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Event.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\Event.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Event.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\Event.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T13:18:13.239Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\User.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\User.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\User.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T13:16:30.597Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 38,
               "Title": "SystemSalesTickets.Service.csproj",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj",
               "RelativeDocumentMoniker": "SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj",
@@ -529,43 +748,8 @@
               "RelativeToolTip": "SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-08-31T21:28:18.729Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "Seat.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Seat.cs",
-              "RelativeDocumentMoniker": "SystemSalesTicketsDomain\\Models\\Seat.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\Models\\Seat.cs",
-              "RelativeToolTip": "SystemSalesTicketsDomain\\Models\\Seat.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T13:21:11.377Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "SystemSalesTickets.Data.csproj",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
-              "RelativeDocumentMoniker": "SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
-              "RelativeToolTip": "SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-08-31T13:29:09.242Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\appsettings.json",
-              "RelativeDocumentMoniker": "SystemSalesTickets\\appsettings.json",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05DC\u05D0\u05D4\\\u05E9\u05E0\u05D4 \u05D1\\dotnet\\SystemSalesTickets\\SystemSalesTickets\\appsettings.json",
-              "RelativeToolTip": "SystemSalesTickets\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-08-31T13:11:31.734Z"
+              "WhenOpened": "2026-08-31T21:28:18.729Z",
+              "EditorCaption": ""
             }
           ]
         }

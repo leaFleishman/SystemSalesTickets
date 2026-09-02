@@ -9,3 +9,7 @@ C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTic
 C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\refint\SystemSalesTickets.Core.dll
 C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.pdb
 C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\ref\SystemSalesTickets.Core.dll
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.sourcelink.json
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\bin\Debug\net8.0\SystemSalesTickets.Core.runtimeconfig.json
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.genruntimeconfig.cache
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsDomain\obj\Debug\net8.0\SystemSalesTickets.Core.csproj.AssemblyReference.cache

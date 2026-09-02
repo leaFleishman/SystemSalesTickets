@@ -6,6 +6,9 @@ using SystemSalesTickets.Service.Service;
 using SystemSalesTickets.Api.Middleware;
 using SystemSalesTicketsCore.Repository;
 using Microsoft.EntityFrameworkCore;
+using SystemSalesTickets.Core;
+using AutoMapper;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,18 +33,18 @@ builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+
+
+
 builder.Services.AddDbContext<DataContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    if (!string.IsNullOrWhiteSpace(connectionString))
-    {
-        options.UseNpgsql(connectionString);
-    }
-    else
-    {
-        options.UseInMemoryDatabase("SystemSalesTicketsDev");
-    }
-});
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

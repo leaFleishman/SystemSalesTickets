@@ -4,8 +4,8 @@ namespace SystemSalesTicketsPresentation.Interfaces
 {
     public interface IEventService
     {
-        public Task<IEnumerable<Event>> GetEvents();
+        public Task<IEnumerable<Event>> GetAll();
 
-        public Task AddEvent(Event e);
+        public Task Add(Event e);
     }
 }
