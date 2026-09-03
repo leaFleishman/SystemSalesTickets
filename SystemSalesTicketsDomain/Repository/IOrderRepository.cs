@@ -1,11 +1,8 @@
-﻿
+﻿using SystemSalesTickets.Core.Models;
 
-using SystemSalesTickets.Core.Repository;
-using SystemSalesTicketsDomain.models;
-
-namespace SystemSalesTicketsCore.Repository
+namespace SystemSalesTickets.Core.Repository
 {
-    public interface IOrderRepository:IRepository<Order>
+    public interface IOrderRepository : IRepository<Order>
     {
 
     }

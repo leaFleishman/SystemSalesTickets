@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using SystemSalesTickets.Core.DTOs;
-using SystemSalesTicketsDomain.models;
-
+using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Core
 {
@@ -11,7 +10,7 @@ namespace SystemSalesTickets.Core
         {
             CreateMap<UserDTO, User>().ReverseMap();
             CreateMap<SeatDTO, Seat>().ReverseMap();
-            CreateMap<EventDTO, Event>().ReverseMap();
+            CreateMap<EventDTO, EventDTO>().ReverseMap();
             CreateMap<OrderDTO, Order>().ReverseMap();
         }
     }

@@ -1,13 +1,14 @@
-﻿using SystemSalesTickets.Core.Repository;
-using SystemSalesTicketsDomain.models;
+﻿using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Models;
+using SystemSalesTickets.Core.Repository;
 
-namespace SystemSalesTicketsPresentation.Interfaces
+namespace SystemSalesTickets.Core.Interfaces
 {
     public interface ISeatService
     {
-        Task<IEnumerable<Seat>> GetAll();
-        Task<Seat?> GetById(int id);
-        Task<Seat> Add(Seat seat);
-        Task<Seat> Update(Seat seat);
+        Task<IEnumerable<SeatDTO>> GetAll();
+        Task<SeatDTO> GetById(int id);
+        Task<SeatDTO> Add(SeatDTO seat);
+        Task<SeatDTO> Update(SeatDTO seat);
     }
 }

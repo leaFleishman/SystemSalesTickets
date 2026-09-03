@@ -1,4 +1,4 @@
-﻿namespace SystemSalesTicketsDomain.models
+﻿namespace SystemSalesTickets.Core.Models
 {
     public class Event
     {
@@ -12,6 +12,6 @@
 
         public int NumberOfSeats { get; set; }
 
-       
+
     }
 }

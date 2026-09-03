@@ -1,11 +1,11 @@
-﻿using SystemSalesTicketsDomain.models;
+﻿using SystemSalesTickets.Core.DTOs;
 
-namespace SystemSalesTicketsPresentation.Interfaces
+namespace SystemSalesTickets.Core.Interfaces
 {
     public interface IEventService
     {
-        public Task<IEnumerable<Event>> GetAll();
+        public Task<IEnumerable<EventDTO>> GetAll();
 
-        public Task Add(Event e);
+        public Task Add(EventDTO e);
     }
 }

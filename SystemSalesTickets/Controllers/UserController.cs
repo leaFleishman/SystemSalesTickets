@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SystemSalesTicketsDomain.models;
-using SystemSalesTicketsPresentation.Interfaces;
+using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Interfaces;
+using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Api.Controllers
 {
@@ -16,21 +17,21 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpPost("AddUser")]
-        public async Task<ActionResult<User>> AddUser([FromBody] User user)
+        public async Task<ActionResult<UserDTO>> AddUser([FromBody] UserDTO user)
         {
             var result = await _userService.AddUser(user);
             return Ok(result);
         }
 
         [HttpGet("GetAllUsers")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsers();
             return Ok(users);
         }
 
         [HttpGet("GetUserById")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
         {
             var user = await _userService.GetUserById(id);
 

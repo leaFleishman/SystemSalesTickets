@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\SystemSalesTickets.Api.props" />
-</Project>

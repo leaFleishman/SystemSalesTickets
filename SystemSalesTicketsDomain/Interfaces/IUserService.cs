@@ -1,12 +1,13 @@
-﻿using SystemSalesTicketsDomain.models;
+﻿using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Models;
 
-namespace SystemSalesTicketsPresentation.Interfaces
+namespace SystemSalesTickets.Core.Interfaces
 {
     public interface IUserService
     {
 
-        Task<User> AddUser(User user);
-        Task<IEnumerable<User>> GetAllUsers();
-        Task<User?> GetUserById(int id);
+        Task<UserDTO> AddUser(UserDTO user);
+        Task<IEnumerable<UserDTO>> GetAllUsers();
+        Task<UserDTO> GetUserById(int id);
     }
 }

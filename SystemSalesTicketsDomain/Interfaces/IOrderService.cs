@@ -1,12 +1,13 @@
-﻿using SystemSalesTicketsDomain.models;
+﻿using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Models;
 
-namespace SystemSalesTicketsPresentation.Interfaces
+namespace SystemSalesTickets.Core.Interfaces
 {
     public interface IOrderService
     {
-        Task<Order> AddOrder(Order order);
-        Task<IEnumerable<Order>> GetAllOrders();
-        Task<Order?> GetOrderById(int id);
+        Task<OrderDTO> AddOrder(OrderDTO order);
+        Task<IEnumerable<OrderDTO>> GetAllOrders();
+        Task<OrderDTO> GetOrderById(int id);
 
     }
 }

@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using SystemSalesTicketsCore.Repository;
-using SystemSalesTicketsDomain.models;
-using SystemSalesTicketsPresentation.Interfaces;
+using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Interfaces;
+using SystemSalesTickets.Core.Models;
+using SystemSalesTickets.Core.Repository;
 
 namespace SystemSalesTickets.Service.Service
 {
@@ -11,25 +12,32 @@ namespace SystemSalesTickets.Service.Service
 
         private readonly IUserRepository _userRepository;
 
+        private static int counter = 1;
+
         public UserService(IUserRepository userRepository,IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper=mapper;
         }
 
-        public async Task<User> AddUser(User user)
+        public async Task<UserDTO> AddUser(UserDTO user)
         {
-            return await _userRepository.Add(user);
+            var tmp = _mapper.Map<User>(user);
+            tmp.Id = counter++;
+            var res= await _userRepository.Add(tmp);
+            return _mapper.Map<UserDTO>(res);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
-            return await _userRepository.GetAll();
+            var res= await _userRepository.GetAll();
+            return _mapper.Map<IEnumerable<UserDTO>>(res);
         }
 
-        public async Task<User?> GetUserById(int id)
+        public async Task<UserDTO> GetUserById(int id)
         {
-            return await _userRepository.GetById(id);
+            var res= await _userRepository.GetById(id);
+            return _mapper.Map<UserDTO>(res);
         }
     }
 }

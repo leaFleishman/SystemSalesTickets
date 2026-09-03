@@ -1,6 +1,6 @@
 ﻿
-using SystemSalesTicketsCore.Repository;
-using SystemSalesTicketsDomain.models;
+using SystemSalesTickets.Core.Models;
+using SystemSalesTickets.Core.Repository;
 using SystemSalesTicketsInfrastructure;
 
 namespace SystemSalesTicketsData

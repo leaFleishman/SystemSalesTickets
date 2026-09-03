@@ -1,13 +1,12 @@
-using SystemSalesTicketsPresentation.Interfaces;
 using SystemSalesTicketsData;
 using SystemSalesTicketsInfrastructure;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
 using SystemSalesTickets.Api.Middleware;
-using SystemSalesTicketsCore.Repository;
 using Microsoft.EntityFrameworkCore;
 using SystemSalesTickets.Core;
 using AutoMapper;
+using SystemSalesTickets.Core.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);

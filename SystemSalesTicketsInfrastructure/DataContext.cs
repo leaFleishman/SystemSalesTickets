@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SystemSalesTicketsDomain.models;
+using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTicketsInfrastructure
 {
@@ -15,6 +15,6 @@ namespace SystemSalesTicketsInfrastructure
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<Event> Events { get; set; }
+        public DbSet<EventDTO> Events { get; set; }
     }
 }

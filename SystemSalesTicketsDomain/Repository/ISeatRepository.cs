@@ -1,8 +1,7 @@
 ﻿
-using SystemSalesTickets.Core.Repository;
-using SystemSalesTicketsDomain.models;
+using SystemSalesTickets.Core.Models;
 
-namespace SystemSalesTicketsCore.Repository
+namespace SystemSalesTickets.Core.Repository
 {
     public interface ISeatRepository : IRepository<Seat>
     {

@@ -1,6 +1,6 @@
 ﻿
 
-using SystemSalesTicketsDomain.models;
+using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Core.DTOs
 {
@@ -10,7 +10,7 @@ namespace SystemSalesTickets.Core.DTOs
 
         public DateTime OrderDate { get; set; }
 
-        public Event EventDTO { get; set; }
+        public Models.EventDTO EventDTO { get; set; }
 
         public Seat SeatDTO { get; set; }
     }
