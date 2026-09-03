@@ -1,4 +1,6 @@
-﻿namespace SystemSalesTickets.Core.Models
+﻿using SystemSalesTickets.Core.DTOs;
+
+namespace SystemSalesTickets.Core.Models
 {
     public class Order
     {
@@ -16,7 +18,7 @@
 
         public User User { get; set; }
 
-        public EventDTO Event { get; set; }
+        public Event Event { get; set; }
 
         public Seat Seat { get; set; }
     }

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "vDX25D6ECiC3SjRk++dS7L7dXfuobENgpf9z4ipKEYA=",
+  "Source": "SystemSalesTickets.Api",
+  "BasePath": "_content/SystemSalesTickets.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

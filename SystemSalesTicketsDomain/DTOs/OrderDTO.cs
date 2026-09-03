@@ -10,7 +10,7 @@ namespace SystemSalesTickets.Core.DTOs
 
         public DateTime OrderDate { get; set; }
 
-        public Models.EventDTO EventDTO { get; set; }
+        public EventDTO EventDTO { get; set; }
 
         public Seat SeatDTO { get; set; }
     }

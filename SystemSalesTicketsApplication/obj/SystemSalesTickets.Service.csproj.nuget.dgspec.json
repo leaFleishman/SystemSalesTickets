@@ -30,9 +30,6 @@
             "projectReferences": {
               "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj": {
                 "projectPath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj"
-              },
-              "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTicketsDomain.csproj": {
-                "projectPath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTicketsDomain.csproj"
               }
             }
           }
@@ -114,7 +111,7 @@
           "dependencies": {
             "AutoMapper": {
               "target": "Package",
-              "version": "[8.1.1, )"
+              "version": "[12.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

@@ -1,9 +1,8 @@
 ﻿
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
-using SystemSalesTicketsInfrastructure;
 
-namespace SystemSalesTicketsData
+namespace SystemSalesTickets.Data
 {
     public class OrderRepository : Repository<Order>, IOrderRepository
     {
@@ -13,7 +12,7 @@ namespace SystemSalesTicketsData
         {
         }
 
-       
+
 
     }
 }

@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginModel",
+        "Type": "SystemSalesTickets.Core.Models.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SystemSalesTickets.Api.Controllers.EventController",
     "Method": "AddEvent",
     "RelativePath": "api/Event/AddEvent",
@@ -9,13 +25,13 @@
     "Parameters": [
       {
         "Name": "e",
-        "Type": "SystemSalesTicketsDomain.models.Event",
+        "Type": "SystemSalesTickets.Core.DTOs.EventDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.Event",
+        "Type": "SystemSalesTickets.Core.DTOs.EventDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -35,7 +51,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTicketsDomain.models.Event, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTickets.Core.DTOs.EventDTO, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -55,13 +71,13 @@
     "Parameters": [
       {
         "Name": "order",
-        "Type": "SystemSalesTicketsDomain.models.Order",
+        "Type": "SystemSalesTickets.Core.DTOs.OrderDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.Order",
+        "Type": "SystemSalesTickets.Core.DTOs.OrderDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -81,7 +97,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTicketsDomain.models.Order, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTickets.Core.DTOs.OrderDTO, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -107,7 +123,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.Order",
+        "Type": "SystemSalesTickets.Core.Models.Order",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -127,7 +143,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTicketsDomain.models.Seat, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTickets.Core.DTOs.SeatDTO, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -147,13 +163,13 @@
     "Parameters": [
       {
         "Name": "seat",
-        "Type": "SystemSalesTicketsDomain.models.Seat",
+        "Type": "SystemSalesTickets.Core.DTOs.SeatDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.Seat",
+        "Type": "SystemSalesTickets.Core.DTOs.SeatDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -173,13 +189,13 @@
     "Parameters": [
       {
         "Name": "seat",
-        "Type": "SystemSalesTicketsDomain.models.Seat",
+        "Type": "SystemSalesTickets.Core.DTOs.SeatDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.Seat",
+        "Type": "SystemSalesTickets.Core.DTOs.SeatDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -205,7 +221,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.Seat",
+        "Type": "SystemSalesTickets.Core.DTOs.SeatDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -225,13 +241,13 @@
     "Parameters": [
       {
         "Name": "user",
-        "Type": "SystemSalesTicketsDomain.models.User",
+        "Type": "SystemSalesTickets.Core.DTOs.UserDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.User",
+        "Type": "SystemSalesTickets.Core.DTOs.UserDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -251,7 +267,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTicketsDomain.models.User, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[SystemSalesTickets.Core.DTOs.UserDTO, SystemSalesTickets.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -277,7 +293,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "SystemSalesTicketsDomain.models.User",
+        "Type": "SystemSalesTickets.Core.DTOs.UserDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
@@ -16,7 +17,7 @@ namespace SystemSalesTickets.Api.Controllers
         {
             _orderService = orderService;
         }
-
+        [Authorize]
         [HttpPost("AddOrder")]
         public async Task<ActionResult<OrderDTO>> AddOrder([FromBody] OrderDTO order)
         {
@@ -30,6 +31,8 @@ namespace SystemSalesTickets.Api.Controllers
             var orders = await _orderService.GetAllOrders();
             return Ok(orders);
         }
+
+        [Authorize]
 
         [HttpGet("GetOrderById")]
         public async Task<ActionResult<Order>> GetOrderById(int id)

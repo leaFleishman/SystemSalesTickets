@@ -30,9 +30,6 @@
             "projectReferences": {
               "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj": {
                 "projectPath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj"
-              },
-              "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTicketsDomain.csproj": {
-                "projectPath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTicketsDomain.csproj"
               }
             }
           }
@@ -114,7 +111,7 @@
           "dependencies": {
             "AutoMapper": {
               "target": "Package",
-              "version": "[8.1.1, )"
+              "version": "[12.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -243,9 +240,6 @@
               "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj": {
                 "projectPath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTickets.Core.csproj"
               },
-              "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTicketsDomain.csproj": {
-                "projectPath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsDomain\\SystemSalesTicketsDomain.csproj"
-              },
               "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj": {
                 "projectPath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsInfrastructure\\SystemSalesTickets.Data.csproj"
               }
@@ -267,9 +261,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[8.1.1, )"
+              "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.30, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

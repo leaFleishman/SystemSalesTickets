@@ -8,8 +8,7 @@ namespace SystemSalesTickets.Service.Service
 {
     public class EventService : IEventService
     {
-        private static int counter = 1;
-
+        private static int counter = new Random().Next();
         private readonly IEventRepository _eventRepository;
 
         private readonly IMapper _mapper;

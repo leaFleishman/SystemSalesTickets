@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
-using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Api.Controllers
 {
@@ -18,12 +18,16 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+
         public async Task<ActionResult<IEnumerable<SeatDTO>>> GetAll()
         {
             return Ok(await _seatService.GetAll());
         }
 
         [HttpGet("{id}")]
+        [Authorize]
+
         public async Task<ActionResult<SeatDTO>> GetById(int id)
         {
             var seat = await _seatService.GetById(id);
@@ -35,6 +39,8 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+
         public async Task<ActionResult<SeatDTO>> Add(SeatDTO seat)
         {
             var result = await _seatService.Add(seat);
@@ -43,6 +49,8 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize]
+
         public async Task<ActionResult<SeatDTO>> Update(SeatDTO seat)
         {
             var result = await _seatService.Update(seat);

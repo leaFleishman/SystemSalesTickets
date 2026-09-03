@@ -1,4 +1,5 @@
-﻿using SystemSalesTickets.Core.Models;
+﻿using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Core.Repository
 {

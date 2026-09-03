@@ -8,8 +8,7 @@ namespace SystemSalesTickets.Service.Service
 {
     public class OrderService : IOrderService
     {
-        private static int counter = 1;
-
+        private static int counter = new Random().Next();
         private readonly IOrderRepository _orderRepository;
 
         private readonly IMapper _mapper;

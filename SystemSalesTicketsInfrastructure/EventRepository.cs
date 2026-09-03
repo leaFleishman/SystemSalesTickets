@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
-using SystemSalesTicketsInfrastructure;
 
-namespace SystemSalesTicketsData
+namespace SystemSalesTickets.Data
 {
-    public class EventRepository : Repository<EventDTO>, IEventRepository
+    public class EventRepository : Repository<Event>, IEventRepository
     {
         private readonly DataContext _dataContext;
 
@@ -13,12 +12,5 @@ namespace SystemSalesTicketsData
         {
             _dataContext = context;
         }
-
-
-
-
-        
-
-
     }
 }

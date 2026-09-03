@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
+
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
@@ -10,8 +9,7 @@ namespace SystemSalesTickets.Service.Service
 {
     public class SeatService : ISeatService
     {
-        private static int counter = 1;
-
+        private static int counter = new Random().Next();
         private readonly ISeatRepository _seatRepository;
 
         private readonly IMapper _mapper;

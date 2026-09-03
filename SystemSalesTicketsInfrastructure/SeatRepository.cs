@@ -1,10 +1,9 @@
 ﻿using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
-using SystemSalesTicketsInfrastructure;
 
-namespace SystemSalesTicketsData
+namespace SystemSalesTickets.Data
 {
-    public class SeatRepository: Repository<Seat>, ISeatRepository
+    public class SeatRepository : Repository<Seat>, ISeatRepository
     {
         private readonly DataContext _dataContext;
 

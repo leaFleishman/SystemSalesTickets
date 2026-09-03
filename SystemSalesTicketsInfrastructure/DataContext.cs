@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Models;
 
-namespace SystemSalesTicketsInfrastructure
+namespace SystemSalesTickets.Data
 {
-    public class DataContext:DbContext
+    public class DataContext : DbContext
     {
 
         public DataContext(DbContextOptions<DataContext> options)
@@ -15,6 +16,6 @@ namespace SystemSalesTicketsInfrastructure
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<EventDTO> Events { get; set; }
+        public DbSet<Event> Events { get; set; }
     }
 }

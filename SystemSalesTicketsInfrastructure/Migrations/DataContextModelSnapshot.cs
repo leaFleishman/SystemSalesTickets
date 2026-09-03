@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SystemSalesTicketsInfrastructure;
+using SystemSalesTickets.Data;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace SystemSalesTickets.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SystemSalesTicketsDomain.models.Event", b =>
+            modelBuilder.Entity("SystemSalesTickets.Core.Models.Event", b =>
                 {
                     b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace SystemSalesTickets.Data.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("SystemSalesTicketsDomain.models.Order", b =>
+            modelBuilder.Entity("SystemSalesTickets.Core.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace SystemSalesTickets.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SystemSalesTicketsDomain.models.Seat", b =>
+            modelBuilder.Entity("SystemSalesTickets.Core.Models.Seat", b =>
                 {
                     b.Property<int>("SeatId")
                         .ValueGeneratedOnAdd()
@@ -97,9 +97,6 @@ namespace SystemSalesTickets.Data.Migrations
                     b.Property<int>("Line")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Row")
                         .HasColumnType("integer");
 
@@ -108,7 +105,7 @@ namespace SystemSalesTickets.Data.Migrations
                     b.ToTable("Seat");
                 });
 
-            modelBuilder.Entity("SystemSalesTicketsDomain.models.User", b =>
+            modelBuilder.Entity("SystemSalesTickets.Core.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,14 +117,6 @@ namespace SystemSalesTickets.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
@@ -136,26 +125,30 @@ namespace SystemSalesTickets.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SystemSalesTicketsDomain.models.Order", b =>
+            modelBuilder.Entity("SystemSalesTickets.Core.Models.Order", b =>
                 {
-                    b.HasOne("SystemSalesTicketsDomain.models.Event", "Event")
+                    b.HasOne("SystemSalesTickets.Core.Models.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SystemSalesTicketsDomain.models.Seat", "Seat")
+                    b.HasOne("SystemSalesTickets.Core.Models.Seat", "Seat")
                         .WithMany()
                         .HasForeignKey("SeatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SystemSalesTicketsDomain.models.User", "User")
+                    b.HasOne("SystemSalesTickets.Core.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

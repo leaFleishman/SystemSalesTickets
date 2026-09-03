@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
-using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Api.Controllers
 {
@@ -24,6 +24,8 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet("GetAllUsers")]
+        [Authorize]
+
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsers();
@@ -31,6 +33,8 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet("GetUserById")]
+        [Authorize]
+
         public async Task<ActionResult<UserDTO>> GetUserById(int id)
         {
             var user = await _userService.GetUserById(id);

@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using SystemSalesTickets.Core.Repository;
-using SystemSalesTicketsInfrastructure;
 
-namespace SystemSalesTicketsData
+namespace SystemSalesTickets.Data
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -28,7 +27,7 @@ namespace SystemSalesTicketsData
             await _context.SaveChangesAsync();
         }
 
-        
+
 
 
         public async Task<IEnumerable<T>> GetAll()
@@ -49,6 +48,6 @@ namespace SystemSalesTicketsData
             return entity;
         }
 
-      
+
     }
 }
