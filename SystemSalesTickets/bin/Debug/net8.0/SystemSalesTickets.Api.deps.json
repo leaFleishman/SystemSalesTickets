@@ -13,6 +13,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.30",
           "Microsoft.EntityFrameworkCore.Design": "8.0.20",
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.11",
+          "NLog.Web.AspNetCore": "6.2.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.11",
           "Swashbuckle.AspNetCore": "6.6.2",
           "SystemSalesTickets.Core": "1.0.0",
@@ -366,7 +367,7 @@
         "dependencies": {
           "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
           "Microsoft.Extensions.Options": "8.0.2",
           "Microsoft.Extensions.Primitives": "8.0.0"
         },
@@ -412,7 +413,7 @@
       "Microsoft.Extensions.Logging/8.0.1": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "8.0.1",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
           "Microsoft.Extensions.Options": "8.0.2"
         },
         "runtime": {
@@ -422,14 +423,14 @@
           }
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
+      "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
             "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.1024.46610"
+            "fileVersion": "8.0.1325.6609"
           }
         }
       },
@@ -529,9 +530,41 @@
           }
         }
       },
+      "NLog/6.2.0": {
+        "runtime": {
+          "lib/netstandard2.1/NLog.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.0.5698"
+          }
+        }
+      },
+      "NLog.Extensions.Logging/6.2.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging": "8.0.1",
+          "NLog": "6.2.0"
+        },
+        "runtime": {
+          "lib/net8.0/NLog.Extensions.Logging.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.0.887"
+          }
+        }
+      },
+      "NLog.Web.AspNetCore/6.2.0": {
+        "dependencies": {
+          "NLog.Extensions.Logging": "6.2.0"
+        },
+        "runtime": {
+          "lib/net8.0/NLog.Web.AspNetCore.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.0.1474"
+          }
+        }
+      },
       "Npgsql/8.0.6": {
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2"
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3"
         },
         "runtime": {
           "lib/net8.0/Npgsql.dll": {
@@ -715,6 +748,7 @@
       },
       "SystemSalesTickets.Service/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
           "SystemSalesTickets.Core": "1.0.0"
         },
         "runtime": {
@@ -907,12 +941,12 @@
       "path": "microsoft.extensions.logging/8.0.1",
       "hashPath": "microsoft.extensions.logging.8.0.1.nupkg.sha512"
     },
-    "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
+    "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-nroMDjS7hNBPtkZqVBbSiQaQjWRDxITI8Y7XnDs97rqG3EbzVTNLZQf7bIeUJcaHOV8bca47s1Uxq94+2oGdxA==",
-      "path": "microsoft.extensions.logging.abstractions/8.0.2",
-      "hashPath": "microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512"
+      "sha512": "sha512-dL0QGToTxggRLMYY4ZYX5AMwBb+byQBd/5dMiZE07Nv73o6I5Are3C7eQTh7K2+A4ct0PVISSr7TZANbiNb2yQ==",
+      "path": "microsoft.extensions.logging.abstractions/8.0.3",
+      "hashPath": "microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Options/8.0.2": {
       "type": "package",
@@ -983,6 +1017,27 @@
       "sha512": "sha512-KZYeKBET/2Z0gY1WlTAK7+RHTl7GSbtvTLDXEZZojUdAPqpQNDL6tHv7VUpqfX5VEOh+uRGKaZXkuD253nEOBQ==",
       "path": "mono.texttemplating/2.2.1",
       "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
+    },
+    "NLog/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CxK6AjM1Wy3hM8YeBpLJJuB/JdoeIVvX0/fMTWeIXD917UozCtzv6cZDamevugeEaBBF0TIatfcNX2iJHI0Cew==",
+      "path": "nlog/6.2.0",
+      "hashPath": "nlog.6.2.0.nupkg.sha512"
+    },
+    "NLog.Extensions.Logging/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZNitUMsNUir+P4A87OhfItgeIiodwSG3Iq15LuNk/Wqjjm2ho3OptjykpWJmFs/Zlgr41XmUB3XbNvhBoCBUrg==",
+      "path": "nlog.extensions.logging/6.2.0",
+      "hashPath": "nlog.extensions.logging.6.2.0.nupkg.sha512"
+    },
+    "NLog.Web.AspNetCore/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YdXkeY7nvzTUmZR5+tHNMNhmHopepFMGRrkkLNbAiZI3Bd7kz6wTIfegAga4FLKjZryXilDAwx+Rk1JEeiHn/w==",
+      "path": "nlog.web.aspnetcore/6.2.0",
+      "hashPath": "nlog.web.aspnetcore.6.2.0.nupkg.sha512"
     },
     "Npgsql/8.0.6": {
       "type": "package",

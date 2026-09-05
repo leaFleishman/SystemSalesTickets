@@ -40,13 +40,7 @@ namespace SystemSalesTickets.Data
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<T> Update(T entity)
-        {
-            _dbSet.Update(entity);
-            await Save();
-
-            return entity;
-        }
+        
 
 
     }

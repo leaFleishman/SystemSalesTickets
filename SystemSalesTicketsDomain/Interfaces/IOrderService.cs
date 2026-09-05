@@ -5,9 +5,9 @@ namespace SystemSalesTickets.Core.Interfaces
 {
     public interface IOrderService
     {
-        Task<OrderDTO> AddOrder(OrderDTO order);
+        Task<OrderLogDTO> AddOrder(OrderDTO order);
         Task<IEnumerable<OrderDTO>> GetAllOrders();
-        Task<OrderDTO> GetOrderById(int id);
+        Task<OrderLogDTO> GetOrderById(int id);
 
     }
 }

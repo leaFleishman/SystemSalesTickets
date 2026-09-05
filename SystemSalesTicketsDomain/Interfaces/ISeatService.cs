@@ -9,6 +9,5 @@ namespace SystemSalesTickets.Core.Interfaces
         Task<IEnumerable<SeatDTO>> GetAll();
         Task<SeatDTO> GetById(int id);
         Task<SeatDTO> Add(SeatDTO seat);
-        Task<SeatDTO> Update(SeatDTO seat);
     }
 }

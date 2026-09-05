@@ -12,11 +12,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NLog.Web.AspNetCore" Version="6.2.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.11" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\nlog.config" Link="nlog.config" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\SystemSalesTicketsApplication\SystemSalesTickets.Service.csproj" />
     <ProjectReference Include="..\SystemSalesTicketsDomain\SystemSalesTickets.Core.csproj" />
     <ProjectReference Include="..\SystemSalesTicketsInfrastructure\SystemSalesTickets.Data.csproj" />

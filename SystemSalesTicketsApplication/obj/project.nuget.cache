@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "5SzefVgtxJk=",
+  "dgSpecHash": "esBtosm+T14=",
   "success": true,
   "projectFilePath": "C:\\Users\\user1\\Desktop\\לאה\\שנה ב\\dotnet\\SystemSalesTickets\\SystemSalesTicketsApplication\\SystemSalesTickets.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user1\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.3\\microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512"
   ],
   "logs": []
 }

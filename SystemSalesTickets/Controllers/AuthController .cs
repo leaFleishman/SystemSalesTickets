@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,24 +12,29 @@ using SystemSalesTickets.Core.Models;
 public class AuthController : ControllerBase
 {
     private readonly IConfiguration _configuration;
-
+    private readonly ILogger _logger;
     private readonly IUserService _userService;
 
-    public AuthController(IConfiguration configuration, IUserService userService)
+    public AuthController(IConfiguration configuration, IUserService userService, ILogger<AuthController> logger)
     {
         _configuration = configuration;
         _userService = userService;
+        _logger = logger;
     }
 
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
     {
+        _logger.LogInformation("Login request received at {RequestTime}", DateTime.Now);
         if (loginModel == null)
             return BadRequest();
         var user = await _userService.Login(loginModel);
 
         if (user == null)
+        {
+            _logger.LogWarning("Login failed");
             return Unauthorized();
+        }
 
 
         var claims = new List<Claim>
@@ -61,7 +67,7 @@ public class AuthController : ControllerBase
 
         var tokenString = new JwtSecurityTokenHandler()
             .WriteToken(token);
-
+        _logger.LogInformation("Login for UserId {UserId} completed successfully", user.Id);
         return Ok(new
         {
             Token = tokenString

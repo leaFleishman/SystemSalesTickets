@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using NLog.Web;
+using SystemSalesTickets.API.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +39,8 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 
 
@@ -107,7 +110,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCheckIfBuyMiddleware();
-app.UseCheckShabatMiddleware();
+app.UseMiddleware<LoggingMiddleware>();
+//app.UseCheckShabatMiddleware();
 
 app.MapControllers();
 
