@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 
@@ -26,20 +27,17 @@ namespace SystemSalesTickets.Api.Controllers
         {
             _logger.LogInformation("AddOrder request received");
 
-            try
-            {
-                var result = await _orderService.AddOrder(order);
-                _logger.LogInformation("AddOrder completed successfully for OrderId {OrderId}", result?.Id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "AddOrder failed");
-                throw;
-            }
+
+
+            var result = await _orderService.AddOrder(order);
+            _logger.LogInformation("AddOrder completed successfully for OrderId {OrderId}", result?.Id);
+            return Ok(result);
+
         }
 
         [HttpGet("GetAllOrders")]
+        [Authorize(Roles = nameof(UserRole.Manager))]
+
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAllOrders()
         {
             _logger.LogInformation("GetAllOrders request received by user");
@@ -51,7 +49,7 @@ namespace SystemSalesTickets.Api.Controllers
             return Ok(orders);
         }
 
-        [Authorize]
+        [Authorize(Roles = nameof(UserRole.Manager))]
         [HttpGet("GetOrderById")]
         public async Task<ActionResult<Order>> GetOrderById(int id)
         {

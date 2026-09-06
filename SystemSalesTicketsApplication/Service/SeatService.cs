@@ -29,18 +29,18 @@ namespace SystemSalesTickets.Service.Service
             return _mapper.Map<IEnumerable<SeatDTO>>(tmp);
         }
 
-        public async Task<SeatDTO> GetById(int id)
+        public async Task<SeatLogDTO> GetById(int id)
         {
             var res= await _seatRepository.GetById(id);
-            return _mapper.Map<SeatDTO>(res);
+            return _mapper.Map<SeatLogDTO>(res);
         }
 
-        public async Task<SeatDTO> Add(SeatDTO seat)
+        public async Task<SeatLogDTO> Add(SeatDTO seat)
         {
             var tmp = _mapper.Map<Seat>(seat);
             tmp.SeatId=counter++;
             var res = await _seatRepository.Add(tmp);
-            return _mapper.Map<SeatDTO>(res);
+            return _mapper.Map<SeatLogDTO>(res);
         }
 
        

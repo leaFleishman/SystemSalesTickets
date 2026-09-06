@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
 
 namespace SystemSalesTickets.Api.Controllers
@@ -20,7 +21,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<ActionResult<IEnumerable<SeatDTO>>> GetAll()
         {
             _logger.LogInformation("GetAll seats request received");
@@ -33,7 +34,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
+        [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<ActionResult<SeatDTO>> GetById(int id)
         {
             _logger.LogInformation("GetById request received for SeatId {SeatId}", id);
@@ -56,17 +57,11 @@ namespace SystemSalesTickets.Api.Controllers
         {
             _logger.LogInformation("Add seat request received");
 
-            try
-            {
+            
                 var result = await _seatService.Add(seat);
                 _logger.LogInformation("Add seat completed successfully for SeatId {SeatId}", result?.Id);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Add seat failed");
-                throw;
-            }
+          
         }
 
     }

@@ -31,8 +31,11 @@ namespace SystemSalesTickets.Service.Service
 
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
-            var res = await _userRepository.GetAll();
-            return _mapper.Map<IEnumerable<UserDTO>>(res);
+            
+                var res = await _userRepository.GetAll();
+                return _mapper.Map<IEnumerable<UserDTO>>(res);
+            
+            
         }
 
         public async Task<UserLogDTO> GetUserById(int id)

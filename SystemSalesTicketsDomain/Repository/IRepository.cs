@@ -7,5 +7,7 @@ namespace SystemSalesTickets.Core.Repository
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(int id);
         Task<T> Add(T entity);
+
+        public Task Update(T entity);
     }
 }

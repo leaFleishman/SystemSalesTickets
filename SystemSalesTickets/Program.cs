@@ -1,6 +1,5 @@
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
-using SystemSalesTickets.Api.Middleware;
 using Microsoft.EntityFrameworkCore;
 using SystemSalesTickets.Core;
 using AutoMapper;
@@ -12,6 +11,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 using SystemSalesTickets.API.Middleware;
+using SystemSalesTickets.API.Middleware.SystemSalesTickets.API.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -103,16 +103,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseExceptionHandlingMiddleware();
+app.UseCheckShabatMiddleware();
+app.UsePerformanceMiddleware();     
+app.UseMiddleware<LoggingMiddleware>(); 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-
 app.UseAuthorization();
-
-app.UseCheckIfBuyMiddleware();
-app.UseMiddleware<LoggingMiddleware>();
-//app.UseCheckShabatMiddleware();
-
 app.MapControllers();
-
 app.Run();

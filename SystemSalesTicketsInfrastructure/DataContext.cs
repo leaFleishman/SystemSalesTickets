@@ -17,5 +17,12 @@ namespace SystemSalesTickets.Data
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<Event> Events { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Seat>()
+                .Property(s => s.Version)
+                .IsConcurrencyToken();
+        }
     }
 }

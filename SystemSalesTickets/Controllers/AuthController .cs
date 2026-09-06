@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 
@@ -38,10 +39,11 @@ public class AuthController : ControllerBase
 
 
         var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Role, "manager"),
-        new Claim(ClaimTypes.Role, "user")
-    };
+        {
+           new Claim(ClaimTypes.Role, user.Role.ToString())
+
+
+        };
 
         var key = _configuration.GetValue<string>("JWT:Key");
 

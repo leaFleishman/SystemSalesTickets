@@ -14,6 +14,7 @@ namespace SystemSalesTickets.Core
             CreateMap<OrderDTO, Order>().ReverseMap();
             CreateMap<UserLogDTO, User>().ReverseMap();
             CreateMap<OrderLogDTO, Order>().ReverseMap();
+            CreateMap<SeatLogDTO, Seat>().ReverseMap();
         }
     }
 }

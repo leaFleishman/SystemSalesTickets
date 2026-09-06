@@ -27,6 +27,11 @@ namespace SystemSalesTickets.Data
             await _context.SaveChangesAsync();
         }
 
+        public async Task Update(T entity)
+        {
+            _dbSet.Update(entity);
+            await Save();
+        }
 
 
 

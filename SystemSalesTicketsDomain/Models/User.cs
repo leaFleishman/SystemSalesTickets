@@ -1,4 +1,6 @@
-﻿namespace SystemSalesTickets.Core.Models
+﻿using SystemSalesTickets.Core.Enums;
+
+namespace SystemSalesTickets.Core.Models
 {
     public class User
     {
@@ -7,6 +9,7 @@
 
         public string UserName { get; set; }
 
+        public UserRole Role { get; set; }
 
         public string Phone { get; set; }
 

@@ -9,5 +9,7 @@
         public decimal Price { get; set; }
 
         public int NumberOfSeats { get; set; }
+
+
     }
 }

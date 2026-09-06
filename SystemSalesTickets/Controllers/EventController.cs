@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 
@@ -21,7 +22,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet("GetEvents")]
-        [Authorize]
+        [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<IEnumerable<EventDTO>> GetEvents()
         {
             _logger.LogInformation("GetEvents request received");
@@ -38,18 +39,18 @@ namespace SystemSalesTickets.Api.Controllers
         public async Task<ActionResult<EventDTO>> AddEvent([FromBody] EventDTO e)
         {
             _logger.LogInformation("AddEvent request received for event {EventName}", e?.Name);
+            await _eventService.Add(e);
+            _logger.LogInformation("AddEvent completed successfully for event {EventName}", e?.Name);
+            return Created();
 
-            try
-            {
-                await _eventService.Add(e);
-                _logger.LogInformation("AddEvent completed successfully for event {EventName}", e?.Name);
-                return Created();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "AddEvent failed for event {EventName}", e?.Name);
-                throw;
-            }
+        }
+
+        [HttpGet("GetEventByName")]
+        [Authorize]
+        public async Task<ActionResult<EventDTO>> GetEventByName(string name)
+        {
+
+        return   await _eventService.GetEventByName(name);
         }
     }
 }

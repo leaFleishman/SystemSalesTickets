@@ -12,5 +12,11 @@ namespace SystemSalesTickets.Data
         {
             _dataContext = context;
         }
+
+        public async Task<Event> GetEventByName(string name)
+        {
+            return await _dataContext.Events
+                   .FirstOrDefaultAsync(e => e.Name == name);
+        }
     }
 }

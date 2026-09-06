@@ -7,5 +7,7 @@ namespace SystemSalesTickets.Core.Interfaces
         public Task<IEnumerable<EventDTO>> GetAll();
 
         public Task Add(EventDTO e);
+
+       public Task<EventDTO> GetEventByName(string name);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SystemSalesTickets.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SystemSalesTickets.Core.Models
 {
     public class Seat
     {
@@ -9,5 +11,9 @@
         public int Line { get; set; }
 
         public bool IsAvailable { get; set; }
+
+        public int Version { get; set; } = 1;
+
     }
+
 }

@@ -12,6 +12,7 @@
 
         public int NumberOfSeats { get; set; }
 
+        public int Version { get; set; } = 1;
 
     }
 }

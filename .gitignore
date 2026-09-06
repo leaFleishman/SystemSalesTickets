@@ -4,3 +4,5 @@ launchSettings.json
 **/obj/
 appsettings.Development.json
 appsettings.json
+logs/
+*.log
