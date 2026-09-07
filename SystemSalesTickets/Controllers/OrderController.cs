@@ -23,26 +23,26 @@ namespace SystemSalesTickets.Api.Controllers
 
         [Authorize]
         [HttpPost("AddOrder")]
-        public async Task<ActionResult<OrderDTO>> AddOrder([FromBody] OrderDTO order)
+        public async Task<ActionResult<OrderDTO>> AddOrder([FromBody] OrderDTO order, CancellationToken cancellationToken)
         {
             _logger.LogInformation("AddOrder request received");
 
 
 
-            var result = await _orderService.AddOrder(order);
+            var result = await _orderService.AddOrder(order, cancellationToken);
             _logger.LogInformation("AddOrder completed successfully for OrderId {OrderId}", result?.Id);
-            return Ok(result);
+            return Created();
 
         }
 
         [HttpGet("GetAllOrders")]
         [Authorize(Roles = nameof(UserRole.Manager))]
 
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAllOrders()
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAllOrders(CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetAllOrders request received by user");
 
-            var orders = await _orderService.GetAllOrders();
+            var orders = await _orderService.GetAllOrders(cancellationToken);
 
             _logger.LogInformation("GetAllOrders returned {Count} orders", orders?.Count() ?? 0);
 
@@ -51,11 +51,11 @@ namespace SystemSalesTickets.Api.Controllers
 
         [Authorize(Roles = nameof(UserRole.Manager))]
         [HttpGet("GetOrderById")]
-        public async Task<ActionResult<Order>> GetOrderById(int id)
+        public async Task<ActionResult<Order>> GetOrderById(int id, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetOrderById request received for OrderId {OrderId}", id);
 
-            var order = await _orderService.GetOrderById(id);
+            var order = await _orderService.GetOrderById(id, cancellationToken);
 
             if (order == null)
             {

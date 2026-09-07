@@ -22,11 +22,11 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult<IEnumerable<SeatDTO>>> GetAll()
+        public async Task<ActionResult<IEnumerable<SeatDTO>>> GetAll(CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetAll seats request received");
 
-            var seats = await _seatService.GetAll();
+            var seats = await _seatService.GetAll(cancellationToken);
 
             _logger.LogInformation("GetAll returned {Count} seats", seats?.Count() ?? 0);
 
@@ -35,11 +35,11 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult<SeatDTO>> GetById(int id)
+        public async Task<ActionResult<SeatDTO>> GetById(int id, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetById request received for SeatId {SeatId}", id);
 
-            var seat = await _seatService.GetById(id);
+            var seat = await _seatService.GetById(id, cancellationToken);
 
             if (seat == null)
             {
@@ -53,16 +53,43 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<SeatDTO>> Add(SeatDTO seat)
+        public async Task<ActionResult<SeatDTO>> Add([FromBody] SeatDTO seat, CancellationToken cancellationToken)
         {
+            if (seat == null)
+            {
+                return BadRequest("Invalid seat data.");
+            }
+
             _logger.LogInformation("Add seat request received");
 
-            
-                var result = await _seatService.Add(seat);
-                _logger.LogInformation("Add seat completed successfully for SeatId {SeatId}", result?.Id);
-                return Ok(result);
-          
+            var result = await _seatService.Add(seat, cancellationToken);
+
+            if (result == null)
+            {
+                return BadRequest("Failed to create seat.");
+            }
+
+            _logger.LogInformation("Add seat completed successfully for SeatId {SeatId}", result.Id);
+
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
+        [HttpDelete("{id}")]
+        [Authorize(Roles = nameof(UserRole.Manager))]
+        public async Task<IActionResult> DeleteAsyncSeat(int id, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Delete seat request received for SeatId {SeatId}", id);
+
+            var deleted = await _seatService.DeleteSeatAsync(id, cancellationToken);
+
+            if (!deleted)
+            {
+                _logger.LogWarning("Delete: no seat found for SeatId {SeatId}", id);
+                return NotFound();
+            }
+
+            _logger.LogInformation("Delete succeeded for SeatId {SeatId}", id);
+            return NoContent();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace SystemSalesTickets.Core.Models
 
         public bool IsAvailable { get; set; }
 
-        public uint Version { get; set; }
+        public byte[] Version { get; set; }
     }
 
 }

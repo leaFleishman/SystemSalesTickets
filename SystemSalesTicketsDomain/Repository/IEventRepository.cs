@@ -5,6 +5,6 @@ namespace SystemSalesTickets.Core.Repository
 {
     public interface IEventRepository : IRepository<Event>
     {
-        public Task<Event> GetEventByName(string name);
+        public Task<Event> GetEventByName(string name, CancellationToken cancellationToken = default);
     }
 }

@@ -5,10 +5,10 @@ namespace SystemSalesTickets.Core.Repository
     public interface IUserRepository : IRepository<User>
     {
 
-        Task<User> Add(User user);
-        Task<IEnumerable<User>> GetAll();
-        Task<User> GetById(int id);
-        Task<User> Login(LoginModel loginModel);
-        Task<User> MakeUserManager(int id);
+        Task<User> Add(User user, CancellationToken cancellationToken = default);
+        Task<IEnumerable<User>> GetAll(CancellationToken cancellationToken = default);
+        Task<User> GetById(int id, CancellationToken cancellationToken = default);
+        Task<User> Login(LoginModel loginModel, CancellationToken cancellationToken = default);
+        Task<User> MakeUserManager(int id, CancellationToken cancellationToken = default);
     }
 }

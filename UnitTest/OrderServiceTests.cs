@@ -61,7 +61,7 @@ namespace SystemSalesTickets.Tests
                 .Returns(order);
 
             _seatRepositoryMock
-                .Setup(x => x.GetById(1))
+                .Setup(x => x.GetById(1, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Seat)null);
 
             // Act
@@ -72,15 +72,15 @@ namespace SystemSalesTickets.Tests
             Assert.Equal("Seat not found", result.Message);
 
             _seatRepositoryMock.Verify(
-                x => x.GetById(1),
+                x => x.GetById(1, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _seatRepositoryMock.Verify(
-                x => x.Update(It.IsAny<Seat>()),
+                x => x.Update(It.IsAny<Seat>(), It.IsAny<CancellationToken>()),
                 Times.Never);
 
             _orderRepositoryMock.Verify(
-                x => x.Add(It.IsAny<Order>()),
+                x => x.Add(It.IsAny<Order>(), It.IsAny<CancellationToken>()),
                 Times.Never);
         }
 
@@ -120,7 +120,7 @@ namespace SystemSalesTickets.Tests
                 .Returns(order);
 
             _seatRepositoryMock
-                .Setup(x => x.GetById(1))
+                .Setup(x => x.GetById(1, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(seat);
 
             // Act
@@ -131,11 +131,11 @@ namespace SystemSalesTickets.Tests
             Assert.Equal("Seat is already occupied", result.Message);
 
             _seatRepositoryMock.Verify(
-                x => x.Update(It.IsAny<Seat>()),
+                x => x.Update(It.IsAny<Seat>(), It.IsAny<CancellationToken>()),
                 Times.Never);
 
             _orderRepositoryMock.Verify(
-                x => x.Add(It.IsAny<Order>()),
+                x => x.Add(It.IsAny<Order>(), It.IsAny<CancellationToken>()),
                 Times.Never);
         }
 
@@ -179,15 +179,15 @@ namespace SystemSalesTickets.Tests
                 .Returns(order);
 
             _seatRepositoryMock
-                .Setup(x => x.GetById(1))
+                .Setup(x => x.GetById(1, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(seat);
 
             _seatRepositoryMock
-                .Setup(x => x.Update(seat))
+                .Setup(x => x.Update(seat, It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             _orderRepositoryMock
-                .Setup(x => x.Add(order))
+                .Setup(x => x.Add(order, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(order);
 
             _mapperMock
@@ -206,12 +206,12 @@ namespace SystemSalesTickets.Tests
 
             // Update של הכיסא בוצע
             _seatRepositoryMock.Verify(
-                x => x.Update(seat),
+                x => x.Update(seat, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             // הוספת ההזמנה בוצעה
             _orderRepositoryMock.Verify(
-                x => x.Add(order),
+                x => x.Add(order, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -251,11 +251,11 @@ namespace SystemSalesTickets.Tests
                 .Returns(order);
 
             _seatRepositoryMock
-                .Setup(x => x.GetById(1))
+                .Setup(x => x.GetById(1, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(seat);
 
             _seatRepositoryMock
-                .Setup(x => x.Update(seat))
+                .Setup(x => x.Update(seat, It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception());
 
             // Act
@@ -269,13 +269,13 @@ namespace SystemSalesTickets.Tests
                 result.Message);
 
             _seatRepositoryMock.Verify(
-                x => x.Update(seat),
+                x => x.Update(seat, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             // בגלל שה-Update זרק Exception,
             // Add לא אמור להתבצע
             _orderRepositoryMock.Verify(
-                x => x.Add(It.IsAny<Order>()),
+                x => x.Add(It.IsAny<Order>(), It.IsAny<CancellationToken>()),
                 Times.Never);
         }
 
@@ -301,7 +301,7 @@ namespace SystemSalesTickets.Tests
             };
 
             _orderRepositoryMock
-                .Setup(x => x.GetAll())
+                .Setup(x => x.GetAll(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(orders);
 
             _mapperMock
@@ -316,7 +316,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(expectedResult, result);
 
             _orderRepositoryMock.Verify(
-                x => x.GetAll(),
+                x => x.GetAll(It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -342,7 +342,7 @@ namespace SystemSalesTickets.Tests
             };
 
             _orderRepositoryMock
-                .Setup(x => x.GetById(id))
+                .Setup(x => x.GetById(id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(order);
 
             _mapperMock
@@ -357,7 +357,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(expectedResult, result);
 
             _orderRepositoryMock.Verify(
-                x => x.GetById(id),
+                x => x.GetById(id, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
     }

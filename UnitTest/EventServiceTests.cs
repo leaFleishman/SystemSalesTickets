@@ -75,7 +75,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(50, result.NumberOfSeats);
 
             _eventRepository.Verify(
-                x => x.Add(eventModel),
+                x => x.Add(eventModel, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -125,7 +125,7 @@ namespace SystemSalesTickets.Tests
             };
 
             _eventRepository
-                .Setup(x => x.GetAll())
+                .Setup(x => x.GetAll(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(events);
 
             _mapper
@@ -140,7 +140,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(2, result.Count());
 
             _eventRepository.Verify(
-                x => x.GetAll(),
+                x => x.GetAll(It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -169,7 +169,7 @@ namespace SystemSalesTickets.Tests
             };
 
             _eventRepository
-                .Setup(x => x.GetEventByName(name))
+                .Setup(x => x.GetEventByName(name, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(eventModel);
 
             _mapper
@@ -184,7 +184,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal("Concert", result.Name);
 
             _eventRepository.Verify(
-                x => x.GetEventByName(name),
+                x => x.GetEventByName(name, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
     }

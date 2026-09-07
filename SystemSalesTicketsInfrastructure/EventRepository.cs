@@ -13,10 +13,10 @@ namespace SystemSalesTickets.Data
             _dataContext = context;
         }
 
-        public async Task<Event> GetEventByName(string name)
+        public async Task<Event> GetEventByName(string name, CancellationToken cancellationToken = default)
         {
             return await _dataContext.Events
-                   .FirstOrDefaultAsync(e => e.Name == name);
+                   .FirstOrDefaultAsync(e => e.Name == name, cancellationToken);
         }
     }
 }

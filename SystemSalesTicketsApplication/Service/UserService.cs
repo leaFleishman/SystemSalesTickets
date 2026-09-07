@@ -21,37 +21,37 @@ namespace SystemSalesTickets.Service.Service
             _logger=logger;
         }
 
-        public async Task<UserLogDTO> AddUser(UserDTO user)
+        public async Task<UserLogDTO> AddUser(UserDTO user, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<User>(user);
             tmp.Id = counter++;
-            var res = await _userRepository.Add(tmp);
+            var res = await _userRepository.Add(tmp, cancellationToken);
             return _mapper.Map<UserLogDTO>(res);
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllUsers()
+        public async Task<IEnumerable<UserDTO>> GetAllUsers(CancellationToken cancellationToken = default)
         {
             
-                var res = await _userRepository.GetAll();
+                var res = await _userRepository.GetAll(cancellationToken);
                 return _mapper.Map<IEnumerable<UserDTO>>(res);
             
             
         }
 
-        public async Task<UserLogDTO> GetUserById(int id)
+        public async Task<UserLogDTO> GetUserById(int id, CancellationToken cancellationToken = default)
         {
-            var res = await _userRepository.GetById(id);
+            var res = await _userRepository.GetById(id, cancellationToken);
             return _mapper.Map<UserLogDTO>(res);
         }
 
-        public async Task<User> Login(LoginModel loginModel)
+        public async Task<User> Login(LoginModel loginModel, CancellationToken cancellationToken = default)
         {
-            return  await _userRepository.Login(loginModel);
+            return await _userRepository.Login(loginModel, cancellationToken);
         }
 
-        public async Task<UserDTO> MakeUserManager(int id)
+        public async Task<UserDTO> MakeUserManager(int id, CancellationToken cancellationToken = default)
         {
-            var user=await _userRepository.MakeUserManager(id);
+            var user=await _userRepository.MakeUserManager(id, cancellationToken);
             return _mapper.Map<UserDTO>(user);
         }
     }

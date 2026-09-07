@@ -11,7 +11,6 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 using SystemSalesTickets.API.Middleware;
-using SystemSalesTickets.API.Middleware.SystemSalesTickets.API.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);

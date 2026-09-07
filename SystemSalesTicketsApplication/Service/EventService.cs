@@ -25,24 +25,24 @@ namespace SystemSalesTickets.Service.Service
 
        
 
-        public async Task<EventDTO> Add(EventDTO e)
+        public async Task<EventDTO> Add(EventDTO e, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<Event>(e);
             tmp.EventId = counter++;
-            await _eventRepository.Add(tmp);
+            await _eventRepository.Add(tmp, cancellationToken);
             return _mapper.Map<EventDTO>(tmp);
         }
 
 
-        public async Task<IEnumerable<EventDTO>> GetAll()
+        public async Task<IEnumerable<EventDTO>> GetAll(CancellationToken cancellationToken = default)
         {
-            var tmp = await _eventRepository.GetAll();
+            var tmp = await _eventRepository.GetAll(cancellationToken);
             return _mapper.Map<IEnumerable<EventDTO>>(tmp);
         }
 
-        public async Task<EventDTO> GetEventByName(string name)
+        public async Task<EventDTO> GetEventByName(string name, CancellationToken cancellationToken = default)
         {
-            var tmp = await _eventRepository.GetEventByName(name);
+            var tmp = await _eventRepository.GetEventByName(name, cancellationToken);
             return _mapper.Map<EventDTO>(tmp);
         }
 

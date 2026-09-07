@@ -18,13 +18,16 @@ namespace SystemSalesTickets.Data
 
         public DbSet<Event> Events { get; set; }
 
+        public DbSet<Seat> Seats { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Seat>()
                 .Property(s => s.Version)
-                .HasColumnName("xmin")
-                .HasColumnType("xid")
                 .IsRowVersion();
+
+            modelBuilder.Entity<Seat>()
+                .ToTable("Seat");
 
             modelBuilder.Entity<Event>()
                 .HasIndex(e => e.Date)

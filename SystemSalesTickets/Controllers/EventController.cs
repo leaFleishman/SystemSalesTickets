@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
-using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Api.Controllers
 {
@@ -12,7 +11,7 @@ namespace SystemSalesTickets.Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        readonly IEventService _eventService;
+        private readonly IEventService _eventService;
         private readonly ILogger<EventController> _logger;
 
         public EventController(IEventService eventService, ILogger<EventController> logger)
@@ -21,36 +20,52 @@ namespace SystemSalesTickets.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet("GetEvents")]
+        [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<IEnumerable<EventDTO>> GetEvents()
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetEvents(CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetEvents request received");
 
-            var events = await _eventService.GetAll();
+            var events = await _eventService.GetAll(cancellationToken);
 
             _logger.LogInformation("GetEvents returned {Count} events", events?.Count() ?? 0);
 
-            return events;
+            return Ok(events);
         }
 
-        [HttpPost("AddEvent")]
+        [HttpPost]
         [Authorize]
-        public async Task<ActionResult<EventDTO>> AddEvent([FromBody] EventDTO e)
+        public async Task<ActionResult<EventDTO>> AddEvent([FromBody] EventDTO e, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("AddEvent request received for event {EventName}", e?.Name);
-            await _eventService.Add(e);
-            _logger.LogInformation("AddEvent completed successfully for event {EventName}", e?.Name);
-            return Created();
+            if (e == null)
+            {
+                return BadRequest("Invalid event data.");
+            }
 
+            _logger.LogInformation("AddEvent request received for event {EventName}", e.Name);
+
+            var createdEvent = await _eventService.Add(e, cancellationToken);
+
+            _logger.LogInformation("AddEvent completed successfully for event {EventName}", e.Name);
+
+            return CreatedAtAction(nameof(GetEventByName), new { name = createdEvent.Name }, createdEvent);
         }
 
-        [HttpGet("GetEventByName")]
+        [HttpGet("by-name/{name}")]
         [Authorize]
-        public async Task<ActionResult<EventDTO>> GetEventByName(string name)
+        public async Task<ActionResult<EventDTO>> GetEventByName(string name, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("GetEventByName request received for {EventName}", name);
 
-        return   await _eventService.GetEventByName(name);
+            var eventDto = await _eventService.GetEventByName(name, cancellationToken);
+
+            if (eventDto == null)
+            {
+                _logger.LogWarning("GetEventByName: no event found with name {EventName}", name);
+                return NotFound();
+            }
+
+            return Ok(eventDto);
         }
     }
 }

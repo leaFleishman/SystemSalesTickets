@@ -23,27 +23,30 @@ namespace SystemSalesTickets.Service.Service
             _logger = logger;
         }
 
-        public async Task<IEnumerable<SeatDTO>> GetAll()
+        public async Task<IEnumerable<SeatDTO>> GetAll(CancellationToken cancellationToken = default)
         {
-            var tmp = await _seatRepository.GetAll();
+            var tmp = await _seatRepository.GetAll(cancellationToken);
             return _mapper.Map<IEnumerable<SeatDTO>>(tmp);
         }
 
-        public async Task<SeatLogDTO> GetById(int id)
+        public async Task<SeatLogDTO> GetById(int id, CancellationToken cancellationToken = default)
         {
-            var res= await _seatRepository.GetById(id);
+            var res= await _seatRepository.GetById(id, cancellationToken);
             return _mapper.Map<SeatLogDTO>(res);
         }
 
-        public async Task<SeatLogDTO> Add(SeatDTO seat)
+        public async Task<SeatLogDTO> Add(SeatDTO seat, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<Seat>(seat);
             tmp.SeatId=counter++;
-            var res = await _seatRepository.Add(tmp);
+            var res = await _seatRepository.Add(tmp, cancellationToken);
             return _mapper.Map<SeatLogDTO>(res);
         }
 
-       
+        public async Task<bool> DeleteSeatAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _seatRepository.DeleteAsync(id, cancellationToken);
+        }
 
     }
 }

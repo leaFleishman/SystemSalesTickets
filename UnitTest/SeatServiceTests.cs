@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SystemSalesTickets.Core.DTOs;
@@ -29,66 +30,36 @@ namespace SystemSalesTickets.Tests
             );
         }
 
-
-        // =========================================================
-        // GetAll
-        // =========================================================
-
         [Fact]
         public async Task GetAll_ReturnsAllSeats()
         {
-            // Arrange
             var seats = new List<Seat>
             {
-                new Seat
-                {
-                    SeatId = 1,
-                    Row = 1,
-                    Line = 1,
-                    IsAvailable = true
-                },
-                new Seat
-                {
-                    SeatId = 2,
-                    Row = 1,
-                    Line = 2,
-                    IsAvailable = true
-                }
+                new Seat { SeatId = 1, Row = 1, Line = 1, IsAvailable = true },
+                new Seat { SeatId = 2, Row = 1, Line = 2, IsAvailable = true }
             };
 
             var expected = new List<SeatDTO>
             {
-                new SeatDTO
-                {
-                    Row = 1,
-                    Line = 1,
-                    IsAvailable = true
-                },
-                new SeatDTO
-                {
-                    Row = 1,
-                    Line = 2,
-                    IsAvailable = true
-                }
+                new SeatDTO { Row = 1, Line = 1, IsAvailable = true },
+                new SeatDTO { Row = 1, Line = 2, IsAvailable = true }
             };
 
             _seatRepositoryMock
-                .Setup(x => x.GetAll())
+                .Setup(x => x.GetAll(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(seats);
 
             _mapperMock
                 .Setup(x => x.Map<IEnumerable<SeatDTO>>(seats))
                 .Returns(expected);
 
-            // Act
             var result = await _service.GetAll();
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result);
 
             _seatRepositoryMock.Verify(
-                x => x.GetAll(),
+                x => x.GetAll(It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
@@ -96,15 +67,9 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
         }
 
-
-        // =========================================================
-        // GetById
-        // =========================================================
-
         [Fact]
         public async Task GetById_WhenSeatExists_ReturnsSeatLogDTO()
         {
-            // Arrange
             int id = 1;
 
             var seat = new Seat
@@ -118,22 +83,20 @@ namespace SystemSalesTickets.Tests
             var expected = new SeatLogDTO();
 
             _seatRepositoryMock
-                .Setup(x => x.GetById(id))
+                .Setup(x => x.GetById(id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(seat);
 
             _mapperMock
                 .Setup(x => x.Map<SeatLogDTO>(seat))
                 .Returns(expected);
 
-            // Act
             var result = await _service.GetById(id);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result);
 
             _seatRepositoryMock.Verify(
-                x => x.GetById(id),
+                x => x.GetById(id, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
@@ -141,15 +104,9 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
         }
 
-
-        // =========================================================
-        // Add
-        // =========================================================
-
         [Fact]
         public async Task Add_WhenSeatIsValid_AddsSeatAndReturnsResult()
         {
-            // Arrange
             var seatDto = new SeatDTO
             {
                 Row = 1,
@@ -179,29 +136,23 @@ namespace SystemSalesTickets.Tests
                 .Returns(seat);
 
             _seatRepositoryMock
-                .Setup(x => x.Add(seat))
+                .Setup(x => x.Add(seat, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(addedSeat);
 
             _mapperMock
                 .Setup(x => x.Map<SeatLogDTO>(addedSeat))
                 .Returns(expected);
 
-            // Act
             var result = await _service.Add(seatDto);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result);
-
-            // בדיקה שה-ID קיבל ערך
             Assert.NotEqual(0, seat.SeatId);
 
-            // בדיקה שה-Repository קיבל את הכיסא
             _seatRepositoryMock.Verify(
-                x => x.Add(seat),
+                x => x.Add(seat, It.IsAny<CancellationToken>()),
                 Times.Once);
 
-            // בדיקה שה-Mapping בוצע
             _mapperMock.Verify(
                 x => x.Map<Seat>(seatDto),
                 Times.Once);
@@ -211,15 +162,9 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
         }
 
-
-        // =========================================================
-        // Add - Repository throws exception
-        // =========================================================
-
         [Fact]
         public async Task Add_WhenRepositoryThrows_ThrowsException()
         {
-            // Arrange
             var seatDto = new SeatDTO
             {
                 Row = 1,
@@ -239,17 +184,50 @@ namespace SystemSalesTickets.Tests
                 .Returns(seat);
 
             _seatRepositoryMock
-                .Setup(x => x.Add(seat))
+                .Setup(x => x.Add(seat, It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Database error"));
 
-            // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(
                 () => _service.Add(seatDto));
 
             Assert.Equal("Database error", exception.Message);
 
             _seatRepositoryMock.Verify(
-                x => x.Add(seat),
+                x => x.Add(seat, It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteSeatAsync_WhenSeatExists_ReturnsTrue()
+        {
+            const int id = 1;
+
+            _seatRepositoryMock
+                .Setup(x => x.DeleteAsync(id, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(true);
+
+            var result = await _service.DeleteSeatAsync(id);
+
+            Assert.True(result);
+            _seatRepositoryMock.Verify(
+                x => x.DeleteAsync(id, It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteSeatAsync_WhenSeatDoesNotExist_ReturnsFalse()
+        {
+            const int id = 999;
+
+            _seatRepositoryMock
+                .Setup(x => x.DeleteAsync(id, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(false);
+
+            var result = await _service.DeleteSeatAsync(id);
+
+            Assert.False(result);
+            _seatRepositoryMock.Verify(
+                x => x.DeleteAsync(id, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
     }

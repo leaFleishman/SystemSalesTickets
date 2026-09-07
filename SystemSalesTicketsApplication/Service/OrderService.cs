@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
@@ -24,11 +25,11 @@ namespace SystemSalesTickets.Service.Service
             _seatRepository = seatRepository;
         }
 
-        public async Task<OrderLogDTO> AddOrder(OrderDTO order)
+        public async Task<OrderLogDTO> AddOrder(OrderDTO order, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<Order>(order);
 
-            var seat = await _seatRepository.GetById(tmp.Seat.SeatId);
+            var seat = await _seatRepository.GetById(tmp.Seat.SeatId, cancellationToken);
             if (seat == null)
             {
                 _logger.LogInformation("Seat {seatId} not found", tmp.Seat.SeatId); 
@@ -45,12 +46,20 @@ namespace SystemSalesTickets.Service.Service
 
             try
             {
-                await _seatRepository.Update(seat); 
-                await _orderRepository.Add(tmp);     
+                await _seatRepository.Update(seat, cancellationToken); 
+                await _orderRepository.Add(tmp, cancellationToken);     
             }
-            catch (Exception e)
+            catch (Exception ex) when (ex is DbUpdateConcurrencyException || ex is DbUpdateException || ex is InvalidOperationException)
             {
-                _logger.LogWarning("Seat {seatId} was booked concurrently", seat.SeatId);
+                _logger.LogWarning(ex, "Seat {seatId} was booked concurrently", seat.SeatId);
+                return new OrderLogDTO
+                {
+                    Message = "Seat was just booked by someone else, please try again"
+                };
+            }
+            catch (Exception)
+            {
+                _logger.LogWarning("Seat {seatId} update failed while creating order", seat.SeatId);
                 return new OrderLogDTO
                 {
                     Message = "Seat was just booked by someone else, please try again"
@@ -60,15 +69,15 @@ namespace SystemSalesTickets.Service.Service
         }
 
 
-        public async Task<IEnumerable<OrderDTO>> GetAllOrders()
+        public async Task<IEnumerable<OrderDTO>> GetAllOrders(CancellationToken cancellationToken = default)
         {
-            var tmp = await _orderRepository.GetAll();
+            var tmp = await _orderRepository.GetAll(cancellationToken);
             return _mapper.Map<IEnumerable<OrderDTO>>(tmp);
         }
 
-        public async Task<OrderLogDTO> GetOrderById(int id)
+        public async Task<OrderLogDTO> GetOrderById(int id, CancellationToken cancellationToken = default)
         {
-            var tmp = await _orderRepository.GetById(id);
+            var tmp = await _orderRepository.GetById(id, cancellationToken);
             return _mapper.Map<OrderLogDTO>(tmp);
         }
 

@@ -24,12 +24,12 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
+    public async Task<IActionResult> Login([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Login request received at {RequestTime}", DateTime.Now);
         if (loginModel == null)
             return BadRequest();
-        var user = await _userService.Login(loginModel);
+        var user = await _userService.Login(loginModel, cancellationToken);
 
         if (user == null)
         {

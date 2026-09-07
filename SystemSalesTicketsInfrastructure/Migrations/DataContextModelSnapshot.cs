@@ -103,15 +103,15 @@ namespace SystemSalesTickets.Data.Migrations
                     b.Property<int>("Row")
                         .HasColumnType("integer");
 
-                    b.Property<uint>("Version")
+                    b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
+                        .HasColumnType("bytea");
 
                     b.HasKey("SeatId");
 
-                    b.ToTable("Seat");
+                    b.ToTable("Seat", (string)null);
                 });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.User", b =>

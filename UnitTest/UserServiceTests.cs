@@ -72,7 +72,7 @@ namespace SystemSalesTickets.Tests
                 .Returns(user);
 
             _userRepositoryMock
-                .Setup(x => x.Add(user))
+                .Setup(x => x.Add(user, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(addedUser);
 
             _mapperMock
@@ -93,7 +93,7 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
 
             _userRepositoryMock.Verify(
-                x => x.Add(user),
+                x => x.Add(user, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
@@ -151,7 +151,7 @@ namespace SystemSalesTickets.Tests
             };
 
             _userRepositoryMock
-                .Setup(x => x.GetAll())
+                .Setup(x => x.GetAll(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(users);
 
             _mapperMock
@@ -166,7 +166,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(expected, result);
 
             _userRepositoryMock.Verify(
-                x => x.GetAll(),
+                x => x.GetAll(It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
@@ -197,7 +197,7 @@ namespace SystemSalesTickets.Tests
             var expected = new UserLogDTO();
 
             _userRepositoryMock
-                .Setup(x => x.GetById(id))
+                .Setup(x => x.GetById(id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
 
             _mapperMock
@@ -212,7 +212,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(expected, result);
 
             _userRepositoryMock.Verify(
-                x => x.GetById(id),
+                x => x.GetById(id, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
@@ -245,7 +245,7 @@ namespace SystemSalesTickets.Tests
             };
 
             _userRepositoryMock
-                .Setup(x => x.Login(loginModel))
+                .Setup(x => x.Login(loginModel, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expected);
 
             // Act
@@ -256,7 +256,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(expected, result);
 
             _userRepositoryMock.Verify(
-                x => x.Login(loginModel),
+                x => x.Login(loginModel, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -285,7 +285,7 @@ namespace SystemSalesTickets.Tests
             };
 
             _userRepositoryMock
-                .Setup(r => r.MakeUserManager(id))
+                .Setup(r => r.MakeUserManager(id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
 
             _mapperMock
@@ -301,7 +301,7 @@ namespace SystemSalesTickets.Tests
             Assert.Equal(userDto.Email, result.Email);
 
             _userRepositoryMock.Verify(
-                r => r.MakeUserManager(id),
+                r => r.MakeUserManager(id, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
@@ -316,7 +316,7 @@ namespace SystemSalesTickets.Tests
             int id = 999;
 
             _userRepositoryMock
-                .Setup(r => r.MakeUserManager(id))
+                .Setup(r => r.MakeUserManager(id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((User)null);
 
             _mapperMock
@@ -330,7 +330,7 @@ namespace SystemSalesTickets.Tests
             Assert.Null(result);
 
             _userRepositoryMock.Verify(
-                r => r.MakeUserManager(id),
+                r => r.MakeUserManager(id, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
     }
