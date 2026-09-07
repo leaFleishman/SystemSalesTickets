@@ -49,7 +49,7 @@ namespace SystemSalesTickets.Service.Service
                 await _seatRepository.Update(seat, cancellationToken); 
                 await _orderRepository.Add(tmp, cancellationToken);     
             }
-            catch (Exception ex) when (ex is DbUpdateConcurrencyException || ex is DbUpdateException || ex is InvalidOperationException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogWarning(ex, "Seat {seatId} was booked concurrently", seat.SeatId);
                 return new OrderLogDTO

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SystemSalesTickets.Core.Models;
+﻿using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Core.DTOs
 {
@@ -15,7 +10,7 @@ namespace SystemSalesTickets.Core.DTOs
 
         public EventDTO EventDTO { get; set; }
 
-        public Seat SeatDTO { get; set; }
+        public SeatDTO SeatDTO { get; set; }
 
         public int Id { get; set; }
 

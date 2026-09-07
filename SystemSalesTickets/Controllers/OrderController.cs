@@ -30,8 +30,14 @@ namespace SystemSalesTickets.Api.Controllers
 
 
             var result = await _orderService.AddOrder(order, cancellationToken);
-            _logger.LogInformation("AddOrder completed successfully for OrderId {OrderId}", result?.Id);
-            return Created();
+            if (result!=null)
+            {
+                _logger.LogInformation("AddOrder completed successfully for OrderId {OrderId}", result?.Id);
+                return Created();
+            }
+            _logger.LogInformation("AddOrder completed successfully for OrderId { OrderId} ", result?.Id);
+             return Conflict("Seat was just booked by someone else, please try again");
+            
 
         }
 

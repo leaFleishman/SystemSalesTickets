@@ -1,6 +1,5 @@
 ﻿using SystemSalesTickets.Core.DTOs;
-using SystemSalesTickets.Core.Models;
-using SystemSalesTickets.Core.Repository;
+
 
 namespace SystemSalesTickets.Core.Interfaces
 {

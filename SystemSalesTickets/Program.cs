@@ -2,7 +2,6 @@ using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
 using Microsoft.EntityFrameworkCore;
 using SystemSalesTickets.Core;
-using AutoMapper;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -103,7 +102,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseExceptionHandlingMiddleware();
-app.UseCheckShabatMiddleware();
 app.UsePerformanceMiddleware();     
 app.UseMiddleware<LoggingMiddleware>(); 
 app.UseHttpsRedirection();

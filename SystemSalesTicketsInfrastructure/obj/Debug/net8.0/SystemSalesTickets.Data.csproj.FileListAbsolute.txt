@@ -14,3 +14,5 @@ C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTic
 C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsInfrastructure\obj\Debug\net8.0\refint\SystemSalesTickets.Data.dll
 C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsInfrastructure\obj\Debug\net8.0\SystemSalesTickets.Data.pdb
 C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsInfrastructure\obj\Debug\net8.0\ref\SystemSalesTickets.Data.dll
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsInfrastructure\bin\Debug\net8.0\SystemSalesTickets.Data.runtimeconfig.json
+C:\Users\user1\Desktop\לאה\שנה ב\dotnet\SystemSalesTickets\SystemSalesTicketsInfrastructure\obj\Debug\net8.0\SystemSalesTickets.Data.genruntimeconfig.cache

@@ -22,7 +22,7 @@ namespace SystemSalesTickets.Data
             return entity;
         }
 
-        private async Task Save(CancellationToken cancellationToken = default)
+        public async Task Save(CancellationToken cancellationToken = default)
         {
             await _context.SaveChangesAsync(cancellationToken);
         }

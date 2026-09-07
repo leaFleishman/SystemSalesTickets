@@ -6,6 +6,7 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SystemSalesTickets.Tests
 {
@@ -36,7 +37,7 @@ namespace SystemSalesTickets.Tests
             var eventDto = new EventDTO
             {
                 Name = "Concert",
-                Date = new DateTime(2026, 10, 10),
+                Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Price = 100,
                 NumberOfSeats = 50
             };
@@ -44,7 +45,7 @@ namespace SystemSalesTickets.Tests
             var eventModel = new Event
             {
                 Name = "Concert",
-                Date = new DateTime(2026, 10, 10),
+                Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Price = 100,
                 NumberOfSeats = 50
             };
@@ -52,7 +53,7 @@ namespace SystemSalesTickets.Tests
             var resultDto = new EventDTO
             {
                 Name = "Concert",
-                Date = new DateTime(2026, 10, 10),
+                Date =  new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Price = 100,
                 NumberOfSeats = 50
             };
@@ -90,7 +91,7 @@ namespace SystemSalesTickets.Tests
                 {
                     EventId = 1,
                     Name = "Concert",
-                    Date = new DateTime(2026, 10, 10),
+                    Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                     Price = 100,
                     NumberOfSeats = 50
                 },
@@ -99,7 +100,7 @@ namespace SystemSalesTickets.Tests
                 {
                     EventId = 2,
                     Name = "Show",
-                    Date = new DateTime(2026, 11, 10),
+                    Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                     Price = 200,
                     NumberOfSeats = 100
                 }
@@ -110,7 +111,7 @@ namespace SystemSalesTickets.Tests
                 new EventDTO
                 {
                     Name = "Concert",
-                    Date = new DateTime(2026, 10, 10),
+                    Date =new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                     Price = 100,
                     NumberOfSeats = 50
                 },
@@ -118,7 +119,7 @@ namespace SystemSalesTickets.Tests
                 new EventDTO
                 {
                     Name = "Show",
-                    Date = new DateTime(2026, 11, 10),
+                    Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                     Price = 200,
                     NumberOfSeats = 100
                 }
@@ -155,7 +156,7 @@ namespace SystemSalesTickets.Tests
             {
                 EventId = 1,
                 Name = "Concert",
-                Date = new DateTime(2026, 10, 10),
+                Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Price = 100,
                 NumberOfSeats = 50
             };
@@ -163,7 +164,7 @@ namespace SystemSalesTickets.Tests
             var eventDto = new EventDTO
             {
                 Name = "Concert",
-                Date = new DateTime(2026, 10, 10),
+                Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Price = 100,
                 NumberOfSeats = 50
             };

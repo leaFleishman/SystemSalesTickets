@@ -12,7 +12,7 @@ namespace SystemSalesTickets.Data
         {
         }
 
-
+       
 
     }
 }

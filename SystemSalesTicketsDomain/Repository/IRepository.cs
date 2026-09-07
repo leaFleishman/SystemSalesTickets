@@ -8,7 +8,7 @@ namespace SystemSalesTickets.Core.Repository
         Task<T> GetById(int id, CancellationToken cancellationToken = default);
         Task<T> Add(T entity, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
-
+        Task Save(CancellationToken cancellationToken = default);
         public Task Update(T entity, CancellationToken cancellationToken = default);
     }
 }

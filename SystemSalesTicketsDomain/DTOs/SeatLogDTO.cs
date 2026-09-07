@@ -13,6 +13,7 @@ namespace SystemSalesTickets.Core.DTOs
         public int Line { get; set; }
 
         public int Id { get; set; }
+
         public bool IsAvailable { get; set; }
     }
 }
