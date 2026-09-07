@@ -10,7 +10,7 @@ namespace SystemSalesTickets.Core.Interfaces
         Task<IEnumerable<UserDTO>> GetAllUsers();
         Task<UserLogDTO> GetUserById(int id);
         Task<User> Login(LoginModel loginModel);
-
+        Task<UserDTO> MakeUserManager(int id);
 
     }
 }

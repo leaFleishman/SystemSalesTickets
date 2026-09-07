@@ -54,5 +54,24 @@ namespace SystemSalesTickets.Api.Controllers
             _logger.LogInformation("GetUserById succeeded for UserId {UserId}", id);
             return Ok(user);
         }
+        [HttpPut("MakeUserManager")]
+        [Authorize(Roles = nameof(UserRole.Manager))]
+        public async Task<ActionResult> MakeUserManager(int id)
+        {
+            _logger.LogInformation("Attempting to promote user {UserId} to Manager", id);
+
+            var user = await _userService.MakeUserManager(id);
+
+            if (user == null)
+            {
+                _logger.LogWarning("User {UserId} was not found, promotion failed", id);
+                return NotFound();
+            }
+
+            _logger.LogInformation("User {UserId} was successfully promoted to Manager", id);
+
+            return Ok(user);
+        }
+
     }
 }

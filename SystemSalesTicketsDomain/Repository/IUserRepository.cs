@@ -9,5 +9,6 @@ namespace SystemSalesTickets.Core.Repository
         Task<IEnumerable<User>> GetAll();
         Task<User> GetById(int id);
         Task<User> Login(LoginModel loginModel);
+        Task<User> MakeUserManager(int id);
     }
 }

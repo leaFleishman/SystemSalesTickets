@@ -48,6 +48,12 @@ namespace SystemSalesTickets.Service.Service
         {
             return  await _userRepository.Login(loginModel);
         }
+
+        public async Task<UserDTO> MakeUserManager(int id)
+        {
+            var user=await _userRepository.MakeUserManager(id);
+            return _mapper.Map<UserDTO>(user);
+        }
     }
 }
 

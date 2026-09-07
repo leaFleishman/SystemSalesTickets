@@ -259,5 +259,79 @@ namespace SystemSalesTickets.Tests
                 x => x.Login(loginModel),
                 Times.Once);
         }
+
+
+        [Fact]
+        public async Task MakeUserManager_ReturnsUserDTO()
+        {
+            // Arrange
+            int id = 1;
+
+            var user = new User
+            {
+                Id = id,
+                UserName = "TestUser",
+                Phone = "0500000000",
+                Email = "test@test.com",
+                Password = "1234"
+            };
+
+            var userDto = new UserDTO
+            {
+                UserName = "TestUser",
+                Phone = "0500000000",
+                Email = "test@test.com",
+                Password = "1234"
+            };
+
+            _userRepositoryMock
+                .Setup(r => r.MakeUserManager(id))
+                .ReturnsAsync(user);
+
+            _mapperMock
+                .Setup(m => m.Map<UserDTO>(user))
+                .Returns(userDto);
+
+            // Act
+            var result = await _service.MakeUserManager(id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(userDto.UserName, result.UserName);
+            Assert.Equal(userDto.Email, result.Email);
+
+            _userRepositoryMock.Verify(
+                r => r.MakeUserManager(id),
+                Times.Once);
+
+            _mapperMock.Verify(
+                m => m.Map<UserDTO>(user),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task MakeUserManager_UserNotFound_ReturnsNull()
+        {
+            // Arrange
+            int id = 999;
+
+            _userRepositoryMock
+                .Setup(r => r.MakeUserManager(id))
+                .ReturnsAsync((User)null);
+
+            _mapperMock
+                .Setup(m => m.Map<UserDTO>(null))
+                .Returns((UserDTO)null);
+
+            // Act
+            var result = await _service.MakeUserManager(id);
+
+            // Assert
+            Assert.Null(result);
+
+            _userRepositoryMock.Verify(
+                r => r.MakeUserManager(id),
+                Times.Once);
+        }
     }
 }

@@ -22,13 +22,13 @@ namespace SystemSalesTickets.Data
         {
             modelBuilder.Entity<Seat>()
                 .Property(s => s.Version)
-                .IsConcurrencyToken();
+                .HasColumnName("xmin")
+                .HasColumnType("xid")
+                .IsRowVersion();
 
             modelBuilder.Entity<Event>()
-            .HasIndex(e => e.Date)
-            .IsUnique();
-
-
+                .HasIndex(e => e.Date)
+                .IsUnique();
         }
     }
 }
