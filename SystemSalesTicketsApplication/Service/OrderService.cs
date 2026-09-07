@@ -40,7 +40,7 @@ namespace SystemSalesTickets.Service.Service
                 _logger.LogInformation("Seat {seatId} is already occupied", seat.SeatId);
                 return new OrderLogDTO { Message = "Seat is already occupied" };
             }
-
+           
             seat.IsAvailable = false;
 
             try
@@ -48,12 +48,14 @@ namespace SystemSalesTickets.Service.Service
                 await _seatRepository.Update(seat); 
                 await _orderRepository.Add(tmp);     
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 _logger.LogWarning("Seat {seatId} was booked concurrently", seat.SeatId);
-                return new OrderLogDTO { Message = "Seat was just booked by someone else, please try again" };
+                return new OrderLogDTO
+                {
+                    Message = "Seat was just booked by someone else, please try again"
+                };
             }
-
             return _mapper.Map<OrderLogDTO>(tmp);
         }
 

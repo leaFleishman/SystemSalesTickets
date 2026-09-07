@@ -23,23 +23,15 @@ namespace SystemSalesTickets.Service.Service
             _logger = logger;
         }
 
-        public async Task Add(EventDTO e)
+       
+
+        public async Task<EventDTO> Add(EventDTO e)
         {
             var tmp = _mapper.Map<Event>(e);
             tmp.EventId = counter++;
             await _eventRepository.Add(tmp);
-        }
-
-        public async Task<EventDTO> AddEvent(EventDTO e)
-        {
-            var tmp = _mapper.Map<Event>(e);
-            tmp.EventId = counter++;
-            tmp.Version++;
-            _eventRepository.Add(tmp);
-
             return _mapper.Map<EventDTO>(tmp);
         }
-
 
 
         public async Task<IEnumerable<EventDTO>> GetAll()
@@ -50,8 +42,10 @@ namespace SystemSalesTickets.Service.Service
 
         public async Task<EventDTO> GetEventByName(string name)
         {
-          var tmp=await  _eventRepository.GetEventByName(name);
+            var tmp = await _eventRepository.GetEventByName(name);
             return _mapper.Map<EventDTO>(tmp);
         }
+
+       
     }
 }

@@ -12,7 +12,7 @@ using SystemSalesTickets.Data;
 namespace SystemSalesTickets.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20260906185013_add concurrency")]
+    [Migration("20260907051100_add concurrency")]
     partial class addconcurrency
     {
         /// <inheritdoc />
@@ -46,10 +46,10 @@ namespace SystemSalesTickets.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
-
                     b.HasKey("EventId");
+
+                    b.HasIndex("Date")
+                        .IsUnique();
 
                     b.ToTable("Events");
                 });
@@ -106,9 +106,11 @@ namespace SystemSalesTickets.Data.Migrations
                     b.Property<int>("Row")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Version")
+                    b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
-                        .HasColumnType("integer");
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
 
                     b.HasKey("SeatId");
 

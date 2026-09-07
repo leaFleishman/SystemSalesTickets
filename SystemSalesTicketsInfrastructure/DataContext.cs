@@ -23,6 +23,12 @@ namespace SystemSalesTickets.Data
             modelBuilder.Entity<Seat>()
                 .Property(s => s.Version)
                 .IsConcurrencyToken();
+
+            modelBuilder.Entity<Event>()
+            .HasIndex(e => e.Date)
+            .IsUnique();
+
+
         }
     }
 }

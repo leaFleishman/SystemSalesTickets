@@ -17,24 +17,28 @@ namespace SystemSalesTickets.Data.Migrations
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<byte[]>(
                 name: "Version",
                 table: "Seat",
-                type: "integer",
+                type: "bytea",
+                rowVersion: true,
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: new byte[0]);
 
-            migrationBuilder.AddColumn<int>(
-                name: "Version",
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_Date",
                 table: "Events",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
+                column: "Date",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropIndex(
+                name: "IX_Events_Date",
+                table: "Events");
+
             migrationBuilder.DropColumn(
                 name: "Role",
                 table: "Users");
@@ -42,10 +46,6 @@ namespace SystemSalesTickets.Data.Migrations
             migrationBuilder.DropColumn(
                 name: "Version",
                 table: "Seat");
-
-            migrationBuilder.DropColumn(
-                name: "Version",
-                table: "Events");
         }
     }
 }

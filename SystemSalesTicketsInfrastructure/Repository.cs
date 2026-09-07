@@ -15,7 +15,7 @@ namespace SystemSalesTickets.Data
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T> Add(T entity)
+        public virtual async Task<T> Add(T entity)
         {
             await _dbSet.AddAsync(entity);
             await Save();

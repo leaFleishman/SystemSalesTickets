@@ -12,8 +12,8 @@ namespace SystemSalesTickets.Core.Models
 
         public bool IsAvailable { get; set; }
 
-        public int Version { get; set; } = 1;
-
+        [Timestamp]
+        public byte[] Version { get; set; }
     }
 
 }

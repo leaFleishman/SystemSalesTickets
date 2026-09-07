@@ -1,4 +1,6 @@
-﻿namespace SystemSalesTickets.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SystemSalesTickets.Core.Models
 {
     public class Event
     {
@@ -11,8 +13,6 @@
         public decimal Price { get; set; }
 
         public int NumberOfSeats { get; set; }
-
-        public int Version { get; set; } = 1;
 
     }
 }
