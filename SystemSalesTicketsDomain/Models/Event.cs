@@ -15,7 +15,7 @@ namespace SystemSalesTickets.Core.Models
 
         public DateTime Date { get; set; }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         [Required(ErrorMessage = "Num of seats is required")]
 

@@ -10,6 +10,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.30",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
+          "Npgsql": "8.0.9",
           "SystemSalesTickets.Core": "1.0.0"
         },
         "runtime": {
@@ -140,6 +141,17 @@
           }
         }
       },
+      "Npgsql/8.0.9": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3"
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.dll": {
+            "assemblyVersion": "8.0.9.0",
+            "fileVersion": "8.0.9.0"
+          }
+        }
+      },
       "SystemSalesTickets.Core/1.0.0": {
         "dependencies": {
           "AutoMapper": "12.0.1"
@@ -249,6 +261,13 @@
       "sha512": "sha512-bXJEZrW9ny8vjMF1JV253WeLhpEVzFo1lyaZu1vQ4ZxWUlVvknZ/+ftFgVheLubb4eZPSwwxBeqS1JkCOjxd8g==",
       "path": "microsoft.extensions.primitives/8.0.0",
       "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+    },
+    "Npgsql/8.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-H7O9NrvSO+BaojUOK59YmSOi7+RabnBoNPw1F7NgtZhw5uBeAA3bCjTH2VjgacUVHe8K1asPyj/a/mnhJ/e1yA==",
+      "path": "npgsql/8.0.9",
+      "hashPath": "npgsql.8.0.9.nupkg.sha512"
     },
     "SystemSalesTickets.Core/1.0.0": {
       "type": "project",

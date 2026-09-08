@@ -33,15 +33,21 @@ namespace SystemSalesTickets.Service.Service
 
 
         public async Task<OrderLogDTO> AddOrder(
-            OrderDTO orderDto,
-            CancellationToken cancellationToken = default)
+     OrderDTO orderDto,
+     CancellationToken cancellationToken = default)
         {
             try
             {
-                var seat = await _seatRepository.GetById(orderDto.SeatId, cancellationToken);
+                var seat = await _seatRepository.GetById(
+                    orderDto.SeatId,
+                    cancellationToken);
+
                 if (seat == null)
                 {
-                    return new OrderLogDTO { Message = "Seat not found" };
+                    return new OrderLogDTO
+                    {
+                        Message = "Seat not found"
+                    };
                 }
 
                 var isBooked = await _orderRepository.ExistsForEventAndSeat(
@@ -51,23 +57,45 @@ namespace SystemSalesTickets.Service.Service
 
                 if (isBooked)
                 {
-                    return new OrderLogDTO { Message = "Seat is already occupied" };
+                    return new OrderLogDTO
+                    {
+                        Message = "Seat is already occupied"
+                    };
                 }
+
+                // שינוי ב-Seat מפעיל את מנגנון ה-Optimistic Concurrency
+                seat.Row = seat.Row;
+
+                await _seatRepository.Update(seat, cancellationToken);
 
                 var newOrder = _mapper.Map<Order>(orderDto);
 
                 await _orderRepository.Add(newOrder, cancellationToken);
+
                 await _orderRepository.Save(cancellationToken);
 
                 return _mapper.Map<OrderLogDTO>(newOrder);
             }
-            catch (DbUpdateException ex) when (
-     ex.InnerException is PostgresException postgresException &&
-     postgresException.SqlState == PostgresErrorCodes.UniqueViolation)
+            catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogWarning(
                     ex,
-                    "Seat {SeatId} was booked concurrently for Event {EventId}",
+                    "Concurrency conflict for Seat {SeatId}, Event {EventId}",
+                    orderDto.SeatId,
+                    orderDto.EventId);
+
+                return new OrderLogDTO
+                {
+                    Message = "Seat was booked by someone else, please try again"
+                };
+            }
+            catch (DbUpdateException ex) when (
+                ex.InnerException is PostgresException postgresException &&
+                postgresException.SqlState == PostgresErrorCodes.UniqueViolation)
+            {
+                _logger.LogWarning(
+                    ex,
+                    "Duplicate booking attempt for Seat {SeatId}, Event {EventId}",
                     orderDto.SeatId,
                     orderDto.EventId);
 
@@ -76,7 +104,6 @@ namespace SystemSalesTickets.Service.Service
                     Message = "Seat was just booked by someone else, please try again"
                 };
             }
-
         }
 
         public async Task<PagedResponse<OrderDTO>> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)

@@ -74,7 +74,7 @@ namespace SystemSalesTickets.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<IActionResult> DeleteAsyncSeat(int id, CancellationToken cancellationToken)
         {

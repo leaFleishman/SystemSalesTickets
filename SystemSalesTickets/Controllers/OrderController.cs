@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
-using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Api.Controllers
 {
@@ -63,7 +61,7 @@ namespace SystemSalesTickets.Api.Controllers
                 result);
         }
 
-        [HttpGet("GetAllOrders")]
+        [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
 
         public async Task<IActionResult> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)

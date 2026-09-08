@@ -9,6 +9,7 @@ public class EventSeat
     public int SeatId { get; set; }
     public Seat Seat { get; set; }
 
+    bool IsAvailable { get; set; } = true;
 
     [ConcurrencyCheck]
     public Guid Version { get; set; } = Guid.NewGuid();

@@ -20,7 +20,7 @@ namespace SystemSalesTickets.Api.Controllers
             _logger = logger;
         }
 
-        [HttpPost("AddUser")]
+        [HttpPost]
         public async Task<ActionResult<UserDTO>> AddUser([FromBody] UserDTO user, CancellationToken cancellationToken)
         {
             _logger.LogInformation("AddUser request received for Email {Email}", user?.Email);
@@ -30,7 +30,7 @@ namespace SystemSalesTickets.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetAllUsers")]
+        [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<IActionResult> GetAllUsers(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
@@ -40,7 +40,7 @@ namespace SystemSalesTickets.Api.Controllers
             return Ok(users);
         }
 
-        [HttpGet("GetUserById")]
+        [HttpGet("{id:int}")]
         [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<ActionResult<UserDTO>> GetUserById(int id, CancellationToken cancellationToken)
         {
