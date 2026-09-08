@@ -77,7 +77,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [Authorize(Roles = nameof(UserRole.Manager))]
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<OrderLogDTO>> GetOrderById(
+        public async Task<ActionResult<OrderLogDTO>> GetOrderById([FromRoute]
       int id,
       CancellationToken cancellationToken)
         {

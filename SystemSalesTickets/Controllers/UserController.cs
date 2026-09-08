@@ -32,7 +32,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<IActionResult> GetAllUsers(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAllUsers([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAllUsers request received");
             var users = await _userService.GetAllUsers(pageNumber, pageSize, cancellationToken);
@@ -42,7 +42,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet("{id:int}")]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult<UserDTO>> GetUserById(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<UserDTO>> GetUserById([FromRoute] int id, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetUserById request received for UserId {UserId}", id);
             var user = await _userService.GetUserById(id, cancellationToken);
@@ -56,7 +56,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
         [HttpPut("MakeUserManager")]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult> MakeUserManager(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult> MakeUserManager([FromQuery] int id, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Attempting to promote user {UserId} to Manager", id);
 
