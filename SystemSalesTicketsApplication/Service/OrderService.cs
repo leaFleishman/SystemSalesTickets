@@ -37,19 +37,24 @@ namespace SystemSalesTickets.Service.Service
         {
             try
             {
-                // 1. בדיקה מוקדמת אם הכיסא כבר מוזמן לאירוע זה
-                var isBooked = await _orderRepository.GetById(orderDto.EventId, cancellationToken);
-
-
-
-                if (isBooked!=null)
+                var seat = await _seatRepository.GetById(orderDto.SeatId, cancellationToken);
+                if (seat == null)
                 {
-                    return new OrderLogDTO { Message = "Seat is already occupied for this event" };
+                    return new OrderLogDTO { Message = "Seat not found" };
+                }
+
+                var isBooked = await _orderRepository.ExistsForEventAndSeat(
+                    orderDto.EventId,
+                    orderDto.SeatId,
+                    cancellationToken);
+
+                if (isBooked)
+                {
+                    return new OrderLogDTO { Message = "Seat is already occupied" };
                 }
 
                 var newOrder = _mapper.Map<Order>(orderDto);
 
-                // 2. הוספת ההזמנה ושמירה
                 await _orderRepository.Add(newOrder, cancellationToken);
                 await _orderRepository.Save(cancellationToken);
 
@@ -64,7 +69,7 @@ namespace SystemSalesTickets.Service.Service
 
                 return new OrderLogDTO
                 {
-                    Message = "Seat was just booked by someone else, please choose another seat"
+                    Message = "Seat was just booked by someone else, please try again"
                 };
             }
           
