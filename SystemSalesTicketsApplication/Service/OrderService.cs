@@ -6,6 +6,7 @@ using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using MyApp.Application.Common.Models;
+using Npgsql;
 
 namespace SystemSalesTickets.Service.Service
 {
@@ -60,19 +61,22 @@ namespace SystemSalesTickets.Service.Service
 
                 return _mapper.Map<OrderLogDTO>(newOrder);
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException ex) when (
+     ex.InnerException is PostgresException postgresException &&
+     postgresException.SqlState == PostgresErrorCodes.UniqueViolation)
             {
-                // אם שני אנשים עברו את הבדיקה הראשונה יחד,
-                // ה-Unique Index ב-PostgreSQL יזרוק את החריגה הזו בדיוק על המשתמש השני!
-                _logger.LogWarning(ex, "Seat {SeatId} was booked concurrently for Event {EventId}",
-                    orderDto.SeatId, orderDto.EventId);
+                _logger.LogWarning(
+                    ex,
+                    "Seat {SeatId} was booked concurrently for Event {EventId}",
+                    orderDto.SeatId,
+                    orderDto.EventId);
 
                 return new OrderLogDTO
                 {
                     Message = "Seat was just booked by someone else, please try again"
                 };
             }
-          
+
         }
 
         public async Task<PagedResponse<OrderDTO>> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
