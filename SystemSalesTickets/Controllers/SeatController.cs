@@ -35,7 +35,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult<SeatDTO>> GetById([FromQuery] int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<SeatDTO>> GetById([FromRoute] int id, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetById request received for SeatId {SeatId}", id);
 
