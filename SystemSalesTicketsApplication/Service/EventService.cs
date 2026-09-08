@@ -12,7 +12,7 @@ namespace SystemSalesTickets.Service.Service
     {
 
         private readonly ILogger<EventService> _logger;
-        private static int counter = new Random().Next();
+        //private static int counter = new Random().Next();
         private readonly IEventRepository _eventRepository;
 
         private readonly IMapper _mapper;
@@ -29,8 +29,9 @@ namespace SystemSalesTickets.Service.Service
         public async Task<EventDTO> Add(EventDTO e, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<Event>(e);
-            tmp.EventId = counter++;
+            //tmp.EventId = counter++;
             await _eventRepository.Add(tmp, cancellationToken);
+            await _eventRepository.Save();
             return _mapper.Map<EventDTO>(tmp);
         }
 

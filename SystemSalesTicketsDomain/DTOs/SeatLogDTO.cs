@@ -8,12 +8,17 @@ namespace SystemSalesTickets.Core.DTOs
 {
     public class SeatLogDTO
     {
-        public int Row { get; set; }
-
-        public int Line { get; set; }
 
         public int Id { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public int EventId { get; set; }
+
+        public int SeatId { get; set; }
+
+        public string? EventName { get; set; }
+
+        public DateTime OrderDate { get; set; }
+
+        public string? Message { get; set; }
     }
 }

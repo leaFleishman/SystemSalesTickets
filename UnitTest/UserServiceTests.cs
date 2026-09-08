@@ -46,7 +46,6 @@ namespace SystemSalesTickets.Tests
                 UserName = "TestUser",
                 Phone = "0501234567",
                 Email = "test@test.com",
-                Password = "1234"
             };
 
             var user = new User
@@ -139,7 +138,6 @@ namespace SystemSalesTickets.Tests
                     UserName = "User1",
                     Phone = "0501111111",
                     Email = "user1@test.com",
-                    Password = "1234"
                 },
 
                 new UserDTO
@@ -147,7 +145,6 @@ namespace SystemSalesTickets.Tests
                     UserName = "User2",
                     Phone = "0502222222",
                     Email = "user2@test.com",
-                    Password = "5678"
                 }
             };
 
@@ -282,7 +279,6 @@ namespace SystemSalesTickets.Tests
                 UserName = "TestUser",
                 Phone = "0500000000",
                 Email = "test@test.com",
-                Password = "1234"
             };
 
             _userRepositoryMock

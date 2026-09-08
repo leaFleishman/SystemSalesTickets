@@ -52,7 +52,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<ActionResult<SeatDTO>> Add([FromBody] SeatDTO seat, CancellationToken cancellationToken)
         {
             if (seat == null)

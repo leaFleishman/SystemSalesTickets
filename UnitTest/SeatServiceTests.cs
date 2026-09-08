@@ -204,14 +204,14 @@ namespace SystemSalesTickets.Tests
             const int id = 1;
 
             _seatRepositoryMock
-                .Setup(x => x.DeleteAsync(id, It.IsAny<CancellationToken>()))
+                .Setup(x => x.Delete(id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 
             var result = await _service.DeleteSeatAsync(id);
 
             Assert.True(result);
             _seatRepositoryMock.Verify(
-                x => x.DeleteAsync(id, It.IsAny<CancellationToken>()),
+                x => x.Delete(id, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -221,14 +221,14 @@ namespace SystemSalesTickets.Tests
             const int id = 999;
 
             _seatRepositoryMock
-                .Setup(x => x.DeleteAsync(id, It.IsAny<CancellationToken>()))
+                .Setup(x => x.Delete(id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(false);
 
             var result = await _service.DeleteSeatAsync(id);
 
             Assert.False(result);
             _seatRepositoryMock.Verify(
-                x => x.DeleteAsync(id, It.IsAny<CancellationToken>()),
+                x => x.Delete(id, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
     }

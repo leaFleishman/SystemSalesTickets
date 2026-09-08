@@ -7,7 +7,7 @@ namespace SystemSalesTickets.Core.Repository
         Task<PagedResponse<T>> GetAllAsync(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default);
         Task<T> GetById(int id, CancellationToken cancellationToken = default);
         Task<T> Add(T entity, CancellationToken cancellationToken = default);
-        Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+        Task<bool> Delete(int id, CancellationToken cancellationToken = default);
         Task Save(CancellationToken cancellationToken = default);
         public Task Update(T entity, CancellationToken cancellationToken = default);
     }

@@ -12,7 +12,7 @@ namespace SystemSalesTickets.Service.Service
     public class OrderService : IOrderService
     {
         private readonly ISeatRepository _seatRepository;
-        private static int counter = new Random().Next();
+        //private static int counter = new Random().Next();
         private readonly IOrderRepository _orderRepository;
         private readonly ILogger<OrderService> _logger;
 
@@ -26,47 +26,61 @@ namespace SystemSalesTickets.Service.Service
             _seatRepository = seatRepository;
         }
 
-        public async Task<OrderLogDTO> AddOrder(OrderDTO order, CancellationToken cancellationToken = default)
+        public async Task<OrderLogDTO> AddOrder(
+     OrderDTO order,
+     CancellationToken cancellationToken = default)
         {
-            var tmp = _mapper.Map<Order>(order);
+            var seat = await _seatRepository.GetById(
+                order.SeatId,
+                cancellationToken);
 
-            var seat = await _seatRepository.GetById(tmp.Seat.SeatId, cancellationToken);
             if (seat == null)
             {
-                _logger.LogInformation("Seat {seatId} not found", tmp.Seat.SeatId); 
-                return new OrderLogDTO { Message = "Seat not found" };
+                return new OrderLogDTO
+                {
+                    Message = "Seat not found"
+                };
             }
 
-            if (!seat.IsAvailable)
+            if (await _orderRepository.ExistsForEventAndSeat(
+                    order.EventId,
+                    order.SeatId,
+                    cancellationToken))
             {
-                _logger.LogInformation("Seat {seatId} is already occupied", seat.SeatId);
-                return new OrderLogDTO { Message = "Seat is already occupied" };
+                return new OrderLogDTO
+                {
+                    Message = "Seat is already occupied"
+                };
             }
-           
-            seat.IsAvailable = false;
+
+            var newOrder = _mapper.Map<Order>(order);
 
             try
             {
-                await _seatRepository.Update(seat, cancellationToken); 
-                await _orderRepository.Add(tmp, cancellationToken);     
+                await _orderRepository.Add(
+                    newOrder,
+                    cancellationToken);
+
+                // Save אחד בלבד
+                await _orderRepository.Save(cancellationToken);
+
+                return _mapper.Map<OrderLogDTO>(newOrder);
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException)
             {
-                _logger.LogWarning(ex, "Seat {seatId} was booked concurrently", seat.SeatId);
                 return new OrderLogDTO
                 {
-                    Message = "Seat was just booked by someone else, please try again"
+                    Message =
+                        "Seat was just booked by someone else, please try again"
                 };
             }
-            catch (Exception)
+            catch (DbUpdateException)
             {
-                _logger.LogWarning("Seat {seatId} update failed while creating order", seat.SeatId);
                 return new OrderLogDTO
                 {
-                    Message = "Seat was just booked by someone else, please try again"
+                    Message = "Seat is already occupied"
                 };
             }
-            return _mapper.Map<OrderLogDTO>(tmp);
         }
 
 

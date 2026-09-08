@@ -7,13 +7,11 @@ namespace SystemSalesTickets.Core.DTOs
 {
     public class OrderDTO
     {
-        [Required]
-        public string EventName { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public int EventId { get; set; }
 
-        public EventDTO EventDTO { get; set; }
+        public int SeatId { get; set; }
 
-        public Seat SeatDTO { get; set; }
+        public int UserId { get; set; }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SystemSalesTickets.Data
 {
@@ -22,19 +20,30 @@ namespace SystemSalesTickets.Data
 
         public DbSet<Seat> Seats { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Seat>()
-                .Property(s => s.Version);
-
-            modelBuilder.Entity<Seat>()
-                .ToTable("Seat");
+            modelBuilder.Entity<Order>()
+        .HasIndex(o => new { o.EventId, o.SeatId })
+        .IsUnique();
 
             modelBuilder.Entity<Event>()
                 .HasIndex(e => e.Date)
                 .IsUnique();
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Seat>()
+                .Property(s => s.Version)
+                .IsConcurrencyToken();
+
+            modelBuilder.Entity<Seat>()
+                .ToTable("Seat");
+
 
             modelBuilder.Entity<User>().HasData(
                 new User { Role = UserRole.Manager, Email = "admin@example.com", Phone = "0556667788", Password = "111", Id = 1, UserName = "Avi" },
@@ -61,6 +70,10 @@ namespace SystemSalesTickets.Data
            OrderDate = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
        }
    );
+
+            modelBuilder.Entity<Order>()
+                .HasIndex(order => new { order.EventId, order.SeatId })
+                .IsUnique();
         }
 
         public override async Task<int> SaveChangesAsync(

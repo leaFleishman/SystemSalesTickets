@@ -20,7 +20,6 @@ namespace SystemSalesTickets.Data
         public virtual async Task<T> Add(T entity, CancellationToken cancellationToken = default)
         {
             await _dbSet.AddAsync(entity, cancellationToken);
-            await Save(cancellationToken);
             return entity;
         }
 
@@ -32,10 +31,9 @@ namespace SystemSalesTickets.Data
         public async Task Update(T entity, CancellationToken cancellationToken = default)
         {
             _dbSet.Update(entity);
-            await Save(cancellationToken);
         }
 
-        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(int id, CancellationToken cancellationToken = default)
         {
             var entity = await _dbSet.FindAsync(new object[] { id }, cancellationToken);
             if (entity == null)
@@ -63,13 +61,13 @@ namespace SystemSalesTickets.Data
 
             return new PagedResponse<T>(items, pageNumber, pageSize, count);
         }
-        public async Task<T?> GetById(int id, CancellationToken cancellationToken = default)
+        public async Task<T?> GetById(int id,
+                 CancellationToken cancellationToken = default)
         {
-            var query = _dbSet.AsNoTracking();
-            return await _dbSet.FindAsync(new object[] { id }, cancellationToken);
+            return await _dbSet.FindAsync(
+                new object[] { id },
+                cancellationToken);
         }
-
-        
 
 
     }
