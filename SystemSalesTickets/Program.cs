@@ -32,7 +32,6 @@ builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IEventSeatRepository, EventSeatRepository>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 

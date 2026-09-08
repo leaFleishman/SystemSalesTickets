@@ -14,25 +14,47 @@ namespace SystemSalesTickets.Service.Service
         private readonly ILogger<EventService> _logger;
         private readonly ISeatRepository _seatRepository;
         private readonly IEventRepository _eventRepository;
-
+        private readonly IEventSeatRepository _eventSeatRepository;
         private readonly IMapper _mapper;
 
-        public EventService(IEventRepository eventRepo, IMapper mapper, ILogger<EventService> logger,ISeatRepository seatRepository)
+        public EventService(IEventRepository eventRepo, IMapper mapper, ILogger<EventService> logger,ISeatRepository seatRepository, IEventSeatRepository eventSeatRepository)
         {
             _eventRepository = eventRepo;
             _mapper = mapper;
             _logger = logger;
             _seatRepository = seatRepository;
+            _eventSeatRepository = eventSeatRepository;
         }
 
-       
 
-        public async Task<EventDTO> Add(EventDTO e, CancellationToken cancellationToken = default)
+
+        public async Task<EventDTO> Add(
+      EventDTO e,
+      CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<Event>(e);
-            //tmp.EventId = counter++;
+
             await _eventRepository.Add(tmp, cancellationToken);
+
+            var seats = await _seatRepository.GetAllAsync(
+                1,
+                int.MaxValue,
+                cancellationToken);
+
+            foreach (var seat in seats.Data)
+            {
+                await _eventSeatRepository.Add(
+                    new EventSeat
+                    {
+                        Event = tmp,
+                        SeatId = seat.SeatId,
+                        IsAvailable = true
+                    },
+                    cancellationToken);
+            }
+
             await _eventRepository.Save(cancellationToken);
+
             return _mapper.Map<EventDTO>(tmp);
         }
 
