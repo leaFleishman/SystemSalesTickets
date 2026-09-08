@@ -97,7 +97,6 @@ namespace SystemSalesTickets.Tests
                 SeatId = 1,
                 Row = 1,
                 Line = 1,
-                IsAvailable = false
             };
 
             _seatRepositoryMock
@@ -163,7 +162,6 @@ namespace SystemSalesTickets.Tests
             var seat = new Seat
             {
                 SeatId = 1,
-                IsAvailable = false
             };
             var newOrder = new Order
             {
@@ -211,7 +209,6 @@ namespace SystemSalesTickets.Tests
                 SeatId = 1,
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             var newOrder = new Order
@@ -303,7 +300,6 @@ namespace SystemSalesTickets.Tests
                 SeatId = 1,
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             var newOrder = new Order

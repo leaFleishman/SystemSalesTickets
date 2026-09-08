@@ -36,14 +36,14 @@ namespace SystemSalesTickets.Tests
         {
             var seats = new List<Seat>
             {
-                new Seat { SeatId = 1, Row = 1, Line = 1, IsAvailable = true },
-                new Seat { SeatId = 2, Row = 1, Line = 2, IsAvailable = true }
+                new Seat { SeatId = 1, Row = 1, Line = 1 },
+                new Seat { SeatId = 2, Row = 1, Line = 2 }
             };
 
             var expected = new List<SeatDTO>
             {
-                new SeatDTO { Row = 1, Line = 1, IsAvailable = true },
-                new SeatDTO { Row = 1, Line = 2, IsAvailable = true }
+                new SeatDTO { Row = 1, Line = 1,   },
+                new SeatDTO { Row = 1, Line = 2,   }
             };
 
             _seatRepositoryMock
@@ -78,7 +78,6 @@ namespace SystemSalesTickets.Tests
                 SeatId = id,
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             var expected = new SeatLogDTO();
@@ -112,14 +111,12 @@ namespace SystemSalesTickets.Tests
             {
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             var seat = new Seat
             {
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             var addedSeat = new Seat
@@ -127,7 +124,6 @@ namespace SystemSalesTickets.Tests
                 SeatId = 100,
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             var expected = new SeatLogDTO();
@@ -170,14 +166,12 @@ namespace SystemSalesTickets.Tests
             {
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             var seat = new Seat
             {
                 Row = 1,
                 Line = 1,
-                IsAvailable = true
             };
 
             _mapperMock

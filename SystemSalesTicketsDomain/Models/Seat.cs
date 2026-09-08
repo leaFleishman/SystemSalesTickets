@@ -13,7 +13,6 @@ namespace SystemSalesTickets.Core.Models
         [ Required(ErrorMessage = "Line is required")]
         public int Line { get; set; }
 
-        public bool IsAvailable { get; set; }
 
         [Required]
         [ConcurrencyCheck]

@@ -140,7 +140,6 @@ namespace SystemSalesTickets.Data.Migrations
                         new
                         {
                             SeatId = 1,
-                            IsAvailable = true,
                             Line = 1,
                             Row = 1,
                             Version = new Guid("3e806215-e4ca-42e8-a197-746edcb51981")
@@ -148,7 +147,6 @@ namespace SystemSalesTickets.Data.Migrations
                         new
                         {
                             SeatId = 2,
-                            IsAvailable = true,
                             Line = 12,
                             Row = 12,
                             Version = new Guid("12f9a601-54a0-45f4-a5df-ca9a9143186a")

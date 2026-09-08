@@ -26,63 +26,49 @@ namespace SystemSalesTickets.Service.Service
             _seatRepository = seatRepository;
         }
 
+
+
+
+
+
         public async Task<OrderLogDTO> AddOrder(
-     OrderDTO order,
-     CancellationToken cancellationToken = default)
+            OrderDTO orderDto,
+            CancellationToken cancellationToken = default)
         {
-            var seat = await _seatRepository.GetById(
-                order.SeatId,
-                cancellationToken);
-
-            if (seat == null)
-            {
-                return new OrderLogDTO
-                {
-                    Message = "Seat not found"
-                };
-            }
-
-            if (await _orderRepository.ExistsForEventAndSeat(
-                    order.EventId,
-                    order.SeatId,
-                    cancellationToken))
-            {
-                return new OrderLogDTO
-                {
-                    Message = "Seat is already occupied"
-                };
-            }
-
-            var newOrder = _mapper.Map<Order>(order);
-
             try
             {
-                await _orderRepository.Add(
-                    newOrder,
-                    cancellationToken);
+                // 1. בדיקה מוקדמת אם הכיסא כבר מוזמן לאירוע זה
+                var isBooked = await _orderRepository.GetById(orderDto.EventId, cancellationToken);
 
-                // Save אחד בלבד
+
+
+                if (isBooked!=null)
+                {
+                    return new OrderLogDTO { Message = "Seat is already occupied for this event" };
+                }
+
+                var newOrder = _mapper.Map<Order>(orderDto);
+
+                // 2. הוספת ההזמנה ושמירה
+                await _orderRepository.Add(newOrder, cancellationToken);
                 await _orderRepository.Save(cancellationToken);
 
                 return _mapper.Map<OrderLogDTO>(newOrder);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateException ex)
             {
-                return new OrderLogDTO
-                {
-                    Message =
-                        "Seat was just booked by someone else, please try again"
-                };
-            }
-            catch (DbUpdateException)
-            {
-                return new OrderLogDTO
-                {
-                    Message = "Seat is already occupied"
-                };
-            }
-        }
+                // אם שני אנשים עברו את הבדיקה הראשונה יחד,
+                // ה-Unique Index ב-PostgreSQL יזרוק את החריגה הזו בדיוק על המשתמש השני!
+                _logger.LogWarning(ex, "Seat {SeatId} was booked concurrently for Event {EventId}",
+                    orderDto.SeatId, orderDto.EventId);
 
+                return new OrderLogDTO
+                {
+                    Message = "Seat was just booked by someone else, please choose another seat"
+                };
+            }
+          
+        }
 
         public async Task<PagedResponse<OrderDTO>> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {

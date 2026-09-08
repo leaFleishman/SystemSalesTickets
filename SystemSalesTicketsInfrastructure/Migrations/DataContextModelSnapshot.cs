@@ -22,6 +22,25 @@ namespace SystemSalesTickets.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("EventSeat", b =>
+                {
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SeatId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("EventId", "SeatId");
+
+                    b.HasIndex("SeatId");
+
+                    b.ToTable("EventSeat");
+                });
+
             modelBuilder.Entity("SystemSalesTickets.Core.Models.Event", b =>
                 {
                     b.Property<int>("EventId")
@@ -117,9 +136,6 @@ namespace SystemSalesTickets.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SeatId"));
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("Line")
                         .HasColumnType("integer");
 
@@ -138,18 +154,16 @@ namespace SystemSalesTickets.Data.Migrations
                         new
                         {
                             SeatId = 1,
-                            IsAvailable = true,
                             Line = 1,
                             Row = 1,
-                            Version = new Guid("16bec816-ec0f-4e7a-aeed-5bb3cd116f50")
+                            Version = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                         },
                         new
                         {
                             SeatId = 2,
-                            IsAvailable = true,
                             Line = 12,
                             Row = 12,
-                            Version = new Guid("ce287448-1e30-4e0c-a6e0-a669a9efe4e6")
+                            Version = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
                         });
                 });
 
@@ -204,6 +218,25 @@ namespace SystemSalesTickets.Data.Migrations
                             Role = 1,
                             UserName = "Moshe"
                         });
+                });
+
+            modelBuilder.Entity("EventSeat", b =>
+                {
+                    b.HasOne("SystemSalesTickets.Core.Models.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SystemSalesTickets.Core.Models.Seat", "Seat")
+                        .WithMany()
+                        .HasForeignKey("SeatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Seat");
                 });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.Order", b =>
