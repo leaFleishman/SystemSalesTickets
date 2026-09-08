@@ -4,6 +4,7 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
+using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Service.Service
 {
@@ -29,11 +30,15 @@ namespace SystemSalesTickets.Service.Service
             return _mapper.Map<UserLogDTO>(res);
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllUsers(CancellationToken cancellationToken = default)
+        public async Task<PagedResponse<UserDTO>> GetAllUsers(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
             
-                var res = await _userRepository.GetAll(cancellationToken);
-                return _mapper.Map<IEnumerable<UserDTO>>(res);
+                var result = await _userRepository.GetAllAsync(pageNumber, pageSize, cancellationToken);
+                return new PagedResponse<UserDTO>(
+                    _mapper.Map<IEnumerable<UserDTO>>(result.Data),
+                    result.PageNumber,
+                    result.PageSize,
+                    result.TotalRecords);
             
             
         }

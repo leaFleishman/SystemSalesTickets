@@ -22,13 +22,13 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult<IEnumerable<SeatDTO>>> GetAll(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAll seats request received");
 
-            var seats = await _seatService.GetAll(cancellationToken);
+            var seats = await _seatService.GetAll(pageNumber, pageSize, cancellationToken);
 
-            _logger.LogInformation("GetAll returned {Count} seats", seats?.Count() ?? 0);
+            _logger.LogInformation("GetAll returned page {PageNumber} with {Count} seats", seats.PageNumber, seats.Data.Count());
 
             return Ok(seats);
         }

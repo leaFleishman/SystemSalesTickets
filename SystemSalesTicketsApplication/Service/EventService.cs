@@ -4,6 +4,7 @@ using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.DTOs;
 using Microsoft.Extensions.Logging;
+using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Service.Service
 {
@@ -34,10 +35,14 @@ namespace SystemSalesTickets.Service.Service
         }
 
 
-        public async Task<IEnumerable<EventDTO>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<PagedResponse<EventDTO>> GetAll(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
-            var tmp = await _eventRepository.GetAll(cancellationToken);
-            return _mapper.Map<IEnumerable<EventDTO>>(tmp);
+            var result = await _eventRepository.GetAllAsync(pageNumber, pageSize, cancellationToken);
+            return new PagedResponse<EventDTO>(
+                _mapper.Map<IEnumerable<EventDTO>>(result.Data),
+                result.PageNumber,
+                result.PageSize,
+                result.TotalRecords);
         }
 
         public async Task<EventDTO> GetEventByName(string name, CancellationToken cancellationToken = default)

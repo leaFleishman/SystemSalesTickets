@@ -6,6 +6,7 @@ using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
+using MyApp.Application.Common.Models;
 using Xunit;
 
 namespace SystemSalesTickets.Tests
@@ -151,8 +152,8 @@ namespace SystemSalesTickets.Tests
             };
 
             _userRepositoryMock
-                .Setup(x => x.GetAll(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(users);
+                .Setup(x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new PagedResponse<User>(users, 1, 20, users.Count));
 
             _mapperMock
                 .Setup(x => x.Map<IEnumerable<UserDTO>>(users))
@@ -163,10 +164,10 @@ namespace SystemSalesTickets.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, result.Data);
 
             _userRepositoryMock.Verify(
-                x => x.GetAll(It.IsAny<CancellationToken>()),
+                x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(

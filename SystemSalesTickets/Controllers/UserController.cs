@@ -32,11 +32,11 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet("GetAllUsers")]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllUsers(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAllUsers request received");
-            var users = await _userService.GetAllUsers(cancellationToken);
-            _logger.LogInformation("GetAllUsers returned {Count} users", users?.Count() ?? 0);
+            var users = await _userService.GetAllUsers(pageNumber, pageSize, cancellationToken);
+            _logger.LogInformation("GetAllUsers returned page {PageNumber} with {Count} users", users.PageNumber, users.Data.Count());
             return Ok(users);
         }
 

@@ -6,6 +6,7 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
+using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Tests
 {
@@ -46,8 +47,8 @@ namespace SystemSalesTickets.Tests
             };
 
             _seatRepositoryMock
-                .Setup(x => x.GetAll(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(seats);
+                .Setup(x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new PagedResponse<Seat>(seats, 1, 20, seats.Count));
 
             _mapperMock
                 .Setup(x => x.Map<IEnumerable<SeatDTO>>(seats))
@@ -56,10 +57,10 @@ namespace SystemSalesTickets.Tests
             var result = await _service.GetAll();
 
             Assert.NotNull(result);
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, result.Data);
 
             _seatRepositoryMock.Verify(
-                x => x.GetAll(It.IsAny<CancellationToken>()),
+                x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(

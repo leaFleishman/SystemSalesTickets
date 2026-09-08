@@ -44,13 +44,13 @@ namespace SystemSalesTickets.Api.Controllers
         [HttpGet("GetAllOrders")]
         [Authorize(Roles = nameof(UserRole.Manager))]
 
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAllOrders(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAllOrders request received by user");
 
-            var orders = await _orderService.GetAllOrders(cancellationToken);
+            var orders = await _orderService.GetAllOrders(pageNumber, pageSize, cancellationToken);
 
-            _logger.LogInformation("GetAllOrders returned {Count} orders", orders?.Count() ?? 0);
+            _logger.LogInformation("GetAllOrders returned page {PageNumber} with {Count} orders", orders.PageNumber, orders.Data.Count());
 
             return Ok(orders);
         }

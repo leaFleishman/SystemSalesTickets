@@ -6,6 +6,7 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
+using MyApp.Application.Common.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SystemSalesTickets.Tests
@@ -126,8 +127,8 @@ namespace SystemSalesTickets.Tests
             };
 
             _eventRepository
-                .Setup(x => x.GetAll(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(events);
+                .Setup(x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new PagedResponse<Event>(events, 1, 20, events.Count));
 
             _mapper
                 .Setup(x => x.Map<IEnumerable<EventDTO>>(events))
@@ -138,10 +139,10 @@ namespace SystemSalesTickets.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
+            Assert.Equal(2, result.Data.Count());
 
             _eventRepository.Verify(
-                x => x.GetAll(It.IsAny<CancellationToken>()),
+                x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 

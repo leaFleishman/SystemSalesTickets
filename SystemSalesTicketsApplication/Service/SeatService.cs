@@ -4,6 +4,7 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
+using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Service.Service
 {
@@ -23,10 +24,14 @@ namespace SystemSalesTickets.Service.Service
             _logger = logger;
         }
 
-        public async Task<IEnumerable<SeatDTO>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<PagedResponse<SeatDTO>> GetAll(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
-            var tmp = await _seatRepository.GetAll(cancellationToken);
-            return _mapper.Map<IEnumerable<SeatDTO>>(tmp);
+            var result = await _seatRepository.GetAllAsync(pageNumber, pageSize, cancellationToken);
+            return new PagedResponse<SeatDTO>(
+                _mapper.Map<IEnumerable<SeatDTO>>(result.Data),
+                result.PageNumber,
+                result.PageSize,
+                result.TotalRecords);
         }
 
         public async Task<SeatLogDTO> GetById(int id, CancellationToken cancellationToken = default)

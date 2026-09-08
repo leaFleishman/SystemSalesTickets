@@ -5,6 +5,7 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
+using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Service.Service
 {
@@ -69,10 +70,14 @@ namespace SystemSalesTickets.Service.Service
         }
 
 
-        public async Task<IEnumerable<OrderDTO>> GetAllOrders(CancellationToken cancellationToken = default)
+        public async Task<PagedResponse<OrderDTO>> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
         {
-            var tmp = await _orderRepository.GetAll(cancellationToken);
-            return _mapper.Map<IEnumerable<OrderDTO>>(tmp);
+            var result = await _orderRepository.GetAllAsync(pageNumber, pageSize, cancellationToken);
+            return new PagedResponse<OrderDTO>(
+                _mapper.Map<IEnumerable<OrderDTO>>(result.Data),
+                result.PageNumber,
+                result.PageSize,
+                result.TotalRecords);
         }
 
         public async Task<OrderLogDTO> GetOrderById(int id, CancellationToken cancellationToken = default)
