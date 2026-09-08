@@ -33,10 +33,12 @@ namespace SystemSalesTickets.Data
             modelBuilder.Entity<Seat>()
                 .ToTable("Seat");
 
+            // Optimistic Concurrency עבור Seat
             modelBuilder.Entity<Seat>()
                 .Property(s => s.Version)
                 .IsConcurrencyToken();
 
+            // EventSeat - מפתח מורכב
             modelBuilder.Entity<EventSeat>()
                 .HasKey(es => new { es.EventId, es.SeatId });
 
@@ -44,36 +46,109 @@ namespace SystemSalesTickets.Data
                 .Property(es => es.IsAvailable)
                 .IsRequired();
 
+            // Optimistic Concurrency עבור EventSeat
             modelBuilder.Entity<EventSeat>()
                 .Property(es => es.Version)
                 .IsConcurrencyToken();
 
+            // קשר Event -> EventSeat
             modelBuilder.Entity<EventSeat>()
-    .HasOne(es => es.Event)
-    .WithMany()
-    .HasForeignKey(es => es.EventId)
-    .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(es => es.Event)
+                .WithMany()
+                .HasForeignKey(es => es.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            // קשר Seat -> EventSeat
             modelBuilder.Entity<EventSeat>()
                 .HasOne(es => es.Seat)
                 .WithMany()
                 .HasForeignKey(es => es.SeatId)
                 .OnDelete(DeleteBehavior.Cascade);
-            // Seed Data עם ערכי Version קבועים
+
+            // Seed Users
             modelBuilder.Entity<User>().HasData(
-                new User { Role = UserRole.Manager, Email = "admin@example.com", Phone = "0556667788", Password = "111", Id = 1, UserName = "Avi" },
-                new User { Role = UserRole.User, Email = "user@example.com", Phone = "0556367788", Password = "222", Id = 2, UserName = "Moshe" }
+                new User
+                {
+                    Role = UserRole.Manager,
+                    Email = "admin@example.com",
+                    Phone = "0556667788",
+                    Password = "111",
+                    Id = 1,
+                    UserName = "Avi"
+                },
+                new User
+                {
+                    Role = UserRole.User,
+                    Email = "user@example.com",
+                    Phone = "0556367788",
+                    Password = "222",
+                    Id = 2,
+                    UserName = "Moshe"
+                }
             );
 
+            // Seed Seats
             modelBuilder.Entity<Seat>().HasData(
-                new Seat { SeatId = 1, Row = 1, Line = 1, Version = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa") },
-                new Seat { SeatId = 2, Row = 12, Line = 12, Version = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb") }
+                new Seat
+                {
+                    SeatId = 1,
+                    Row = 1,
+                    Line = 1,
+                    Version = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+                },
+                new Seat
+                {
+                    SeatId = 2,
+                    Row = 12,
+                    Line = 12,
+                    Version = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
+                }
             );
 
+            // Seed Event
             modelBuilder.Entity<Event>().HasData(
-                new Event { EventId = 1, Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc), Name = "Concert A", NumberOfSeats = 2500, Price = 15000 }
+                new Event
+                {
+                    EventId = 1,
+                    Date = new DateTime(
+                        2026,
+                        1,
+                        1,
+                        0,
+                        0,
+                        0,
+                        DateTimeKind.Utc
+                    ),
+                    Name = "Concert A",
+                    NumberOfSeats = 2500,
+                    Price = 15000
+                }
             );
 
+            // Seed EventSeats
+            // Seat 1 כבר תפוס על ידי Order 1
+            modelBuilder.Entity<EventSeat>().HasData(
+                new EventSeat
+                {
+                    EventId = 1,
+                    SeatId = 1,
+                    IsAvailable = false,
+                    Version = Guid.Parse(
+                        "11111111-1111-1111-1111-111111111111"
+                    )
+                },
+                new EventSeat
+                {
+                    EventId = 1,
+                    SeatId = 2,
+                    IsAvailable = true,
+                    Version = Guid.Parse(
+                        "22222222-2222-2222-2222-222222222222"
+                    )
+                }
+            );
+
+            // Seed Order
             modelBuilder.Entity<Order>().HasData(
                 new Order
                 {
@@ -82,21 +157,39 @@ namespace SystemSalesTickets.Data
                     SeatId = 1,
                     UserId = 2,
                     EventName = "Concert A",
-                    OrderDate = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    OrderDate = new DateTime(
+                        2026,
+                        1,
+                        1,
+                        0,
+                        0,
+                        0,
+                        DateTimeKind.Utc
+                    )
                 }
             );
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(
+            CancellationToken cancellationToken = default)
         {
+            // עדכון Version של Seats ששונו
             var modifiedSeats = ChangeTracker
                 .Entries<Seat>()
                 .Where(e => e.State == EntityState.Modified);
 
             foreach (var entry in modifiedSeats)
             {
-                // עדכון רק של הערך החדש כדי לא לדרוס את ה-OriginalValue של ה-Concurrency Check
                 entry.Property(s => s.Version).CurrentValue = Guid.NewGuid();
+            }
+
+            var modifiedEventSeats = ChangeTracker
+                .Entries<EventSeat>()
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in modifiedEventSeats)
+            {
+                entry.Property(es => es.Version).CurrentValue = Guid.NewGuid();
             }
 
             return await base.SaveChangesAsync(cancellationToken);

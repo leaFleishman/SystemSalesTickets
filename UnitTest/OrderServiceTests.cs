@@ -6,51 +6,54 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
+using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Tests
 {
     public class OrderServiceTests
     {
         private readonly Mock<IOrderRepository> _orderRepositoryMock;
-        private readonly Mock<ISeatRepository> _seatRepositoryMock;
+        private readonly Mock<IEventSeatRepository> _eventSeatRepositoryMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<ILogger<OrderService>> _loggerMock;
 
-    private readonly OrderService _service;
+        private readonly OrderService _service;
 
         public OrderServiceTests()
         {
             _orderRepositoryMock = new Mock<IOrderRepository>();
-            _seatRepositoryMock = new Mock<ISeatRepository>();
+            _eventSeatRepositoryMock = new Mock<IEventSeatRepository>();
             _mapperMock = new Mock<IMapper>();
             _loggerMock = new Mock<ILogger<OrderService>>();
 
-            //_service = new OrderService(
-            //    _orderRepositoryMock.Object,
-            //    _mapperMock.Object,
-            //    _loggerMock.Object
-            //    );
+            _service = new OrderService(
+                _orderRepositoryMock.Object,
+                _mapperMock.Object,
+                _loggerMock.Object,
+                _eventSeatRepositoryMock.Object);
         }
-
 
         // =====================================================
         // AddOrder
         // =====================================================
 
         [Fact]
-        public async Task AddOrder_WhenSeatDoesNotExist_ReturnsSeatNotFound()
+        public async Task AddOrder_WhenEventSeatDoesNotExist_ReturnsSeatNotFound()
         {
             // Arrange
             var orderDto = new OrderDTO
             {
-                SeatId = 999
+                EventId = 1,
+                SeatId = 999,
+                UserId = 2
             };
 
-            _seatRepositoryMock
-                .Setup(x => x.GetById(
+            _eventSeatRepositoryMock
+                .Setup(x => x.GetByEventAndSeat(
+                    orderDto.EventId,
                     orderDto.SeatId,
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Seat?)null);
+                .ReturnsAsync((EventSeat?)null);
 
             // Act
             var result = await _service.AddOrder(orderDto);
@@ -59,17 +62,12 @@ namespace SystemSalesTickets.Tests
             Assert.NotNull(result);
             Assert.Equal("Seat not found", result.Message);
 
-            _seatRepositoryMock.Verify(
-                x => x.GetById(
+            _eventSeatRepositoryMock.Verify(
+                x => x.GetByEventAndSeat(
+                    orderDto.EventId,
                     orderDto.SeatId,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
-
-            _seatRepositoryMock.Verify(
-                x => x.Update(
-                    It.IsAny<Seat>(),
-                    It.IsAny<CancellationToken>()),
-                Times.Never);
 
             _orderRepositoryMock.Verify(
                 x => x.Add(
@@ -78,39 +76,41 @@ namespace SystemSalesTickets.Tests
                 Times.Never);
 
             _orderRepositoryMock.Verify(
-                x => x.Save(It.IsAny<CancellationToken>()),
+                x => x.Save(
+                    It.IsAny<CancellationToken>()),
+                Times.Never);
+
+            _mapperMock.Verify(
+                x => x.Map<Order>(
+                    It.IsAny<OrderDTO>()),
                 Times.Never);
         }
 
-
         [Fact]
-        public async Task AddOrder_WhenSeatIsAlreadyOccupied_ReturnsConflictMessage()
+        public async Task AddOrder_WhenEventSeatIsAlreadyOccupied_ReturnsConflictMessage()
         {
             // Arrange
             var orderDto = new OrderDTO
             {
-                SeatId = 1
-            };
-
-            var seat = new Seat
-            {
+                EventId = 1,
                 SeatId = 1,
-                Row = 1,
-                Line = 1,
+                UserId = 2
             };
 
-            _seatRepositoryMock
-                .Setup(x => x.GetById(
-                    orderDto.SeatId,
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(seat);
+            var eventSeat = new EventSeat
+            {
+                EventId = 1,
+                SeatId = 1,
+                IsAvailable = false,
+                Version = Guid.NewGuid()
+            };
 
-            _orderRepositoryMock
-                .Setup(x => x.ExistsForEventAndSeat(
+            _eventSeatRepositoryMock
+                .Setup(x => x.GetByEventAndSeat(
                     orderDto.EventId,
                     orderDto.SeatId,
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true);
+                .ReturnsAsync(eventSeat);
 
             // Act
             var result = await _service.AddOrder(orderDto);
@@ -121,24 +121,12 @@ namespace SystemSalesTickets.Tests
                 "Seat is already occupied",
                 result.Message);
 
-            _seatRepositoryMock.Verify(
-                x => x.GetById(
-                    orderDto.SeatId,
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
-
-            _orderRepositoryMock.Verify(
-                x => x.ExistsForEventAndSeat(
+            _eventSeatRepositoryMock.Verify(
+                x => x.GetByEventAndSeat(
                     orderDto.EventId,
                     orderDto.SeatId,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
-
-            _seatRepositoryMock.Verify(
-                x => x.Update(
-                    It.IsAny<Seat>(),
-                    It.IsAny<CancellationToken>()),
-                Times.Never);
 
             _orderRepositoryMock.Verify(
                 x => x.Add(
@@ -147,75 +135,36 @@ namespace SystemSalesTickets.Tests
                 Times.Never);
 
             _orderRepositoryMock.Verify(
-                x => x.Save(It.IsAny<CancellationToken>()),
+                x => x.Save(
+                    It.IsAny<CancellationToken>()),
                 Times.Never);
         }
 
         [Fact]
-        public async Task AddOrder_WhenSeatIsUnavailableForAnotherEvent_AddsOrder()
-        {
-            var orderDto = new OrderDTO
-            {
-                EventId = 2,
-                SeatId = 1
-            };
-            var seat = new Seat
-            {
-                SeatId = 1,
-            };
-            var newOrder = new Order
-            {
-                EventId = orderDto.EventId,
-                SeatId = orderDto.SeatId
-            };
-
-            _seatRepositoryMock
-                .Setup(x => x.GetById(orderDto.SeatId, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(seat);
-            _orderRepositoryMock
-                .Setup(x => x.ExistsForEventAndSeat(
-                    orderDto.EventId,
-                    orderDto.SeatId,
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(false);
-            _mapperMock.Setup(x => x.Map<Order>(orderDto)).Returns(newOrder);
-            _orderRepositoryMock
-                .Setup(x => x.Add(newOrder, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(newOrder);
-            _mapperMock
-                .Setup(x => x.Map<OrderLogDTO>(newOrder))
-                .Returns(new OrderLogDTO());
-
-            var result = await _service.AddOrder(orderDto);
-
-            Assert.NotNull(result);
-            _orderRepositoryMock.Verify(
-                x => x.Add(newOrder, It.IsAny<CancellationToken>()),
-                Times.Once);
-        }
-
-
-        [Fact]
-        public async Task AddOrder_WhenSeatIsAvailable_AddsOrderAndSaves()
+        public async Task AddOrder_WhenEventSeatIsAvailable_AddsOrderAndSaves()
         {
             // Arrange
             var orderDto = new OrderDTO
             {
-                SeatId = 1
+                EventId = 1,
+                SeatId = 2,
+                UserId = 2
             };
 
-            var seat = new Seat
+            var eventSeat = new EventSeat
             {
-                SeatId = 1,
-                Row = 1,
-                Line = 1,
+                EventId = 1,
+                SeatId = 2,
+                IsAvailable = true,
+                Version = Guid.NewGuid()
             };
 
             var newOrder = new Order
             {
                 OrderId = 10,
-                SeatId = 1,
                 EventId = 1,
+                SeatId = 2,
+                UserId = 2,
                 EventName = "Concert A",
                 OrderDate = DateTime.UtcNow
             };
@@ -226,11 +175,12 @@ namespace SystemSalesTickets.Tests
                 EventName = "Concert A"
             };
 
-            _seatRepositoryMock
-                .Setup(x => x.GetById(
+            _eventSeatRepositoryMock
+                .Setup(x => x.GetByEventAndSeat(
+                    orderDto.EventId,
                     orderDto.SeatId,
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(seat);
+                .ReturnsAsync(eventSeat);
 
             _mapperMock
                 .Setup(x => x.Map<Order>(orderDto))
@@ -242,28 +192,37 @@ namespace SystemSalesTickets.Tests
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(newOrder);
 
+            _orderRepositoryMock
+                .Setup(x => x.Save(
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
             _mapperMock
                 .Setup(x => x.Map<OrderLogDTO>(newOrder))
                 .Returns(expected);
 
             // Act
-            var result = await _service.AddOrder(orderDto);
+            var result = await _service.AddOrder(
+                orderDto,
+                CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result);
 
-            _seatRepositoryMock.Verify(
-                x => x.GetById(
+            // ה־EventSeat חייב להפוך ללא זמין
+            Assert.False(eventSeat.IsAvailable);
+
+            _eventSeatRepositoryMock.Verify(
+                x => x.GetByEventAndSeat(
+                    orderDto.EventId,
                     orderDto.SeatId,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
-            _seatRepositoryMock.Verify(
-                x => x.Update(
-                    It.IsAny<Seat>(),
-                    It.IsAny<CancellationToken>()),
-                Times.Never);
+            _mapperMock.Verify(
+                x => x.Map<Order>(orderDto),
+                Times.Once);
 
             _orderRepositoryMock.Verify(
                 x => x.Add(
@@ -271,13 +230,9 @@ namespace SystemSalesTickets.Tests
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
-            // חשוב: Save אחד בלבד
             _orderRepositoryMock.Verify(
-                x => x.Save(It.IsAny<CancellationToken>()),
-                Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<Order>(orderDto),
+                x => x.Save(
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
@@ -285,37 +240,41 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
         }
 
-
         [Fact]
         public async Task AddOrder_WhenConcurrencyExceptionOccurs_ReturnsConflictMessage()
         {
             // Arrange
             var orderDto = new OrderDTO
             {
-                SeatId = 1
+                EventId = 1,
+                SeatId = 2,
+                UserId = 2
             };
 
-            var seat = new Seat
+            var eventSeat = new EventSeat
             {
-                SeatId = 1,
-                Row = 1,
-                Line = 1,
+                EventId = 1,
+                SeatId = 2,
+                IsAvailable = true,
+                Version = Guid.NewGuid()
             };
 
             var newOrder = new Order
             {
                 OrderId = 10,
-                SeatId = 1,
                 EventId = 1,
+                SeatId = 2,
+                UserId = 2,
                 EventName = "Concert A",
                 OrderDate = DateTime.UtcNow
             };
 
-            _seatRepositoryMock
-                .Setup(x => x.GetById(
+            _eventSeatRepositoryMock
+                .Setup(x => x.GetByEventAndSeat(
+                    orderDto.EventId,
                     orderDto.SeatId,
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(seat);
+                .ReturnsAsync(eventSeat);
 
             _mapperMock
                 .Setup(x => x.Map<Order>(orderDto))
@@ -328,11 +287,15 @@ namespace SystemSalesTickets.Tests
                 .ReturnsAsync(newOrder);
 
             _orderRepositoryMock
-                .Setup(x => x.Save(It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new DbUpdateConcurrencyException());
+                .Setup(x => x.Save(
+                    It.IsAny<CancellationToken>()))
+                .ThrowsAsync(
+                    new DbUpdateConcurrencyException());
 
             // Act
-            var result = await _service.AddOrder(orderDto);
+            var result = await _service.AddOrder(
+                orderDto,
+                CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);
@@ -341,6 +304,13 @@ namespace SystemSalesTickets.Tests
                 "Seat was just booked by someone else, please try again",
                 result.Message);
 
+            _eventSeatRepositoryMock.Verify(
+                x => x.GetByEventAndSeat(
+                    orderDto.EventId,
+                    orderDto.SeatId,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+
             _orderRepositoryMock.Verify(
                 x => x.Add(
                     newOrder,
@@ -348,14 +318,16 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
 
             _orderRepositoryMock.Verify(
-                x => x.Save(It.IsAny<CancellationToken>()),
+                x => x.Save(
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
 
+            // בגלל ה־Concurrency לא אמורה להיות המרה ל־DTO הצלחה
             _mapperMock.Verify(
-                x => x.Map<OrderLogDTO>(It.IsAny<Order>()),
+                x => x.Map<OrderLogDTO>(
+                    It.IsAny<Order>()),
                 Times.Never);
         }
-
 
         // =====================================================
         // GetAllOrders
@@ -366,36 +338,40 @@ namespace SystemSalesTickets.Tests
         {
             // Arrange
             var orders = new List<Order>
-        {
-            new Order
             {
-                OrderId = 1,
-                EventId = 1,
-                SeatId = 1,
-                EventName = "Concert A",
-                OrderDate = DateTime.UtcNow
-            },
-            new Order
-            {
-                OrderId = 2,
-                EventId = 1,
-                SeatId = 2,
-                EventName = "Concert A",
-                OrderDate = DateTime.UtcNow
-            }
-        };
+                new Order
+                {
+                    OrderId = 1,
+                    EventId = 1,
+                    SeatId = 1,
+                    EventName = "Concert A",
+                    OrderDate = DateTime.UtcNow
+                },
+                new Order
+                {
+                    OrderId = 2,
+                    EventId = 1,
+                    SeatId = 2,
+                    EventName = "Concert A",
+                    OrderDate = DateTime.UtcNow
+                }
+            };
 
             var orderDtos = new List<OrderDTO>
-        {
-            new OrderDTO
             {
-                SeatId = 1
-            },
-            new OrderDTO
-            {
-                SeatId = 2
-            }
-        };
+                new OrderDTO
+                {
+                    EventId = 1,
+                    SeatId = 1,
+                    UserId = 2
+                },
+                new OrderDTO
+                {
+                    EventId = 1,
+                    SeatId = 2,
+                    UserId = 2
+                }
+            };
 
             _orderRepositoryMock
                 .Setup(x => x.GetAllAsync(
@@ -403,7 +379,7 @@ namespace SystemSalesTickets.Tests
                     20,
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
-                    new MyApp.Application.Common.Models.PagedResponse<Order>(
+                    new PagedResponse<Order>(
                         orders,
                         1,
                         20,
@@ -414,7 +390,10 @@ namespace SystemSalesTickets.Tests
                 .Returns(orderDtos);
 
             // Act
-            var result = await _service.GetAllOrders();
+            var result = await _service.GetAllOrders(
+                1,
+                20,
+                CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);
@@ -432,7 +411,6 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
         }
 
-
         [Fact]
         public async Task GetAllOrders_UsesRequestedPagination()
         {
@@ -445,7 +423,7 @@ namespace SystemSalesTickets.Tests
                     10,
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
-                    new MyApp.Application.Common.Models.PagedResponse<Order>(
+                    new PagedResponse<Order>(
                         orders,
                         2,
                         10,
@@ -456,10 +434,14 @@ namespace SystemSalesTickets.Tests
                 .Returns(new List<OrderDTO>());
 
             // Act
-            var result = await _service.GetAllOrders(2, 10);
+            var result = await _service.GetAllOrders(
+                2,
+                10,
+                CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);
+
             Assert.Equal(2, result.PageNumber);
             Assert.Equal(10, result.PageSize);
             Assert.Equal(15, result.TotalRecords);
@@ -471,7 +453,6 @@ namespace SystemSalesTickets.Tests
                     It.IsAny<CancellationToken>()),
                 Times.Once);
         }
-
 
         // =====================================================
         // GetOrderById
@@ -488,6 +469,7 @@ namespace SystemSalesTickets.Tests
                 OrderId = id,
                 EventId = 1,
                 SeatId = 1,
+                UserId = 2,
                 EventName = "Concert A",
                 OrderDate = DateTime.UtcNow
             };
@@ -509,7 +491,9 @@ namespace SystemSalesTickets.Tests
                 .Returns(expected);
 
             // Act
-            var result = await _service.GetOrderById(id);
+            var result = await _service.GetOrderById(
+                id,
+                CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);
@@ -525,7 +509,6 @@ namespace SystemSalesTickets.Tests
                 x => x.Map<OrderLogDTO>(order),
                 Times.Once);
         }
-
 
         [Fact]
         public async Task GetOrderById_WhenOrderDoesNotExist_ReturnsNull()
@@ -544,7 +527,9 @@ namespace SystemSalesTickets.Tests
                 .Returns((OrderLogDTO?)null);
 
             // Act
-            var result = await _service.GetOrderById(id);
+            var result = await _service.GetOrderById(
+                id,
+                CancellationToken.None);
 
             // Assert
             Assert.Null(result);
@@ -560,5 +545,4 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
         }
     }
-
 }
