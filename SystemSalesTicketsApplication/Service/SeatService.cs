@@ -4,7 +4,6 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
-using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Service.Service
 {
@@ -45,7 +44,7 @@ namespace SystemSalesTickets.Service.Service
             var tmp = _mapper.Map<Seat>(seat);
             //tmp.SeatId=counter++;
             var res = await _seatRepository.Add(tmp, cancellationToken);
-            _seatRepository.Save(cancellationToken);
+          await  _seatRepository.Save(cancellationToken);
             return _mapper.Map<SeatLogDTO>(res);
         }
 

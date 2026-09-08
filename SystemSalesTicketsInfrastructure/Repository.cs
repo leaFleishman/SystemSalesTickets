@@ -2,8 +2,6 @@
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Core.Models;
 
-using MyApp.Application.Common.Models;
-
 namespace SystemSalesTickets.Data
 {
     public class Repository<T> : IRepository<T> where T : class

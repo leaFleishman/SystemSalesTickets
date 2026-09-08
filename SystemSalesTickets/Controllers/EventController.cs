@@ -22,7 +22,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<IActionResult> GetEvents(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetEvents([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetEvents request received");
 
@@ -53,7 +53,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet("by-name/{name}")]
         [Authorize]
-        public async Task<ActionResult<EventDTO>> GetEventByName(string name, CancellationToken cancellationToken)
+        public async Task<ActionResult<EventDTO>> GetEventByName([FromQuery]string name, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetEventByName request received for {EventName}", name);
 

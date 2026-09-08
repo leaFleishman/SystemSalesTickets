@@ -6,7 +6,6 @@ using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
-using MyApp.Application.Common.Models;
 using Xunit;
 
 namespace SystemSalesTickets.Tests

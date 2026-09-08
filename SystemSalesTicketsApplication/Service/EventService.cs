@@ -4,7 +4,6 @@ using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.DTOs;
 using Microsoft.Extensions.Logging;
-using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Service.Service
 {

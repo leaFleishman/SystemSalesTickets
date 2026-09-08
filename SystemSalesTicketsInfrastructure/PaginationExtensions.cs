@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyApp.Application.Common.Models;
+using SystemSalesTickets.Core.Models;
 
 public static class PaginationExtensions
 {

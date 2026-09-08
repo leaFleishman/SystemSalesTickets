@@ -1,4 +1,4 @@
-﻿using MyApp.Application.Common.Models;
+﻿using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Core.Repository
 {

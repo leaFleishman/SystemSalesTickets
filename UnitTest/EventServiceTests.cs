@@ -6,8 +6,6 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
-using MyApp.Application.Common.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SystemSalesTickets.Tests
 {

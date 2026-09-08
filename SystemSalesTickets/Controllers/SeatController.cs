@@ -22,7 +22,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAll([FromQuery]int pageNumber = 1, [FromQuery] int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAll seats request received");
 
@@ -35,7 +35,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<ActionResult<SeatDTO>> GetById(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<SeatDTO>> GetById([FromQuery] int id, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetById request received for SeatId {SeatId}", id);
 
@@ -76,7 +76,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpDelete("{id:int}")]
         [Authorize(Roles = nameof(UserRole.Manager))]
-        public async Task<IActionResult> DeleteAsyncSeat(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteAsyncSeat([FromRoute] int id, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Delete seat request received for SeatId {SeatId}", id);
 

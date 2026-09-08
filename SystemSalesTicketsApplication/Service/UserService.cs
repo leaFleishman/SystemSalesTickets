@@ -4,7 +4,6 @@ using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
-using MyApp.Application.Common.Models;
 
 namespace SystemSalesTickets.Service.Service
 {

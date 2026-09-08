@@ -1,4 +1,4 @@
-﻿namespace MyApp.Application.Common.Models;
+﻿namespace SystemSalesTickets.Core.Models;
 
 public record PagedResponse<T>(
     IEnumerable<T> Data,
