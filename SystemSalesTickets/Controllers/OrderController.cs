@@ -18,10 +18,11 @@ namespace SystemSalesTickets.Api.Controllers
             _orderService = orderService;
             _logger = logger;
         }
-
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<OrderLogDTO>> AddOrder([FromBody] OrderDTO order, CancellationToken cancellationToken)
+        public async Task<ActionResult<OrderLogDTO>> AddOrder(
+            [FromBody] OrderDTO order,
+            CancellationToken cancellationToken)
         {
             _logger.LogInformation("AddOrder request received");
 
@@ -29,38 +30,39 @@ namespace SystemSalesTickets.Api.Controllers
                 order,
                 cancellationToken);
 
-            if (result == null)
+            switch (result.Status)
             {
-                _logger.LogWarning("AddOrder failed");
-                return Conflict("Seat was just booked by someone else, please try again");
-            }
+                case OrderResultStatus.NotFound:
 
-            if (!string.IsNullOrEmpty(result.Message))
-            {
-                _logger.LogWarning(
-                    "AddOrder failed: {Message}",
-                    result.Message);
+                    _logger.LogWarning(
+                        "AddOrder failed: {Message}",
+                        result.Message);
 
-                if (result.Message == "Seat not found")
                     return NotFound(result.Message);
 
-                if (result.Message == "Seat is already occupied" ||
-                    result.Message == "Seat was just booked by someone else, please try again")
-                {
+                case OrderResultStatus.Conflict:
+
+                    _logger.LogWarning(
+                        "AddOrder conflict: {Message}",
+                        result.Message);
+
                     return Conflict(result.Message);
-                }
+
+                case OrderResultStatus.Success:
+
+                    _logger.LogInformation(
+                        "AddOrder completed successfully for OrderId {OrderId}",
+                        result.Order!.Id);
+
+                    return CreatedAtAction(
+                        nameof(GetOrderById),
+                        new { id = result.Order.Id },
+                        result.Order);
+
+                default:
+                    return BadRequest();
             }
-
-            _logger.LogInformation(
-                "AddOrder completed successfully for OrderId {OrderId}",
-                result.Id);
-
-            return CreatedAtAction(
-                nameof(GetOrderById),
-                new { id = result.Id },
-                result);
         }
-
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
 

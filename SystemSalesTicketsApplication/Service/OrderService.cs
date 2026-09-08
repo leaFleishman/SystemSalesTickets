@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
@@ -27,35 +28,36 @@ namespace SystemSalesTickets.Service.Service
             _eventSeatRepository = eventSeatRepository;
         }
 
-        public async Task<OrderLogDTO> AddOrder(
-            OrderDTO orderDto,
-            CancellationToken cancellationToken = default)
+        public async Task<OrderResultDTO> AddOrder(
+    OrderDTO orderDto,
+    CancellationToken cancellationToken = default)
         {
             try
             {
-                var eventSeat =
-                    await _eventSeatRepository.GetByEventAndSeat(
-                        orderDto.EventId,
-                        orderDto.SeatId,
-                        cancellationToken);
+                var eventSeat = await _eventSeatRepository.GetByEventAndSeat(
+                    orderDto.EventId,
+                    orderDto.SeatId,
+                    cancellationToken);
 
                 if (eventSeat == null)
                 {
-                    return new OrderLogDTO
+                    return new OrderResultDTO
                     {
+                        Status = OrderResultStatus.NotFound,
                         Message = "Seat not found"
                     };
                 }
 
                 if (!eventSeat.IsAvailable)
                 {
-                    return new OrderLogDTO
+                    return new OrderResultDTO
                     {
+                        Status = OrderResultStatus.Conflict,
                         Message = "Seat is already occupied"
                     };
                 }
 
-                // זה השינוי האמיתי במשאב שעליו מתחרים
+                // זה המשאב שעליו מתבצעת התחרות
                 eventSeat.IsAvailable = false;
 
                 var newOrder = _mapper.Map<Order>(orderDto);
@@ -67,7 +69,11 @@ namespace SystemSalesTickets.Service.Service
                 await _orderRepository.Save(
                     cancellationToken);
 
-                return _mapper.Map<OrderLogDTO>(newOrder);
+                return new OrderResultDTO
+                {
+                    Status = OrderResultStatus.Success,
+                    Order = _mapper.Map<OrderLogDTO>(newOrder)
+                };
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -77,10 +83,10 @@ namespace SystemSalesTickets.Service.Service
                     orderDto.SeatId,
                     orderDto.EventId);
 
-                return new OrderLogDTO
+                return new OrderResultDTO
                 {
-                    Message =
-                        "Seat was just booked by someone else, please try again"
+                    Status = OrderResultStatus.Conflict,
+                    Message = "Seat was just booked by someone else, please try again"
                 };
             }
         }
