@@ -16,9 +16,9 @@ namespace SystemSalesTickets.Data
         public async Task<User> Login(LoginModel loginModel, CancellationToken cancellationToken = default)
         {
 
-            return await _dbSet.FirstOrDefaultAsync(u =>
-                u.Email == loginModel.Email &&
-                u.Password == loginModel.Password, cancellationToken);
+            return await _dbSet.FirstOrDefaultAsync(
+        u => u.Email == loginModel.Email,
+        cancellationToken);
         }
 
         public async Task<User> MakeUserManager(int id, CancellationToken cancellationToken = default)

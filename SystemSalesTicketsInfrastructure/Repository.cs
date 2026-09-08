@@ -53,7 +53,8 @@ namespace SystemSalesTickets.Data
             var count = await query.CountAsync(cancellationToken);
 
             var items = await query
-                .Skip((pageNumber - 1) * pageSize)
+                 .OrderBy(x => EF.Property<int>(x, "Id"))
+                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);
 

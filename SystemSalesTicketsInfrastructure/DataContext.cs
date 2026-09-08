@@ -72,7 +72,7 @@ namespace SystemSalesTickets.Data
                     Role = UserRole.Manager,
                     Email = "admin@example.com",
                     Phone = "0556667788",
-                    Password = "111",
+                    Password = "AQAAAAIAAYagAAAAEA1k61jf211sNrnVlnardNcGL3S3o4S7xxODit7eCsR8LChzkSZzH1LEABC8M47emg==",
                     Id = 1,
                     UserName = "Avi"
                 },
@@ -81,7 +81,7 @@ namespace SystemSalesTickets.Data
                     Role = UserRole.User,
                     Email = "user@example.com",
                     Phone = "0556367788",
-                    Password = "222",
+                    Password = "AQAAAAIAAYagAAAAEEgW8PRhBaBx46pxAz/cboT2Ca/gB+JZ3XxBtqCudaDHMLhbhUNrKRHHtnfoDkHuUA==",
                     Id = 2,
                     UserName = "Moshe"
                 }

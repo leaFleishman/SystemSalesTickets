@@ -7,3 +7,4 @@ appsettings.json
 logs/
 *.log
 .fake
+*.csproj.user

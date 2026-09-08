@@ -64,7 +64,7 @@ namespace SystemSalesTickets.Api.Controllers
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Manager))]
 
-        public async Task<IActionResult> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAllOrders([FromQuery]int pageNumber = 1,[FromQuery] int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAllOrders request received by user");
 
