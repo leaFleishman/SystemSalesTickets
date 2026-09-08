@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SystemSalesTickets.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9fb6cdc84135a02bdd96052e0521c81f9e2cc82")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e0637b5ccd38eba7d3dc772599e82f2270c2dd4")]
 [assembly: System.Reflection.AssemblyProductAttribute("SystemSalesTickets.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SystemSalesTickets.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

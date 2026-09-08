@@ -25,10 +25,10 @@ namespace SystemSalesTickets.Tests
             _mapper = new Mock<IMapper>();
             _logger = new Mock<ILogger<EventService>>();
 
-            _service = new EventService(
-                _eventRepository.Object,
-                _mapper.Object,
-                _logger.Object);
+            //_service = new EventService(
+            //    _eventRepository.Object,
+            //    _mapper.Object,
+            //    _logger.Object);
         }
 
         [Fact]

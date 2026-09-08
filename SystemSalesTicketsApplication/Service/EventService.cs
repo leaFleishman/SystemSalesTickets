@@ -12,16 +12,17 @@ namespace SystemSalesTickets.Service.Service
     {
 
         private readonly ILogger<EventService> _logger;
-        //private static int counter = new Random().Next();
+        private readonly ISeatRepository _seatRepository;
         private readonly IEventRepository _eventRepository;
 
         private readonly IMapper _mapper;
 
-        public EventService(IEventRepository eventRepo, IMapper mapper, ILogger<EventService> logger)
+        public EventService(IEventRepository eventRepo, IMapper mapper, ILogger<EventService> logger,ISeatRepository seatRepository)
         {
             _eventRepository = eventRepo;
             _mapper = mapper;
             _logger = logger;
+            _seatRepository = seatRepository;
         }
 
        
@@ -31,7 +32,7 @@ namespace SystemSalesTickets.Service.Service
             var tmp = _mapper.Map<Event>(e);
             //tmp.EventId = counter++;
             await _eventRepository.Add(tmp, cancellationToken);
-            await _eventRepository.Save();
+            await _eventRepository.Save(cancellationToken);
             return _mapper.Map<EventDTO>(tmp);
         }
 

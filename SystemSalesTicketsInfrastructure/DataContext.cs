@@ -15,6 +15,7 @@ namespace SystemSalesTickets.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Seat> Seats { get; set; }
+        public DbSet<EventSeat> EventSeats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,13 +37,28 @@ namespace SystemSalesTickets.Data
                 .Property(s => s.Version)
                 .IsConcurrencyToken();
 
+            modelBuilder.Entity<EventSeat>()
+                .HasKey(es => new { es.EventId, es.SeatId });
 
             modelBuilder.Entity<EventSeat>()
-    .HasKey(es => new { es.EventId, es.SeatId });
+                .Property(es => es.IsAvailable)
+                .IsRequired();
 
             modelBuilder.Entity<EventSeat>()
                 .Property(es => es.Version)
                 .IsConcurrencyToken();
+
+            modelBuilder.Entity<EventSeat>()
+    .HasOne(es => es.Event)
+    .WithMany()
+    .HasForeignKey(es => es.EventId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EventSeat>()
+                .HasOne(es => es.Seat)
+                .WithMany()
+                .HasForeignKey(es => es.SeatId)
+                .OnDelete(DeleteBehavior.Cascade);
             // Seed Data עם ערכי Version קבועים
             modelBuilder.Entity<User>().HasData(
                 new User { Role = UserRole.Manager, Email = "admin@example.com", Phone = "0556667788", Password = "111", Id = 1, UserName = "Avi" },

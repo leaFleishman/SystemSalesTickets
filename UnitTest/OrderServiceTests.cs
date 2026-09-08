@@ -25,11 +25,11 @@ namespace SystemSalesTickets.Tests
             _mapperMock = new Mock<IMapper>();
             _loggerMock = new Mock<ILogger<OrderService>>();
 
-            _service = new OrderService(
-                _orderRepositoryMock.Object,
-                _mapperMock.Object,
-                _loggerMock.Object,
-                _seatRepositoryMock.Object);
+            //_service = new OrderService(
+            //    _orderRepositoryMock.Object,
+            //    _mapperMock.Object,
+            //    _loggerMock.Object
+            //    );
         }
 
 

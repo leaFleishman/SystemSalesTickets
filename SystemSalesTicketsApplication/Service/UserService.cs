@@ -14,7 +14,6 @@ namespace SystemSalesTickets.Service.Service
 
         private readonly IUserRepository _userRepository;
         private readonly ILogger<UserService> _logger;
-        //private static int counter = new Random().Next();
         public UserService(IUserRepository userRepository, IMapper mapper,ILogger<UserService> logger)
         {
             _userRepository = userRepository;
@@ -25,9 +24,8 @@ namespace SystemSalesTickets.Service.Service
         public async Task<UserLogDTO> AddUser(UserDTO user, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<User>(user);
-            //tmp.Id = counter++;
             var res = await _userRepository.Add(tmp, cancellationToken);
-            await _userRepository.Save();
+            await _userRepository.Save(cancellationToken);
             return _mapper.Map<UserLogDTO>(res);
         }
 
@@ -58,7 +56,7 @@ namespace SystemSalesTickets.Service.Service
         public async Task<UserDTO> MakeUserManager(int id, CancellationToken cancellationToken = default)
         {
             var user=await _userRepository.MakeUserManager(id, cancellationToken);
-            await _userRepository.Save();
+            await _userRepository.Save(cancellationToken);
 
             return _mapper.Map<UserDTO>(user);
         }

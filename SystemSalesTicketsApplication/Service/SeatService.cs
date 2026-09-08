@@ -45,6 +45,7 @@ namespace SystemSalesTickets.Service.Service
             var tmp = _mapper.Map<Seat>(seat);
             //tmp.SeatId=counter++;
             var res = await _seatRepository.Add(tmp, cancellationToken);
+            _seatRepository.Save(cancellationToken);
             return _mapper.Map<SeatLogDTO>(res);
         }
 

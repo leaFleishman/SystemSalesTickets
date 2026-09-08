@@ -1,6 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SystemSalesTickets.Core.DTOs
 {
@@ -10,9 +8,9 @@ namespace SystemSalesTickets.Core.DTOs
 
         public int SeatId { get; set; }
 
-        bool IsAvailable { get; set; } = true;
+        public bool IsAvailable { get; set; }
 
         [ConcurrencyCheck]
-        public Guid Version { get; set; } = Guid.NewGuid();
+        public Guid Version { get; set; }
     }
 }
