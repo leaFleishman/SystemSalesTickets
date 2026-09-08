@@ -53,7 +53,7 @@ namespace SystemSalesTickets.Api.Controllers
 
         [HttpGet("by-name/{name}")]
         [Authorize]
-        public async Task<ActionResult<EventDTO>> GetEventByName([FromQuery]string name, CancellationToken cancellationToken)
+        public async Task<ActionResult<EventDTO>> GetEventByName([FromRoute]string name, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetEventByName request received for {EventName}", name);
 
