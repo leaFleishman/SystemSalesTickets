@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
@@ -13,7 +14,7 @@ namespace SystemSalesTickets.Data
         {
         }
 
-        public async Task<User> Login(LoginModel loginModel, CancellationToken cancellationToken = default)
+        public async Task<User> Login(LoginRequestDTO loginModel, CancellationToken cancellationToken = default)
         {
 
             return await _dbSet.FirstOrDefaultAsync(

@@ -4,9 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
-using SystemSalesTickets.Core.Models;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginModel, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Login request received at {RequestTime}", DateTime.Now);
         if (loginModel == null)

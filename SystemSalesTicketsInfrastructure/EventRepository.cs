@@ -15,7 +15,8 @@ namespace SystemSalesTickets.Data
 
         public async Task<Event> GetEventByName(string name, CancellationToken cancellationToken = default)
         {
-            return await _dataContext.Events
+            return await _dataContext.Events.AsNoTracking()
+
                    .FirstOrDefaultAsync(e => e.Name == name, cancellationToken);
         }
     }

@@ -9,8 +9,9 @@ namespace SystemSalesTickets.Core.DTOs
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
-
         public DateTime Date { get; set; }
+
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be non-negative")]
 
         public decimal Price { get; set; }
 

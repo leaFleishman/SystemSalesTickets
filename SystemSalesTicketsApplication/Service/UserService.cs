@@ -21,7 +21,7 @@ namespace SystemSalesTickets.Service.Service
             _logger = logger;
         }
 
-        public async Task<UserLogDTO> AddUser(UserDTO user, CancellationToken cancellationToken = default)
+        public async Task<UserLogDTO> AddUser(RegisterRequestDTO user, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<User>(user);
             tmp.Password = _passwordHasher.HashPassword(tmp, tmp.Password);
@@ -49,7 +49,7 @@ namespace SystemSalesTickets.Service.Service
             return _mapper.Map<UserLogDTO>(res);
         }
 
-        public async Task<User> Login(LoginModel loginModel, CancellationToken cancellationToken = default)
+        public async Task<User> Login(LoginRequestDTO loginModel, CancellationToken cancellationToken = default)
         {
             var user = await _userRepository.Login(loginModel, cancellationToken);
 

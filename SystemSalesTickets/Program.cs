@@ -102,8 +102,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseExceptionHandlingMiddleware();
-app.UsePerformanceMiddleware();     
-app.UseMiddleware<LoggingMiddleware>(); 
+app.UsePerformanceMiddleware();
+app.UseMiddleware<LoggingMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -2,11 +2,9 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using SystemSalesTickets.Core.DTOs;
-using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
-using Xunit;
 
 namespace SystemSalesTickets.Tests
 {
@@ -40,12 +38,14 @@ namespace SystemSalesTickets.Tests
         public async Task AddUser_ReturnsUserLogDTO()
         {
             // Arrange
-            var userDto = new UserDTO
+            var userDto = new RegisterRequestDTO
             {
                 UserName = "TestUser",
                 Phone = "0501234567",
                 Email = "test@test.com",
+                Password = "Password123!"
             };
+
 
             var user = new User
             {
@@ -226,7 +226,7 @@ namespace SystemSalesTickets.Tests
         public async Task Login_ReturnsUser()
         {
             // Arrange
-            var loginModel = new LoginModel
+            var loginModel = new LoginRequestDTO
             {
                 Email = "test@test.com",
                 Password = "1234"

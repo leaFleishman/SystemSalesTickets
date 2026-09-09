@@ -1,10 +1,7 @@
-﻿
-
-using System.ComponentModel.DataAnnotations;
-
-namespace SystemSalesTickets.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace SystemSalesTickets.Core.DTOs
 {
-    public class LoginModel
+    public class LoginRequestDTO
     {
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }

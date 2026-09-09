@@ -21,7 +21,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> AddUser([FromBody] UserDTO user, CancellationToken cancellationToken)
+        public async Task<ActionResult<UserDTO>> AddUser([FromBody] RegisterRequestDTO user, CancellationToken cancellationToken)
         {
             _logger.LogInformation("AddUser request received for Email {Email}", user?.Email);
 

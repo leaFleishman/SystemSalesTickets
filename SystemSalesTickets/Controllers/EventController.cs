@@ -51,7 +51,7 @@ namespace SystemSalesTickets.Api.Controllers
             return CreatedAtAction(nameof(GetEventByName), new { name = createdEvent.Name }, createdEvent);
         }
 
-        [HttpGet("by-name/{name}")]
+        [HttpGet("{name}")]
         [Authorize]
         public async Task<ActionResult<EventDTO>> GetEventByName([FromRoute]string name, CancellationToken cancellationToken)
         {
