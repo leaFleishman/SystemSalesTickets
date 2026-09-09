@@ -14,7 +14,8 @@ namespace SystemSalesTickets.Tests
         private readonly Mock<IEventRepository> _eventRepository;
         private readonly Mock<IMapper> _mapper;
         private readonly Mock<ILogger<EventService>> _logger;
-
+        private readonly Mock<ISeatRepository> _seatRepository;
+        private readonly Mock<IEventSeatRepository> _eventSeatRepository;
         private readonly EventService _service;
 
         public EventServiceTests()
@@ -22,11 +23,14 @@ namespace SystemSalesTickets.Tests
             _eventRepository = new Mock<IEventRepository>();
             _mapper = new Mock<IMapper>();
             _logger = new Mock<ILogger<EventService>>();
-
-            //_service = new EventService(
-            //    _eventRepository.Object,
-            //    _mapper.Object,
-            //    _logger.Object);
+            _seatRepository = new Mock<ISeatRepository>();
+            _eventSeatRepository = new Mock<IEventSeatRepository>();
+            _service = new EventService(
+            _eventRepository.Object,
+            _mapper.Object,
+            _logger.Object,
+            _seatRepository.Object,
+            _eventSeatRepository.Object);
         }
 
         [Fact]
@@ -52,7 +56,7 @@ namespace SystemSalesTickets.Tests
             var resultDto = new EventDTO
             {
                 Name = "Concert",
-                Date =  new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Price = 100,
                 NumberOfSeats = 50
             };

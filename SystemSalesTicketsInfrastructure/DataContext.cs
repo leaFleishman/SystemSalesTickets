@@ -155,6 +155,8 @@ namespace SystemSalesTickets.Data
                     Id = 1,
                     EventId = 1,
                     UserId = 2,
+                    SeatId = 1,      
+
                     EventName = "Concert A",
                     OrderDate = new DateTime(
                         2026,

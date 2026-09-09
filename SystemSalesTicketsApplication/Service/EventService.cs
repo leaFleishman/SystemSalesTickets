@@ -9,6 +9,7 @@ namespace SystemSalesTickets.Service.Service
 {
     public class EventService : IEventService
     {
+       
 
         private readonly ILogger<EventService> _logger;
         private readonly ISeatRepository _seatRepository;
