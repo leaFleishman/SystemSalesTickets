@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using SystemSalesTickets.Core.DTOs;
 
 namespace SystemSalesTickets.Core.Models
 {

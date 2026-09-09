@@ -54,7 +54,7 @@ namespace SystemSalesTickets.Api.Controllers
             _logger.LogInformation("GetUserById succeeded for UserId {UserId}", id);
             return Ok(user);
         }
-        [HttpPut("MakeUserManager")]
+        [HttpPut]
         [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<ActionResult> MakeUserManager([FromQuery] int id, CancellationToken cancellationToken)
         {

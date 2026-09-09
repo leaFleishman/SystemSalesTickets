@@ -23,7 +23,7 @@ namespace SystemSalesTickets.Data
 
             // אינדקס ייחודי למניעת הזמנה כפולה ברמת המסד
             modelBuilder.Entity<Order>()
-                .HasIndex(o => new { o.EventId, o.Id })
+                .HasIndex(o => new { o.EventId, o.SeatId })
                 .IsUnique();
 
             modelBuilder.Entity<Event>()

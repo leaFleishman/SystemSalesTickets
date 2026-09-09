@@ -29,20 +29,12 @@ namespace SystemSalesTickets.Data.Migrations
                 table: "Events",
                 newName: "Id");
 
-            migrationBuilder.UpdateData(
-                table: "Orders",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "SeatId",
-                value: 0);
-
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_EventId_Id",
                 table: "Orders",
                 columns: new[] { "EventId", "Id" },
                 unique: true);
         }
-
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
@@ -64,13 +56,6 @@ namespace SystemSalesTickets.Data.Migrations
                 name: "Id",
                 table: "Events",
                 newName: "EventId");
-
-            migrationBuilder.UpdateData(
-                table: "Orders",
-                keyColumn: "OrderId",
-                keyValue: 1,
-                column: "SeatId",
-                value: 1);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_EventId_SeatId",
