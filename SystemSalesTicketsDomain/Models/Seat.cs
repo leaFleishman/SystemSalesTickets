@@ -5,7 +5,7 @@ namespace SystemSalesTickets.Core.Models
     public class Seat
     {
         [Key]
-        public int SeatId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Row is required")]
         public int Row { get; set; }

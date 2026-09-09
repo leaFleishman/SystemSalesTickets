@@ -35,8 +35,8 @@ namespace SystemSalesTickets.Tests
         {
             var seats = new List<Seat>
             {
-                new Seat { SeatId = 1, Row = 1, Line = 1 },
-                new Seat { SeatId = 2, Row = 1, Line = 2 }
+                new Seat { Id = 1, Row = 1, Line = 1 },
+                new Seat { Id = 2, Row = 1, Line = 2 }
             };
 
             var expected = new List<SeatDTO>
@@ -74,7 +74,7 @@ namespace SystemSalesTickets.Tests
 
             var seat = new Seat
             {
-                SeatId = id,
+                Id = id,
                 Row = 1,
                 Line = 1,
             };
@@ -120,7 +120,7 @@ namespace SystemSalesTickets.Tests
 
             var addedSeat = new Seat
             {
-                SeatId = 100,
+                Id = 100,
                 Row = 1,
                 Line = 1,
             };
@@ -143,7 +143,7 @@ namespace SystemSalesTickets.Tests
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);
-            Assert.NotEqual(0, seat.SeatId);
+            Assert.NotEqual(0, seat.Id);
 
             _seatRepositoryMock.Verify(
                 x => x.Add(seat, It.IsAny<CancellationToken>()),

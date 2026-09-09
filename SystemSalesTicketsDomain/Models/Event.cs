@@ -5,7 +5,7 @@ namespace SystemSalesTickets.Core.Models
     public class Event
     {
         [Key]
-        public int EventId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50, MinimumLength = 3)]

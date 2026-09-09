@@ -88,7 +88,7 @@ namespace SystemSalesTickets.Tests
             {
                 new Event
                 {
-                    EventId = 1,
+                    Id = 1,
                     Name = "Concert",
                     Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                     Price = 100,
@@ -97,7 +97,7 @@ namespace SystemSalesTickets.Tests
 
                 new Event
                 {
-                    EventId = 2,
+                    Id = 2,
                     Name = "Show",
                     Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                     Price = 200,
@@ -153,7 +153,7 @@ namespace SystemSalesTickets.Tests
 
             var eventModel = new Event
             {
-                EventId = 1,
+                Id = 1,
                 Name = "Concert",
                 Date = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 Price = 100,

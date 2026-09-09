@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
@@ -160,7 +161,7 @@ namespace SystemSalesTickets.Tests
 
             var newOrder = new Order
             {
-                OrderId = 10,
+                Id = 10,
                 EventId = 1,
                 SeatId = 2,
                 UserId = 2,
@@ -207,8 +208,8 @@ namespace SystemSalesTickets.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(expected, result);
-
+            Assert.Equal(OrderResultStatus.Success, result.Status);
+            Assert.Equal(expected, result.Order);
             // ה־EventSeat חייב להפוך ללא זמין
             Assert.False(eventSeat.IsAvailable);
 
@@ -260,7 +261,7 @@ namespace SystemSalesTickets.Tests
 
             var newOrder = new Order
             {
-                OrderId = 10,
+                Id = 10,
                 EventId = 1,
                 SeatId = 2,
                 UserId = 2,
@@ -340,7 +341,7 @@ namespace SystemSalesTickets.Tests
             {
                 new Order
                 {
-                    OrderId = 1,
+                    Id = 1,
                     EventId = 1,
                     SeatId = 1,
                     EventName = "Concert A",
@@ -348,7 +349,7 @@ namespace SystemSalesTickets.Tests
                 },
                 new Order
                 {
-                    OrderId = 2,
+                    Id = 2,
                     EventId = 1,
                     SeatId = 2,
                     EventName = "Concert A",
@@ -465,7 +466,7 @@ namespace SystemSalesTickets.Tests
 
             var order = new Order
             {
-                OrderId = id,
+                Id = id,
                 EventId = 1,
                 SeatId = 1,
                 UserId = 2,

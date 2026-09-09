@@ -46,7 +46,7 @@ namespace SystemSalesTickets.Service.Service
                     new EventSeat
                     {
                         Event = tmp,
-                        SeatId = seat.SeatId,
+                        SeatId = seat.Id,
                         IsAvailable = true
                     },
                     cancellationToken);

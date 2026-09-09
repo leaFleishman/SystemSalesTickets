@@ -23,7 +23,7 @@ namespace SystemSalesTickets.Data
 
             // אינדקס ייחודי למניעת הזמנה כפולה ברמת המסד
             modelBuilder.Entity<Order>()
-                .HasIndex(o => new { o.EventId, o.SeatId })
+                .HasIndex(o => new { o.EventId, o.Id })
                 .IsUnique();
 
             modelBuilder.Entity<Event>()
@@ -91,14 +91,14 @@ namespace SystemSalesTickets.Data
             modelBuilder.Entity<Seat>().HasData(
                 new Seat
                 {
-                    SeatId = 1,
+                    Id = 1,
                     Row = 1,
                     Line = 1,
                     Version = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                 },
                 new Seat
                 {
-                    SeatId = 2,
+                    Id = 2,
                     Row = 12,
                     Line = 12,
                     Version = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
@@ -109,7 +109,7 @@ namespace SystemSalesTickets.Data
             modelBuilder.Entity<Event>().HasData(
                 new Event
                 {
-                    EventId = 1,
+                    Id = 1,
                     Date = new DateTime(
                         2026,
                         1,
@@ -152,9 +152,8 @@ namespace SystemSalesTickets.Data
             modelBuilder.Entity<Order>().HasData(
                 new Order
                 {
-                    OrderId = 1,
+                    Id = 1,
                     EventId = 1,
-                    SeatId = 1,
                     UserId = 2,
                     EventName = "Concert A",
                     OrderDate = new DateTime(
