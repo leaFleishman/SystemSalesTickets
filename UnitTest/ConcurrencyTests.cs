@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Data;
-
 namespace UnitTest
 {
     public class ConcurrencyTests
