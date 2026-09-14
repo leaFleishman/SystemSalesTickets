@@ -10,6 +10,9 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 using SystemSalesTickets.API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using SystemSalesTickets.Core.Models;
+using SystemSalesTickets.Service.Background;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +20,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<DataContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddHostedService<HealthMonitorService>();
+
 
 builder.Services.AddScoped<IEventService, EventService>();
 
@@ -32,7 +40,7 @@ builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 
@@ -107,6 +115,8 @@ app.UseMiddleware<LoggingMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHealthChecks("/health");
+app.MapControllers();
 app.MapControllers();
 app.Run();
 

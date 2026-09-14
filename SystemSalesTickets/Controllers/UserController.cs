@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
-using SystemSalesTickets.Service.Service;
 
 namespace SystemSalesTickets.Api.Controllers
 {
