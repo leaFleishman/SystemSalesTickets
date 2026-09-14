@@ -22,5 +22,16 @@ namespace SystemSalesTickets.Data
                       es.SeatId == seatId,
                 cancellationToken);
         }
+
+        public async Task<IEnumerable<EventSeat>> GetAllByEvent(
+            int eventId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .Include(es => es.Seat)
+                .Where(es => es.EventId == eventId)
+                .OrderBy(es => es.SeatId)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

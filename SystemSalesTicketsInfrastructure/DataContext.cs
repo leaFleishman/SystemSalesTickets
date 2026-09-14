@@ -121,7 +121,7 @@ namespace SystemSalesTickets.Data
                     ),
                     Name = "Concert A",
                     NumberOfSeats = 2500,
-                    Price = 15000
+                    Price = 20
                 }
             );
 

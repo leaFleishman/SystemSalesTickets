@@ -8,6 +8,10 @@ namespace SystemSalesTickets.Core.DTOs
 
         public int SeatId { get; set; }
 
+        public int Row { get; set; }
+
+        public int Line { get; set; }
+
         public bool IsAvailable { get; set; }
 
         [ConcurrencyCheck]
