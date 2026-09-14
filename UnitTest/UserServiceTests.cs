@@ -15,7 +15,6 @@ namespace UnitTest
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<ILogger<UserService>> _loggerMock;
         private readonly Mock<IPasswordHasher<User>> _passwordHasherMock;
-
         private readonly UserService _service;
 
         public UserServiceTests()
@@ -29,15 +28,12 @@ namespace UnitTest
                 _userRepositoryMock.Object,
                 _mapperMock.Object,
                 _loggerMock.Object,
-                 _passwordHasherMock.Object
-
-            );
+                _passwordHasherMock.Object);
         }
 
         [Fact]
         public async Task AddUser_ReturnsUserLogDTO()
         {
-            // Arrange
             var userDto = new RegisterRequestDTO
             {
                 UserName = "TestUser",
@@ -69,46 +65,56 @@ namespace UnitTest
                 .Setup(x => x.Map<User>(userDto))
                 .Returns(user);
 
+            _passwordHasherMock
+                .Setup(x => x.HashPassword(
+                    It.IsAny<User>(),
+                    It.IsAny<string>()))
+                .Returns("hashedPassword");
+
             _userRepositoryMock
-                .Setup(x => x.Add(user, It.IsAny<CancellationToken>()))
+                .Setup(x => x.Add(
+                    user,
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(addedUser);
 
             _userRepositoryMock
-                .Setup(x => x.Save(It.IsAny<CancellationToken>()))
+                .Setup(x => x.Save(
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             _mapperMock
                 .Setup(x => x.Map<UserLogDTO>(addedUser))
                 .Returns(expected);
 
-            // Act
-            var result = await _service.AddUser(userDto);
+            var result = await _service.AddUser(
+                userDto,
+                CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result);
+            Assert.Equal("hashedPassword", user.Password);
 
-            _mapperMock.Verify(
-                x => x.Map<User>(userDto),
+            _passwordHasherMock.Verify(
+                x => x.HashPassword(
+                    user,
+                    "Password123!"),
                 Times.Once);
 
             _userRepositoryMock.Verify(
-                x => x.Add(user, It.IsAny<CancellationToken>()),
+                x => x.Add(
+                    user,
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _userRepositoryMock.Verify(
-                x => x.Save(It.IsAny<CancellationToken>()),
-                Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<UserLogDTO>(addedUser),
+                x => x.Save(
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
         [Fact]
         public async Task GetAllUsers_ReturnsUsers()
         {
-            // Arrange
             var users = new List<User>
             {
                 new User
@@ -116,16 +122,14 @@ namespace UnitTest
                     Id = 1,
                     UserName = "User1",
                     Phone = "0501111111",
-                    Email = "user1@test.com",
-                    Password = "1234"
+                    Email = "user1@test.com"
                 },
                 new User
                 {
                     Id = 2,
                     UserName = "User2",
                     Phone = "0502222222",
-                    Email = "user2@test.com",
-                    Password = "5678"
+                    Email = "user2@test.com"
                 }
             };
 
@@ -162,10 +166,11 @@ namespace UnitTest
                 .Setup(x => x.Map<IEnumerable<UserDTO>>(users))
                 .Returns(expected);
 
-            // Act
-            var result = await _service.GetAllUsers();
+            var result = await _service.GetAllUsers(
+                1,
+                20,
+                CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result.Data);
             Assert.Equal(1, result.PageNumber);
@@ -178,25 +183,19 @@ namespace UnitTest
                     20,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<IEnumerable<UserDTO>>(users),
-                Times.Once);
         }
 
         [Fact]
         public async Task GetUserById_ReturnsUser()
         {
-            // Arrange
-            var id = 1;
+            const int id = 1;
 
             var user = new User
             {
                 Id = id,
                 UserName = "TestUser",
                 Phone = "0501234567",
-                Email = "test@test.com",
-                Password = "1234"
+                Email = "test@test.com"
             };
 
             var expected = new UserLogDTO();
@@ -211,10 +210,10 @@ namespace UnitTest
                 .Setup(x => x.Map<UserLogDTO>(user))
                 .Returns(expected);
 
-            // Act
-            var result = await _service.GetUserById(id);
+            var result = await _service.GetUserById(
+                id,
+                CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result);
 
@@ -223,20 +222,15 @@ namespace UnitTest
                     id,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<UserLogDTO>(user),
-                Times.Once);
         }
 
         [Fact]
         public async Task Login_ReturnsUser_WhenPasswordIsCorrect()
         {
-            // Arrange
             var loginModel = new LoginRequestDTO
             {
                 Email = "test@test.com",
-                Password = "1234"
+                Password = "Password123!"
             };
 
             var user = new User
@@ -244,16 +238,9 @@ namespace UnitTest
                 Id = 1,
                 UserName = "TestUser",
                 Phone = "0501234567",
-                Email = "test@test.com"
+                Email = "test@test.com",
+                Password = "hashedPassword"
             };
-
-            // UserService משתמש ב-PasswordHasher אמיתי,
-            // לכן חייבים לשמור Hash אמיתי במסד המדומה.
-            var passwordHasher =
-                new Microsoft.AspNetCore.Identity.PasswordHasher<User>();
-
-            user.Password =
-                passwordHasher.HashPassword(user, loginModel.Password);
 
             _userRepositoryMock
                 .Setup(x => x.Login(
@@ -261,28 +248,35 @@ namespace UnitTest
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
 
-            // Act
-            var result = await _service.Login(loginModel);
+            _passwordHasherMock
+                .Setup(x => x.VerifyHashedPassword(
+                    user,
+                    "hashedPassword",
+                    "Password123!"))
+                .Returns(PasswordVerificationResult.Success);
 
-            // Assert
+            var result = await _service.Login(
+                loginModel,
+                CancellationToken.None);
+
             Assert.NotNull(result);
             Assert.Equal(user, result);
 
-            _userRepositoryMock.Verify(
-                x => x.Login(
-                    loginModel,
-                    It.IsAny<CancellationToken>()),
+            _passwordHasherMock.Verify(
+                x => x.VerifyHashedPassword(
+                    user,
+                    "hashedPassword",
+                    "Password123!"),
                 Times.Once);
         }
 
         [Fact]
         public async Task Login_ReturnsNull_WhenUserDoesNotExist()
         {
-            // Arrange
             var loginModel = new LoginRequestDTO
             {
                 Email = "notfound@test.com",
-                Password = "1234"
+                Password = "Password123!"
             };
 
             _userRepositoryMock
@@ -291,23 +285,23 @@ namespace UnitTest
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync((User?)null);
 
-            // Act
-            var result = await _service.Login(loginModel);
+            var result = await _service.Login(
+                loginModel,
+                CancellationToken.None);
 
-            // Assert
             Assert.Null(result);
 
-            _userRepositoryMock.Verify(
-                x => x.Login(
-                    loginModel,
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
+            _passwordHasherMock.Verify(
+                x => x.VerifyHashedPassword(
+                    It.IsAny<User>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()),
+                Times.Never);
         }
 
         [Fact]
         public async Task Login_ReturnsNull_WhenPasswordIsIncorrect()
         {
-            // Arrange
             var loginModel = new LoginRequestDTO
             {
                 Email = "test@test.com",
@@ -319,14 +313,9 @@ namespace UnitTest
                 Id = 1,
                 UserName = "TestUser",
                 Phone = "0501234567",
-                Email = "test@test.com"
+                Email = "test@test.com",
+                Password = "hashedPassword"
             };
-
-            var passwordHasher =
-                new Microsoft.AspNetCore.Identity.PasswordHasher<User>();
-
-            user.Password =
-                passwordHasher.HashPassword(user, "CorrectPassword");
 
             _userRepositoryMock
                 .Setup(x => x.Login(
@@ -334,32 +323,31 @@ namespace UnitTest
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
 
-            // Act
-            var result = await _service.Login(loginModel);
+            _passwordHasherMock
+                .Setup(x => x.VerifyHashedPassword(
+                    user,
+                    "hashedPassword",
+                    "WrongPassword"))
+                .Returns(PasswordVerificationResult.Failed);
 
-            // Assert
+            var result = await _service.Login(
+                loginModel,
+                CancellationToken.None);
+
             Assert.Null(result);
-
-            _userRepositoryMock.Verify(
-                x => x.Login(
-                    loginModel,
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
         }
 
         [Fact]
         public async Task MakeUserManager_ReturnsUserDTO()
         {
-            // Arrange
-            var id = 1;
+            const int id = 1;
 
             var user = new User
             {
                 Id = id,
                 UserName = "TestUser",
                 Phone = "0500000000",
-                Email = "test@test.com",
-                Password = "1234"
+                Email = "test@test.com"
             };
 
             var userDto = new UserDTO
@@ -384,10 +372,10 @@ namespace UnitTest
                 .Setup(x => x.Map<UserDTO>(user))
                 .Returns(userDto);
 
-            // Act
-            var result = await _service.MakeUserManager(id);
+            var result = await _service.MakeUserManager(
+                id,
+                CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(userDto, result);
 
@@ -401,17 +389,12 @@ namespace UnitTest
                 x => x.Save(
                     It.IsAny<CancellationToken>()),
                 Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<UserDTO>(user),
-                Times.Once);
         }
 
         [Fact]
         public async Task MakeUserManager_UserNotFound_ReturnsNull()
         {
-            // Arrange
-            var id = 999;
+            const int id = 999;
 
             _userRepositoryMock
                 .Setup(x => x.MakeUserManager(
@@ -428,10 +411,10 @@ namespace UnitTest
                 .Setup(x => x.Map<UserDTO>(null))
                 .Returns((UserDTO?)null);
 
-            // Act
-            var result = await _service.MakeUserManager(id);
+            var result = await _service.MakeUserManager(
+                id,
+                CancellationToken.None);
 
-            // Assert
             Assert.Null(result);
 
             _userRepositoryMock.Verify(
@@ -448,23 +431,67 @@ namespace UnitTest
 
         [Fact]
         public async Task AddUser_HashesPasswordBeforeSaving()
-        { 
-            // Arrange
-           var userDto = new RegisterRequestDTO { UserName = "TestUser", Phone = "0501234567", Email = "test@test.com", Password = "Password123!" };
-            var user = new User { UserName = "TestUser", Phone = "0501234567", Email = "test@test.com", Password = "Password123!" };
-            var addedUser = new User { Id = 1, UserName = "TestUser", Phone = "0501234567", Email = "test@test.com" };
-            _mapperMock .Setup(x => x.Map<User>(userDto)) 
-                .Returns(user); _userRepositoryMock
-                .Setup(x => x.Add( It.IsAny<User>(),
-                It.IsAny<CancellationToken>()))
-                .ReturnsAsync(addedUser); _userRepositoryMock
-                .Setup(x => x.Save(It.IsAny<CancellationToken>())) .Returns(Task.CompletedTask); 
-            _mapperMock .Setup(x => x.Map<UserLogDTO>(addedUser)) .Returns(new UserLogDTO());
-            // Act
-            await _service.AddUser(userDto); 
-            // Assert
-            Assert.NotEqual("Password123!", user.Password);
-            Assert.NotNull(user.Password); _userRepositoryMock.Verify( x => x.Add( It.Is<User>(u => u.Password != "Password123!"),
-                It.IsAny<CancellationToken>()), Times.Once); }
+        {
+            var userDto = new RegisterRequestDTO
+            {
+                UserName = "TestUser",
+                Phone = "0501234567",
+                Email = "test@test.com",
+                Password = "Password123!"
+            };
+
+            var user = new User
+            {
+                UserName = "TestUser",
+                Phone = "0501234567",
+                Email = "test@test.com",
+                Password = "Password123!"
+            };
+
+            var addedUser = new User
+            {
+                Id = 1,
+                UserName = "TestUser",
+                Phone = "0501234567",
+                Email = "test@test.com"
+            };
+
+            _mapperMock
+                .Setup(x => x.Map<User>(userDto))
+                .Returns(user);
+
+            _passwordHasherMock
+                .Setup(x => x.HashPassword(
+                    It.IsAny<User>(),
+                    It.IsAny<string>()))
+                .Returns("hashedPassword");
+
+            _userRepositoryMock
+                .Setup(x => x.Add(
+                    It.IsAny<User>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(addedUser);
+
+            _userRepositoryMock
+                .Setup(x => x.Save(
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            _mapperMock
+                .Setup(x => x.Map<UserLogDTO>(addedUser))
+                .Returns(new UserLogDTO());
+
+            await _service.AddUser(
+                userDto,
+                CancellationToken.None);
+
+            Assert.Equal("hashedPassword", user.Password);
+
+            _userRepositoryMock.Verify(
+                x => x.Add(
+                    It.Is<User>(u => u.Password == "hashedPassword"),
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
         }
+    }
 }

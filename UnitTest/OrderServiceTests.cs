@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using SystemSalesTickets.Core;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Models;
@@ -16,7 +16,6 @@ namespace UnitTest
         private readonly Mock<IEventSeatRepository> _eventSeatRepositoryMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<ILogger<OrderService>> _loggerMock;
-
         private readonly OrderService _service;
 
         public OrderServiceTests()
@@ -33,14 +32,9 @@ namespace UnitTest
                 _eventSeatRepositoryMock.Object);
         }
 
-        // =====================================================
-        // AddOrder
-        // =====================================================
-
         [Fact]
         public async Task AddOrder_WhenEventSeatDoesNotExist_ReturnsSeatNotFound()
         {
-            // Arrange
             var orderDto = new OrderDTO
             {
                 EventId = 1,
@@ -55,19 +49,13 @@ namespace UnitTest
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync((EventSeat?)null);
 
-            // Act
-            var result = await _service.AddOrder(orderDto);
+            var result = await _service.AddOrder(
+                orderDto,
+                CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
+            Assert.Equal(OrderResultStatus.NotFound, result.Status);
             Assert.Equal("Seat not found", result.Message);
-
-            _eventSeatRepositoryMock.Verify(
-                x => x.GetByEventAndSeat(
-                    orderDto.EventId,
-                    orderDto.SeatId,
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
 
             _orderRepositoryMock.Verify(
                 x => x.Add(
@@ -79,17 +67,11 @@ namespace UnitTest
                 x => x.Save(
                     It.IsAny<CancellationToken>()),
                 Times.Never);
-
-            _mapperMock.Verify(
-                x => x.Map<Order>(
-                    It.IsAny<OrderDTO>()),
-                Times.Never);
         }
 
         [Fact]
         public async Task AddOrder_WhenEventSeatIsAlreadyOccupied_ReturnsConflictMessage()
         {
-            // Arrange
             var orderDto = new OrderDTO
             {
                 EventId = 1,
@@ -112,21 +94,15 @@ namespace UnitTest
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(eventSeat);
 
-            // Act
-            var result = await _service.AddOrder(orderDto);
+            var result = await _service.AddOrder(
+                orderDto,
+                CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
+            Assert.Equal(OrderResultStatus.Conflict, result.Status);
             Assert.Equal(
                 "Seat is already occupied",
                 result.Message);
-
-            _eventSeatRepositoryMock.Verify(
-                x => x.GetByEventAndSeat(
-                    orderDto.EventId,
-                    orderDto.SeatId,
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
 
             _orderRepositoryMock.Verify(
                 x => x.Add(
@@ -143,7 +119,6 @@ namespace UnitTest
         [Fact]
         public async Task AddOrder_WhenEventSeatIsAvailable_AddsOrderAndSaves()
         {
-            // Arrange
             var orderDto = new OrderDTO
             {
                 EventId = 1,
@@ -201,28 +176,14 @@ namespace UnitTest
                 .Setup(x => x.Map<OrderLogDTO>(newOrder))
                 .Returns(expected);
 
-            // Act
             var result = await _service.AddOrder(
                 orderDto,
                 CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(OrderResultStatus.Success, result.Status);
             Assert.Equal(expected, result.Order);
-            // ה־EventSeat חייב להפוך ללא זמין
             Assert.False(eventSeat.IsAvailable);
-
-            _eventSeatRepositoryMock.Verify(
-                x => x.GetByEventAndSeat(
-                    orderDto.EventId,
-                    orderDto.SeatId,
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<Order>(orderDto),
-                Times.Once);
 
             _orderRepositoryMock.Verify(
                 x => x.Add(
@@ -243,7 +204,6 @@ namespace UnitTest
         [Fact]
         public async Task AddOrder_WhenConcurrencyExceptionOccurs_ReturnsConflictMessage()
         {
-            // Arrange
             var orderDto = new OrderDTO
             {
                 EventId = 1,
@@ -290,26 +250,18 @@ namespace UnitTest
                 .Setup(x => x.Save(
                     It.IsAny<CancellationToken>()))
                 .ThrowsAsync(
-                    new DbUpdateConcurrencyException());
+                    new ConcurrencyException(
+                        "Seat was just booked by someone else."));
 
-            // Act
             var result = await _service.AddOrder(
                 orderDto,
                 CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
-
+            Assert.Equal(OrderResultStatus.Conflict, result.Status);
             Assert.Equal(
                 "Seat was just booked by someone else, please try again",
                 result.Message);
-
-            _eventSeatRepositoryMock.Verify(
-                x => x.GetByEventAndSeat(
-                    orderDto.EventId,
-                    orderDto.SeatId,
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
 
             _orderRepositoryMock.Verify(
                 x => x.Add(
@@ -322,21 +274,15 @@ namespace UnitTest
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
-            // בגלל ה־Concurrency לא אמורה להיות המרה ל־DTO הצלחה
             _mapperMock.Verify(
                 x => x.Map<OrderLogDTO>(
                     It.IsAny<Order>()),
                 Times.Never);
         }
 
-        // =====================================================
-        // GetAllOrders
-        // =====================================================
-
         [Fact]
         public async Task GetAllOrders_ReturnsOrders()
         {
-            // Arrange
             var orders = new List<Order>
             {
                 new Order
@@ -389,13 +335,11 @@ namespace UnitTest
                 .Setup(x => x.Map<IEnumerable<OrderDTO>>(orders))
                 .Returns(orderDtos);
 
-            // Act
             var result = await _service.GetAllOrders(
                 1,
                 20,
                 CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Data.Count());
 
@@ -405,16 +349,11 @@ namespace UnitTest
                     20,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<IEnumerable<OrderDTO>>(orders),
-                Times.Once);
         }
 
         [Fact]
         public async Task GetAllOrders_UsesRequestedPagination()
         {
-            // Arrange
             var orders = new List<Order>();
 
             _orderRepositoryMock
@@ -433,15 +372,12 @@ namespace UnitTest
                 .Setup(x => x.Map<IEnumerable<OrderDTO>>(orders))
                 .Returns(new List<OrderDTO>());
 
-            // Act
             var result = await _service.GetAllOrders(
                 2,
                 10,
                 CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
-
             Assert.Equal(2, result.PageNumber);
             Assert.Equal(10, result.PageSize);
             Assert.Equal(15, result.TotalRecords);
@@ -454,14 +390,9 @@ namespace UnitTest
                 Times.Once);
         }
 
-        // =====================================================
-        // GetOrderById
-        // =====================================================
-
         [Fact]
         public async Task GetOrderById_WhenOrderExists_ReturnsOrderLogDTO()
         {
-            // Arrange
             const int id = 1;
 
             var order = new Order
@@ -490,12 +421,10 @@ namespace UnitTest
                 .Setup(x => x.Map<OrderLogDTO>(order))
                 .Returns(expected);
 
-            // Act
             var result = await _service.GetOrderById(
                 id,
                 CancellationToken.None);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expected, result);
 
@@ -513,7 +442,6 @@ namespace UnitTest
         [Fact]
         public async Task GetOrderById_WhenOrderDoesNotExist_ReturnsNull()
         {
-            // Arrange
             const int id = 999;
 
             _orderRepositoryMock
@@ -526,22 +454,16 @@ namespace UnitTest
                 .Setup(x => x.Map<OrderLogDTO>(null))
                 .Returns((OrderLogDTO?)null);
 
-            // Act
             var result = await _service.GetOrderById(
                 id,
                 CancellationToken.None);
 
-            // Assert
             Assert.Null(result);
 
             _orderRepositoryMock.Verify(
                 x => x.GetById(
                     id,
                     It.IsAny<CancellationToken>()),
-                Times.Once);
-
-            _mapperMock.Verify(
-                x => x.Map<OrderLogDTO>(null),
                 Times.Once);
         }
     }

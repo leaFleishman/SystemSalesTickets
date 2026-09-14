@@ -67,23 +67,14 @@ namespace UnitTest
                 .ReturnsAsync(eventModel);
 
             _seatRepository
-                .Setup(x => x.GetAllAsync(
-                    1,
-                    int.MaxValue,
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(
-                    new PagedResponse<Seat>(
-                        seats,
-                        1,
-                        int.MaxValue,
-                        seats.Count));
+                .Setup(x => x.GetAllSeats(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(seats);
 
             _eventSeatRepository
                 .Setup(x => x.Add(
                     It.IsAny<EventSeat>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(
-                    (EventSeat eventSeat, CancellationToken _) => eventSeat);
+                .ReturnsAsync((EventSeat eventSeat, CancellationToken _) => eventSeat);
 
             _eventRepository
                 .Setup(x => x.Save(It.IsAny<CancellationToken>()))
@@ -108,9 +99,7 @@ namespace UnitTest
                 Times.Once);
 
             _seatRepository.Verify(
-                x => x.GetAllAsync(
-                    1,
-                    int.MaxValue,
+                x => x.GetAllSeats(
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
@@ -161,23 +150,14 @@ namespace UnitTest
                 .ReturnsAsync(eventModel);
 
             _seatRepository
-                .Setup(x => x.GetAllAsync(
-                    1,
-                    int.MaxValue,
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(
-                    new PagedResponse<Seat>(
-                        seats,
-                        1,
-                        int.MaxValue,
-                        seats.Count));
+                .Setup(x => x.GetAllSeats(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(seats);
 
             _eventSeatRepository
                 .Setup(x => x.Add(
                     It.IsAny<EventSeat>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(
-                    (EventSeat eventSeat, CancellationToken _) => eventSeat);
+                .ReturnsAsync((EventSeat eventSeat, CancellationToken _) => eventSeat);
 
             _eventRepository
                 .Setup(x => x.Save(It.IsAny<CancellationToken>()))
@@ -313,6 +293,10 @@ namespace UnitTest
                     name,
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Event)null!);
+
+            _mapper
+                .Setup(x => x.Map<EventDTO>(null))
+                .Returns((EventDTO)null!);
 
             var result = await _service.GetEventByName(
                 name,
