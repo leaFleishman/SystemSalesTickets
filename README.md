@@ -1,230 +1,534 @@
 # SystemSalesTickets
 
-## תיאור המערכת
+## תיאור הפרויקט
 
-SystemSalesTickets הוא Web API לניהול אירועים, מושבים והזמנת כרטיסים, שפותח כפרויקט סיום בקורס .NET — Web API.
+**SystemSalesTickets** הוא Web API למערכת מכירת כרטיסים לאירועים.
 
 המערכת מאפשרת:
 
-* הרשמה והתחברות משתמשים עם JWT.
-* ניהול אירועים ומושבים (Manager בלבד).
-* הצגת זמינות מושבים לאירוע, כולל pagination אמיתי.
-* ביצוע הזמנה של מושב לאירוע, עם מניעת הזמנה כפולה על אותו מושב.
-* ניהול הרשאות לפי תפקידים (`User` / `Manager`).
-* לוגים מובנים ומעקב אחר בקשות באמצעות CorrelationId.
+* ניהול משתמשים והרשאות
+* הרשמה והתחברות באמצעות JWT
+* ניהול אירועים
+* ניהול מושבים
+* הזמנת מושבים לאירועים
+* מניעת הזמנה כפולה של אותו משאב
+* טיפול ב־Optimistic Concurrency
+* בדיקות יחידה ובדיקות Concurrency
+* Logging באמצעות NLog
+* Health Check
+* Swagger לתיעוד ובדיקת ה־API
 
 ---
 
 ## טכנולוגיות
 
-* .NET 8 / ASP.NET Core Web API
-* Entity Framework Core + Npgsql (PostgreSQL)
-* JWT Authentication
+* .NET 8
+* ASP.NET Core Web API
+* Entity Framework Core
+* PostgreSQL
+* Npgsql
 * AutoMapper
+* JWT Authentication
+* xUnit
+* Moq
 * NLog
-* xUnit + Moq
 * Swagger / OpenAPI
 
 ---
 
-## ארכיטקטורת המערכת
+## מבנה הפרויקט
 
-הפתרון בנוי בארבעה פרויקטים עיקריים בתוך `SystemSalesTickets.sln`:
+הפתרון מחולק למספר פרויקטים:
 
-text
-SystemSalesTicketsDomain          →  SystemSalesTickets.Core     (Models, DTOs, Enums, Interfaces)
-SystemSalesTicketsInfrastructure  →  SystemSalesTickets.Data     (DataContext, Repositories, Migrations)
-SystemSalesTicketsApplication     →  SystemSalesTickets.Service  (Business Logic, MappingProfile)
-SystemSalesTickets                →  SystemSalesTickets.Api      (Controllers, Middleware, Program.cs)
+```text
+SystemSalesTickets
+│
+├── SystemSalesTickets.sln
+│
+├── SystemSalesTickets
+│   ├── Controllers
+│   ├── Middleware
+│   ├── Program.cs
+│   └── SystemSalesTickets.Api.csproj
+│
+├── SystemSalesTicketsDomain
+│   └── Core
+│       ├── DTOs
+│       ├── Interfaces
+│       ├── Models
+│       ├── Repository
+│       ├── MappingProfile
+│       └── SystemSalesTickets.Core.csproj
+│
+├── SystemSalesTicketsInfrastructure
+│   └── Data
+│       ├── Migrations
+│       ├── Repositories
+│       ├── DataContext
+│       └── SystemSalesTickets.Data.csproj
+│
+├── SystemSalesTicketsApplication
+│   └── Service
+│       ├── Service
+│       ├── Background
+│       └── SystemSalesTickets.Service.csproj
+│
+├── UnitTest
+│   ├── EventServiceTests
+│   ├── OrderServiceTests
+│   ├── SeatServiceTests
+│   ├── UserServiceTests
+│   ├── ConcurrencyTests
+│   └── UnitTest.csproj
+│
+├── PasswordGenerator
+│
+└── nlog.config
 ```
 
-כיוון התלויות: `Core` אינו מפנה לאף פרויקט אחר. `Data` ו-`Service` מפנים ל-`Core` בלבד. `Api` מפנה ל-`Service`, ל-`Data` (לצורך רישום DI) ול-`Core`. אין Controller שמזריק `DataContext` ישירות — הגישה לנתונים עוברת תמיד דרך שכבת ה-Service.
+### אחריות הפרויקטים
 
-> **הערה לתיקון:** כרגע `SystemSalesTickets.Service.csproj` מכיל הפניה ישירה לחבילות `Microsoft.EntityFrameworkCore` ו-`Npgsql`. מומלץ להסיר אותן — ה-Service אמור לדעת רק על ה-interfaces שב-Core, לא על ה-ORM.
+**SystemSalesTickets**
+פרויקט ה־API. מכיל את ה־Controllers, Middleware, `Program.cs`, Authentication, Authorization ו־Dependency Injection.
 
-פרויקט נוסף, `PasswordGenerator`, הוא כלי עזר עצמאי (console app) להפקת hash לסיסמאות ה-Seed — הוא אינו חלק מהרצת המערכת.
+**SystemSalesTicketsDomain**
+שכבת ה־Core. מכילה Models, DTOs, Interfaces, Repository interfaces ו־AutoMapper configuration.
 
----
+**SystemSalesTicketsInfrastructure**
+שכבת ה־Data. מכילה את `DataContext`, מימושי ה־Repositories ו־EF Core Migrations.
 
-## משאב מוגבל ותחרות עליו
+**SystemSalesTicketsApplication**
+שכבת ה־Service. מכילה את הלוגיקה העסקית ואת שירותי המערכת.
 
-המשאב המוגבל הוא **`EventSeat`** — הצירוף של מושב (`Seat`) לאירוע (`Event`), עם השדה `IsAvailable`.
+**UnitTest**
+מכיל את בדיקות ה־Unit ואת בדיקות ה־Concurrency.
 
-* התחרות מתרחשת כאשר שני משתמשים מנסים להזמין באותו רגע את אותו `EventSeat`.
-* לישות `EventSeat` (וגם ל-`Seat`) קיים שדה `Guid Version` המסומן כ-`[ConcurrencyCheck]` ומוגדר כ-Concurrency Token דרך Fluent API ב-`DataContext.OnModelCreating`.
-* `DataContext` דורס את `SaveChangesAsync` ומחליף את ה-`Version` בכל שורה שסומנה כ-`Modified`, כך שאין תלות בכך ש-service בודד יזכור לעדכן אותו.
-* ב-`OrderService.AddOrder`: קריאה ל-`EventSeat`, בדיקה ש-`IsAvailable == true`, סימון `IsAvailable = false` ושמירה — הכול בתוך אותו scope/DbContext יחד עם יצירת ה-`Order`.
-* אם בין הקריאה לשמירה מישהו אחר כבר תפס את המושב, נזרקת `DbUpdateConcurrencyException`, שנתפסת ב-`catch` ייעודי ומוחזרת כ-`Conflict` (409) עם הודעה ברורה, ונרשמת ללוג ברמת `Warning`.
-* בנוסף קיים אינדקס ייחודי ברמת בסיס הנתונים על (`EventId`, `SeatId`) בטבלת `Orders`, כשכבת הגנה משנית.
 
----
+### אחריות השכבות
 
-## Authentication & Authorization
+**Core**
+מכיל את המודלים, DTOs, interfaces, repositories contracts ו־mapping.
 
-* התחברות (`POST /api/Auth`) מייצרת JWT עם Claims של `Role` ו-`NameIdentifier` (UserId), בתוקף ל-6 דקות.
-* קיימים שני תפקידים: `User` ו-`Manager`.
-* endpoints ניהוליים (ניהול אירועים, מושבים, משתמשים, צפייה בכל ההזמנות) מוגנים ב-`[Authorize(Roles = nameof(UserRole.Manager))]`.
-* endpoints רגילים (הזמנה, הרשמה) מוגנים ב-`[Authorize]` בלבד או פתוחים (הרשמה).
+**Data**
+אחראי על Entity Framework Core, PostgreSQL, `DataContext`, repositories ו־migrations.
 
----
+**Service**
+מכיל את הלוגיקה העסקית של המערכת.
 
-## Endpoints עיקריים
+**API**
+מכיל Controllers, Middleware, Authentication, Swagger ו־Dependency Injection.
 
-| Controller | Method & Route | הרשאה |
-|---|---|---|
-| Auth | `POST /api/Auth` — התחברות | ללא |
-| User | `POST /api/User` — הרשמה | ללא |
-| User | `GET /api/User` — כל המשתמשים | Manager |
-| User | `GET /api/User/{id}` | Manager |
-| User | `PUT /api/User?id=` — הפיכת משתמש ל-Manager | Manager |
-| Event | `GET /api/Event` — pagination | Manager |
-| Event | `GET /api/Event/{name}` | User/Manager |
-| Event | `POST /api/Event` | User/Manager |
-| Seat | `GET /api/Seat`, `GET /api/Seat/{id}` | Manager |
-| Seat | `POST /api/Seat` | Manager |
-| Seat | `DELETE /api/Seat/{id}` | Manager |
-| Order | `POST /api/Order` — הזמנת מושב | User/Manager |
-| Order | `GET /api/Order`, `GET /api/Order/{id}` | Manager |
-
-הרשימה המלאה והמעודכנת זמינה תמיד ב-Swagger לאחר הרצת השרת.
+**UnitTest**
+מכיל בדיקות לשכבת השירות ובדיקות Concurrency.
 
 ---
 
-## Pagination, Validation, Async
+## Authentication ו־Authorization
 
-* שליפות רשימה (`Users`, `Orders`, `Seats`, `Events`) תומכות ב-`pageNumber`/`pageSize`, עם `Skip`/`Take` בתוך השאילתה ו-`AsNoTracking` לקריאות בלבד.
-* Validation בסיסי דרך Data Annotations על ה-Models/DTOs (`[Required]`, `[StringLength]` וכו').
-* Validation עסקי (זמינות מושב, קיום Event/Seat, מניעת הזמנה כפולה) מתבצע בשכבת ה-Service.
-* שרשרת הקריאה כולה אסינכרונית עם `CancellationToken` מועבר מה-Controller ועד ה-DbContext.
+המערכת משתמשת ב־JWT.
+
+בעת Login המערכת:
+
+1. מאתרת את המשתמש לפי Email.
+2. בודקת את הסיסמה באמצעות `IPasswordHasher<User>`.
+3. יוצרת JWT.
+4. מוסיפה ל־Token את פרטי המשתמש וה־Role.
+5. מחזירה את ה־Token ללקוח.
+
+קיימים שני תפקידים:
+
+* `User`
+* `Manager`
+
+Endpoints מוגנים משתמשים ב־`[Authorize]` או ב־`[Authorize(Roles = "...")]`.
+
+---
+
+## Password Security
+
+סיסמאות אינן נשמרות כטקסט רגיל.
+
+המערכת משתמשת ב־ASP.NET Core:
+
+```csharp
+IPasswordHasher<User>
+```
+
+ה־PasswordHasher מוזרק באמצעות Dependency Injection:
+
+```csharp
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+```
+
+---
+
+## Database
+
+המערכת משתמשת ב־PostgreSQL וב־Entity Framework Core Code First.
+
+ה־Connection String מוגדר באמצעות Configuration ואינו אמור להישמר ב־Git.
+
+הפרויקט משתמש ב־EF Core Migrations לצורך יצירה ועדכון של מבנה בסיס הנתונים.
+
+להפעלת migrations:
+
+```powershell
+Add-Migration MigrationName
+```
+
+ולעדכון בסיס הנתונים:
+
+```powershell
+Update-Database
+```
+
+---
+
+## Resource Concurrency
+
+המושב של אירוע הוא משאב מוגבל.
+
+המערכת מונעת מצב שבו שני משתמשים מצליחים להזמין את אותו מושב במקביל.
+
+לצורך כך נעשה שימוש ב־Optimistic Concurrency באמצעות `EventSeat`.
+
+ל־`EventSeat` קיים שדה `Version` המשמש כ־Concurrency Token.
+
+בעת שינוי המשאב ה־Version משתנה.
+
+אם שני משתמשים מנסים לבצע את אותה הזמנה במקביל:
+
+1. המשתמש הראשון מצליח.
+2. המשתמש השני מקבל `DbUpdateConcurrencyException`.
+3. החריגה מטופלת בשכבת השירות.
+4. למשתמש השני מוחזר Conflict (`409`).
+
+בנוסף קיים Unique Index על:
+
+```text
+EventId + SeatId
+```
+
+כך שגם בסיס הנתונים מספק הגנה מפני הזמנה כפולה.
+
+---
+
+## Validation
+
+ה־API משתמש ב־DataAnnotations וב־ASP.NET Core Model Validation.
+
+בנוסף, בדיקות עסקיות מבוצעות בשכבת ה־Service.
+
+לדוגמה:
+
+* בדיקת נתונים חסרים
+* בדיקת קיום אירוע
+* בדיקת קיום מושב
+* בדיקה שהמושב פנוי
+* בדיקת הרשאות
+* מניעת הזמנה כפולה
+
+---
+
+## DTOs
+
+ה־API אינו חושף ישירות את ה־Entities של בסיס הנתונים.
+
+המערכת משתמשת ב־DTOs להעברת מידע בין ה־API לשכבת השירות.
+
+המיפוי בין DTOs ל־Entities מתבצע באמצעות AutoMapper.
+
+---
+
+## Async
+
+פעולות I/O במערכת מבוצעות בצורה אסינכרונית.
+
+לדוגמה:
+
+```csharp
+await repository.GetAll(...);
+await repository.Add(...);
+await repository.Save(...);
+```
+
+פעולות אלו תומכות גם ב־`CancellationToken` כאשר הדבר נדרש.
+
+---
+
+## Repository Pattern
+
+הגישה ל־Database מתבצעת באמצעות Repository interfaces.
+
+לדוגמה:
+
+```text
+IUserRepository
+IEventRepository
+IOrderRepository
+ISeatRepository
+IEventSeatRepository
+```
+
+המימושים נמצאים בשכבת Data.
+
+השירותים מקבלים את ה־Repositories באמצעות Dependency Injection.
 
 ---
 
 ## Middleware
 
-* **ExceptionHandlingMiddleware** — תופס חריגות לא מטופלות ומחזיר JSON אחיד.
-* **LoggingMiddleware** — מייצר/מפיץ `CorrelationId` לכל בקשה ומתעד אותה בלוג.
-* **PerformanceMiddleware** — מודד זמן ביצוע לכל בקשה.
+המערכת כוללת Middleware לטיפול רוחבי בבקשות.
+
+### Exception Handling Middleware
+
+מטפל בחריגות שלא טופלו ומחזיר תשובת שגיאה אחידה ללקוח.
+
+חריגות לא צפויות נרשמות ברמת:
+
+```text
+Error
+```
+
+### Logging Middleware
+
+מתעד את הבקשות והתגובות ומאפשר מעקב אחר פעילות ה־API.
+
+### Performance Middleware
+
+מודד את זמן ביצוע הבקשה.
+
+### Correlation ID
+
+לכל בקשה ניתן Correlation ID המאפשר לקשר בין רשומות Log השייכות לאותה בקשה.
 
 ---
 
-## Logging (NLog)
+## Logging
 
-הגדרות ב-`nlog.config`. ה-Api ממשיך להשתמש ב-`ILogger<T>` הרגיל; NLog מתחבר מתחתיו דרך `builder.Host.UseNLog()`.
+המערכת משתמשת ב־NLog דרך `ILogger`.
 
-* לוג לכל בקשה נכנסת עם ה-`CorrelationId`.
-* חריגות — ברמת `Error`.
-* התנגשויות concurrency (409) — ברמת `Warning`.
-* לא נכתבים ללוג סיסמאות, JWT tokens או גוף בקשות הרשמה/התחברות.
+רמות הלוג העיקריות:
+
+text
+Debug
+Information
+Warning
+Error
+
+דוגמאות:
+
+* בקשה נכנסת → `Information`
+* התנגשות על משאב → `Warning`
+* חריגה שלא טופלה → `Error`
+
+אין לשמור בלוגים:
+
+* סיסמאות
+* JWT Tokens
+* Request Bodies המכילים מידע רגיש
 
 ---
 
-## בסיס נתונים
+## Health Check
 
-PostgreSQL + EF Core Code-First. ה-`DataContext` כולל Seed data ל-`Users`, `Events`, `Seats`, `EventSeats` ו-`Order` לדוגמה, כך שניתן להריץ מיד לאחר `dotnet ef database update`.
+קיים endpoint:
 
-> **הערה אבטחתית:** כרגע ה-connection string (כולל סיסמה) וה-JWT secret key שמורים בפועל בקבצים `appsettings.json` / `appsettings.Development.json` שנכנסים ל-repo. יש להעביר אותם ל-User Secrets לפני ההגשה (ראו הוראות למטה) ולוודא שהערכים לא מגיעים ל-Git.
+```text
+GET /health
+```
+
+ה־Health Check בודק את זמינות בסיס הנתונים.
 
 ---
 
-## הרצה מקומית
+## Swagger
 
-### 1. שכפול הפרויקט
+בסביבת Development ניתן להשתמש ב־Swagger לצורך בדיקה ותיעוד של ה־API.
+
+Swagger כולל תמיכה ב־JWT Bearer.
+
+לאחר קבלת Token ניתן להזין אותו באמצעות:
+
+```text
+Authorize
+```
+
+בפורמט:
+
+```text
+Bearer <JWT>
+```
+
+---
+
+## Tests
+
+הפרויקט כולל Unit Tests באמצעות:
+
+* xUnit
+* Moq
+
+הבדיקות מתמקדות בעיקר בשכבת Service.
+
+נבדקים בין היתר:
+
+* הצלחת פעולות
+* כשלי Validation עסקיים
+* משאבים שאינם קיימים
+* משאבים שכבר נתפסו
+* התנהגות משתמשים
+* Authentication-related logic
+* Optimistic Concurrency
+
+### Concurrency Test
+
+קיים Test המדגים מצב שבו שני משתמשים מנסים להזמין את אותו EventSeat:
+
+```text
+User 1 → Success
+User 2 → Concurrency Conflict
+```
+
+---
+
+## Dependency Injection
+
+השירותים וה־Repositories נרשמים באמצעות Dependency Injection ב־`Program.cs`.
+
+דוגמה:
+
+```csharp
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ISeatService, SeatService>();
+builder.Services.AddScoped<IUserService, UserService>();
+```
+
+גם `IPasswordHasher<User>` נרשם דרך DI:
+
+```csharp
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+```
+
+אין ליצור Services באמצעות `new` בתוך Services אחרים.
+
+---
+
+## Configuration and Secrets
+
+מידע רגיש אינו נשמר ב־Git.
+
+הגדרות מקומיות כגון:
+
+* Connection String
+* JWT Key
+
+צריכות להינתן באמצעות Configuration / User Secrets / Environment Variables.
+
+אין להעלות ל־Git סיסמאות, מפתחות JWT או Connection Strings המכילים credentials.
+
+---
+
+## Running the Project
+
+### 1. Clone
 
 ```bash
 git clone <repository-url>
-cd SystemSalesTickets
 ```
 
-### 2. הגדרת Secrets (במקום appsettings)
+### 2. Configure PostgreSQL
 
-```bash
-dotnet user-secrets init --project SystemSalesTickets
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=SystemSalesTickets;Username=postgres;Password=<your-password>" --project SystemSalesTickets
-dotnet user-secrets set "Jwt:Key" "<a-long-random-secret>" --project SystemSalesTickets
-```
+יש לוודא ש־PostgreSQL מותקן ופועל.
 
-לאחר מכן יש להסיר את הסיסמה ואת ה-JWT key מ-`appsettings.json` / `appsettings.Development.json`.
+יש להגדיר את `DefaultConnection` בסביבת הפיתוח המקומית.
 
-### 3. הרמת PostgreSQL (אם אין התקנה קיימת)
+### 3. Configure JWT
 
-```bash
-docker run --name pg -e POSTGRES_PASSWORD=<your-password> -p 5432:5432 -d postgres:16
-```
-
-### 4. התקנה ובנייה
-
-```bash
-dotnet restore
-dotnet build
-```
-
-### 5. Migrations
-
-```bash
-dotnet ef database update -p SystemSalesTicketsInfrastructure -s SystemSalesTickets
-```
-
-### 6. הרצה
-
-```bash
-dotnet run --project SystemSalesTickets
-```
-
-לאחר ההרצה, Swagger זמין בכתובת המוצגת בטרמינל (למשל `https://localhost:7074/swagger`).
-
----
-
-## Unit Tests
-
-בדיקות ב-`UnitTest` (xUnit + Moq) על שכבת ה-Service: `OrderServiceTests`, `SeatServiceTests`, `EventServiceTests`, `UserServiceTests` — כולל בדיקה על הזמנה מוצלחת, מושב לא זמין/לא קיים, וטיפול ב-`DbUpdateConcurrencyException`.
-
-```bash
-dotnet test
-```
-
----
-
-## משתמשי Demo
-
-המערכת נטענת עם שני משתמשים בסיס-נתונים (ראו Seed ב-`DataContext`):
-
-| Email | Role | סיסמה |
-|---|---|---|
-| `admin@example.com` | Manager | `111` |
-| `user@example.com` | User | `222` |
-
-> הסיסמאות נוצרו באמצעות פרויקט העזר `PasswordGenerator` ומאוחסנות ב-DB כ-hash בלבד. יש לוודא שהמיפוי בין המשתמשים לסיסמאות תואם בפועל למה שנוצר אצלך לפני ההגשה.
-
----
-
-## מבנה עיקרי של הפתרון
+יש להגדיר:
 
 ```text
-SystemSalesTickets.sln
-│
-├── SystemSalesTicketsDomain          (Core)
-│   ├── Models
-│   ├── DTOs
-│   ├── Enums
-│   ├── Interfaces
-│   └── Repository (interfaces)
-│
-├── SystemSalesTicketsInfrastructure  (Data)
-│   ├── DataContext.cs
-│   ├── Repository.cs + <Entity>Repository.cs
-│   └── Migrations
-│
-├── SystemSalesTicketsApplication     (Service)
-│   ├── Service/*.cs
-│   └── (MappingProfile ב-Core)
-│
-├── SystemSalesTickets                (Api)
-│   ├── Controllers
-│   ├── Middleware
-│   ├── Program.cs
-│   ├── appsettings*.json
-│   └── nlog.config
-│
-├── UnitTest
-└── PasswordGenerator                 (כלי עזר, לא חלק מהריצה)
+JWT:Key
+JWT:Issuer
+JWT:Audience
 ```
+
+באמצעות User Secrets או Configuration מתאים.
+
+### 4. Apply Migrations
+
+```powershell
+Update-Database
+```
+
+### 5. Run
+
+```bash
+dotnet run
+```
+
+או להפעיל את הפרויקט דרך Visual Studio.
+
+### 6. Swagger
+
+בסביבת Development ניתן לפתוח את כתובת ה־Swagger שה־API מציג בעת ההרצה.
+
+---
+
+## Main API Areas
+
+המערכת מספקת endpoints עבור:
+
+### Authentication
+
+```text
+POST /api/Auth/Login
+```
+
+### Users
+
+ניהול משתמשים והרשאות.
+
+### Events
+
+יצירה ושליפה של אירועים.
+
+### Seats
+
+ניהול מושבים.
+
+### Orders
+
+יצירת הזמנות ובדיקת זמינות מושבים.
+
+---
+
+## Important Design Principles
+
+הפרויקט מקפיד על:
+
+* Layered Architecture
+* Dependency Injection
+* Repository Pattern
+* DTO Pattern
+* AutoMapper
+* Async/Await
+* Entity Framework Core
+* PostgreSQL
+* JWT Authentication
+* Role-Based Authorization
+* Optimistic Concurrency
+* Global Exception Handling
+* Correlation ID
+* Structured Logging
+* Unit Testing
+* Secure password hashing
+
+---
+
+## Project Status
+
+ה־Server כולל את שכבות ה־API, Service, Data ו־Core, כולל Authentication, Authorization, Database, Logging, Concurrency ו־Tests.
+
+ה־React Client מפותח בנפרד ומתחבר ל־Web API.
