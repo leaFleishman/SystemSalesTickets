@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
@@ -21,7 +20,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = nameof(UserRole.Manager))]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery]int pageNumber = 1, [FromQuery] int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAll seats request received");

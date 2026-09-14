@@ -445,5 +445,26 @@ namespace UnitTest
                     It.IsAny<CancellationToken>()),
                 Times.Once);
         }
-    }
+
+        [Fact]
+        public async Task AddUser_HashesPasswordBeforeSaving()
+        { 
+            // Arrange
+           var userDto = new RegisterRequestDTO { UserName = "TestUser", Phone = "0501234567", Email = "test@test.com", Password = "Password123!" };
+            var user = new User { UserName = "TestUser", Phone = "0501234567", Email = "test@test.com", Password = "Password123!" };
+            var addedUser = new User { Id = 1, UserName = "TestUser", Phone = "0501234567", Email = "test@test.com" };
+            _mapperMock .Setup(x => x.Map<User>(userDto)) 
+                .Returns(user); _userRepositoryMock
+                .Setup(x => x.Add( It.IsAny<User>(),
+                It.IsAny<CancellationToken>()))
+                .ReturnsAsync(addedUser); _userRepositoryMock
+                .Setup(x => x.Save(It.IsAny<CancellationToken>())) .Returns(Task.CompletedTask); 
+            _mapperMock .Setup(x => x.Map<UserLogDTO>(addedUser)) .Returns(new UserLogDTO());
+            // Act
+            await _service.AddUser(userDto); 
+            // Assert
+            Assert.NotEqual("Password123!", user.Password);
+            Assert.NotNull(user.Password); _userRepositoryMock.Verify( x => x.Add( It.Is<User>(u => u.Password != "Password123!"),
+                It.IsAny<CancellationToken>()), Times.Once); }
+        }
 }

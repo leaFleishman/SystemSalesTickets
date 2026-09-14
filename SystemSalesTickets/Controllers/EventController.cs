@@ -21,7 +21,7 @@ namespace SystemSalesTickets.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = nameof(UserRole.Manager))]
+        [Authorize]
         public async Task<IActionResult> GetEvents([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetEvents request received");
