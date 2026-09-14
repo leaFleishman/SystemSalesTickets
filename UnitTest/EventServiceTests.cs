@@ -6,7 +6,7 @@ using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
 
-namespace SystemSalesTickets.Tests
+namespace UnitTest
 {
     public class EventServiceTests
     {
@@ -17,7 +17,7 @@ namespace SystemSalesTickets.Tests
         private readonly Mock<IEventSeatRepository> _eventSeatRepository;
         private readonly EventService _service;
 
-    public EventServiceTests()
+        public EventServiceTests()
         {
             _eventRepository = new Mock<IEventRepository>();
             _mapper = new Mock<IMapper>();
@@ -62,10 +62,10 @@ namespace SystemSalesTickets.Tests
             };
 
             var seats = new List<Seat>
-        {
-            new Seat { Id = 1, Row = 1, Line = 1 },
-            new Seat { Id = 2, Row = 1, Line = 2 }
-        };
+            {
+                new Seat { Id = 1, Row = 1, Line = 1 },
+                new Seat { Id = 2, Row = 1, Line = 2 }
+            };
 
             _mapper
                 .Setup(x => x.Map<Event>(eventDto))
@@ -94,7 +94,8 @@ namespace SystemSalesTickets.Tests
                 .ReturnsAsync(eventModel);
 
             _eventRepository
-                .Setup(x => x.Save(It.IsAny<CancellationToken>()))
+                .Setup(x => x.Save(
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             _eventSeatRepository
@@ -144,48 +145,48 @@ namespace SystemSalesTickets.Tests
         {
             // Arrange
             var events = new List<Event>
-        {
-            new Event
             {
-                Id = 1,
-                Name = "Concert",
-                Date = new DateTime(
-                    2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-                Price = 100,
-                NumberOfSeats = 50
-            },
+                new Event
+                {
+                    Id = 1,
+                    Name = "Concert",
+                    Date = new DateTime(
+                        2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    Price = 100,
+                    NumberOfSeats = 50
+                },
 
-            new Event
-            {
-                Id = 2,
-                Name = "Show",
-                Date = new DateTime(
-                    2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-                Price = 200,
-                NumberOfSeats = 100
-            }
-        };
+                new Event
+                {
+                    Id = 2,
+                    Name = "Show",
+                    Date = new DateTime(
+                        2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    Price = 200,
+                    NumberOfSeats = 100
+                }
+            };
 
             var eventDtos = new List<EventDTO>
-        {
-            new EventDTO
             {
-                Name = "Concert",
-                Date = new DateTime(
-                    2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-                Price = 100,
-                NumberOfSeats = 50
-            },
+                new EventDTO
+                {
+                    Name = "Concert",
+                    Date = new DateTime(
+                        2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    Price = 100,
+                    NumberOfSeats = 50
+                },
 
-            new EventDTO
-            {
-                Name = "Show",
-                Date = new DateTime(
-                    2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-                Price = 200,
-                NumberOfSeats = 100
-            }
-        };
+                new EventDTO
+                {
+                    Name = "Show",
+                    Date = new DateTime(
+                        2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    Price = 200,
+                    NumberOfSeats = 100
+                }
+            };
 
             _eventRepository
                 .Setup(x => x.GetAllAsync(
@@ -269,5 +270,4 @@ namespace SystemSalesTickets.Tests
                 Times.Once);
         }
     }
-
 }

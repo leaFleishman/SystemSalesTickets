@@ -7,7 +7,7 @@ using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
 
-namespace SystemSalesTickets.Tests
+namespace UnitTest
 {
     public class SeatServiceTests
     {
