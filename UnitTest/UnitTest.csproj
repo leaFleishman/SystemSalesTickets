@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SystemSalesTicketsApplication\SystemSalesTickets.Service.csproj" />
+    <ProjectReference Include="..\SystemSalesTicketsInfrastructure\SystemSalesTickets.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
