@@ -11,7 +11,7 @@ namespace SystemSalesTickets.Service.Service
     public class UserService : IUserService
     {
         private readonly IMapper _mapper;
-        private readonly PasswordHasher<User> _passwordHasher = new();
+        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IUserRepository _userRepository;
         private readonly ILogger<UserService> _logger;
         public UserService(IUserRepository userRepository, IMapper mapper, ILogger<UserService> logger, IPasswordHasher<User> @object)
@@ -19,6 +19,7 @@ namespace SystemSalesTickets.Service.Service
             _userRepository = userRepository;
             _mapper = mapper;
             _logger = logger;
+            _passwordHasher = @object;
         }
 
         public async Task<UserLogDTO> AddUser(RegisterRequestDTO user, CancellationToken cancellationToken = default)

@@ -38,9 +38,7 @@ namespace SystemSalesTickets.API.Middleware
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(
-                        ex,
-                        "Unhandled exception while processing request");
+                    
 
                     throw;
                 }
