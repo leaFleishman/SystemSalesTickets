@@ -11,12 +11,12 @@
 * ניהול אירועים
 * ניהול מושבים
 * הזמנת מושבים לאירועים
-* מניעת הזמנה כפולה של אותו משאב
-* טיפול ב־Optimistic Concurrency
-* בדיקות יחידה ובדיקות Concurrency
+* מניעת הזמנה כפולה
+* Optimistic Concurrency
+* בדיקות Unit ו־Concurrency
 * Logging באמצעות NLog
 * Health Check
-* Swagger לתיעוד ובדיקת ה־API
+* Swagger / OpenAPI
 
 ---
 
@@ -29,16 +29,16 @@
 * Npgsql
 * AutoMapper
 * JWT Authentication
+* ASP.NET Core Identity PasswordHasher
 * xUnit
 * Moq
+* SQLite In-Memory עבור בדיקות Concurrency
 * NLog
 * Swagger / OpenAPI
 
 ---
 
 ## מבנה הפרויקט
-
-הפתרון מחולק למספר פרויקטים:
 
 ```text
 SystemSalesTickets
@@ -52,95 +52,82 @@ SystemSalesTickets
 │   └── SystemSalesTickets.Api.csproj
 │
 ├── SystemSalesTicketsDomain
-│   └── Core
-│       ├── DTOs
-│       ├── Interfaces
-│       ├── Models
-│       ├── Repository
-│       ├── MappingProfile
-│       └── SystemSalesTickets.Core.csproj
+│   ├── DTOs
+│   ├── Enums
+│   ├── Interfaces
+│   ├── Models
+│   ├── Repository
+│   ├── MappingProfile.cs
+│   └── SystemSalesTickets.Core.csproj
 │
 ├── SystemSalesTicketsInfrastructure
-│   └── Data
-│       ├── Migrations
-│       ├── Repositories
-│       ├── DataContext
-│       └── SystemSalesTickets.Data.csproj
+│   ├── Migrations
+│   ├── Repositories
+│   ├── DataContext.cs
+│   └── SystemSalesTickets.Data.csproj
 │
 ├── SystemSalesTicketsApplication
-│   └── Service
-│       ├── Service
-│       ├── Background
-│       └── SystemSalesTickets.Service.csproj
+│   ├── Service
+│   ├── Background
+│   └── SystemSalesTickets.Service.csproj
 │
 ├── UnitTest
-│   ├── EventServiceTests
-│   ├── OrderServiceTests
-│   ├── SeatServiceTests
-│   ├── UserServiceTests
-│   ├── ConcurrencyTests
+│   ├── EventServiceTests.cs
+│   ├── OrderServiceTests.cs
+│   ├── SeatServiceTests.cs
+│   ├── UserServiceTests.cs
+│   ├── ConcurrencyTests.cs
 │   └── UnitTest.csproj
 │
 ├── PasswordGenerator
 │
-└── nlog.config
+├── nlog.config
+├── .gitignore
+└── README.md
 ```
 
 ### אחריות הפרויקטים
 
 **SystemSalesTickets**
-פרויקט ה־API. מכיל את ה־Controllers, Middleware, `Program.cs`, Authentication, Authorization ו־Dependency Injection.
+
+שכבת ה־API. מכילה Controllers, Middleware, Authentication, Authorization, Swagger ו־Dependency Injection.
 
 **SystemSalesTicketsDomain**
-שכבת ה־Core. מכילה Models, DTOs, Interfaces, Repository interfaces ו־AutoMapper configuration.
+
+שכבת ה־Core. מכילה Models, DTOs, Enums, Interfaces, Repository contracts ו־AutoMapper configuration.
 
 **SystemSalesTicketsInfrastructure**
+
 שכבת ה־Data. מכילה את `DataContext`, מימושי ה־Repositories ו־EF Core Migrations.
 
 **SystemSalesTicketsApplication**
-שכבת ה־Service. מכילה את הלוגיקה העסקית ואת שירותי המערכת.
+
+שכבת ה־Service. מכילה את הלוגיקה העסקית של המערכת.
 
 **UnitTest**
-מכיל את בדיקות ה־Unit ואת בדיקות ה־Concurrency.
 
-
-### אחריות השכבות
-
-**Core**
-מכיל את המודלים, DTOs, interfaces, repositories contracts ו־mapping.
-
-**Data**
-אחראי על Entity Framework Core, PostgreSQL, `DataContext`, repositories ו־migrations.
-
-**Service**
-מכיל את הלוגיקה העסקית של המערכת.
-
-**API**
-מכיל Controllers, Middleware, Authentication, Swagger ו־Dependency Injection.
-
-**UnitTest**
-מכיל בדיקות לשכבת השירות ובדיקות Concurrency.
+מכיל את בדיקות היחידה ובדיקות ה־Optimistic Concurrency.
 
 ---
 
 ## Authentication ו־Authorization
 
-המערכת משתמשת ב־JWT.
+המערכת משתמשת ב־JWT Authentication.
 
-בעת Login המערכת:
+בעת Login:
 
-1. מאתרת את המשתמש לפי Email.
-2. בודקת את הסיסמה באמצעות `IPasswordHasher<User>`.
-3. יוצרת JWT.
-4. מוסיפה ל־Token את פרטי המשתמש וה־Role.
-5. מחזירה את ה־Token ללקוח.
+1. המשתמש מאותר לפי Email.
+2. הסיסמה נבדקת באמצעות `IPasswordHasher<User>`.
+3. נוצר JWT.
+4. ה־Role של המשתמש נוסף ל־Token.
+5. ה־Token מוחזר ללקוח.
 
 קיימים שני תפקידים:
 
 * `User`
 * `Manager`
 
-Endpoints מוגנים משתמשים ב־`[Authorize]` או ב־`[Authorize(Roles = "...")]`.
+Endpoints מוגנים משתמשים ב־`[Authorize]` וב־`[Authorize(Roles = "...")]`.
 
 ---
 
@@ -148,7 +135,7 @@ Endpoints מוגנים משתמשים ב־`[Authorize]` או ב־`[Authorize(Rol
 
 סיסמאות אינן נשמרות כטקסט רגיל.
 
-המערכת משתמשת ב־ASP.NET Core:
+המערכת משתמשת ב:
 
 ```csharp
 IPasswordHasher<User>
@@ -166,42 +153,50 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 המערכת משתמשת ב־PostgreSQL וב־Entity Framework Core Code First.
 
-ה־Connection String מוגדר באמצעות Configuration ואינו אמור להישמר ב־Git.
+הגישה ל־Database מתבצעת באמצעות `DataContext` ו־Repository Pattern.
 
-הפרויקט משתמש ב־EF Core Migrations לצורך יצירה ועדכון של מבנה בסיס הנתונים.
+מבנה בסיס הנתונים מנוהל באמצעות EF Core Migrations.
 
-להפעלת migrations:
+יצירת Migration:
 
 ```powershell
 Add-Migration MigrationName
 ```
 
-ולעדכון בסיס הנתונים:
+עדכון בסיס הנתונים:
 
 ```powershell
 Update-Database
 ```
 
+ה־Connection String מוגדר באמצעות Configuration ואינו נשמר ב־Git.
+
 ---
 
 ## Resource Concurrency
 
-המושב של אירוע הוא משאב מוגבל.
+`EventSeat` הוא המשאב המוגבל במערכת.
 
-המערכת מונעת מצב שבו שני משתמשים מצליחים להזמין את אותו מושב במקביל.
+המערכת מונעת מצב שבו שני משתמשים מצליחים להזמין את אותו מושב לאותו אירוע.
 
-לצורך כך נעשה שימוש ב־Optimistic Concurrency באמצעות `EventSeat`.
+ל־`EventSeat` קיים:
 
-ל־`EventSeat` קיים שדה `Version` המשמש כ־Concurrency Token.
+```csharp
+Version
+```
 
-בעת שינוי המשאב ה־Version משתנה.
+השדה מוגדר כ־Concurrency Token.
 
-אם שני משתמשים מנסים לבצע את אותה הזמנה במקביל:
+בעת שינוי `EventSeat`, ה־Version משתנה.
 
-1. המשתמש הראשון מצליח.
-2. המשתמש השני מקבל `DbUpdateConcurrencyException`.
-3. החריגה מטופלת בשכבת השירות.
-4. למשתמש השני מוחזר Conflict (`409`).
+במקרה שבו שני משתמשים טוענים את אותו משאב:
+
+```text
+User 1 → Update → Success
+User 2 → Update → Concurrency Conflict
+```
+
+ה־Concurrency exception מטופלת במערכת ומוחזרת ללקוח כ־HTTP `409 Conflict`.
 
 בנוסף קיים Unique Index על:
 
@@ -209,24 +204,24 @@ Update-Database
 EventId + SeatId
 ```
 
-כך שגם בסיס הנתונים מספק הגנה מפני הזמנה כפולה.
+כך שבסיס הנתונים מספק שכבת הגנה נוספת מפני הזמנה כפולה.
 
 ---
 
 ## Validation
 
-ה־API משתמש ב־DataAnnotations וב־ASP.NET Core Model Validation.
+ה־API משתמש ב־ASP.NET Core Model Validation וב־DataAnnotations.
 
-בנוסף, בדיקות עסקיות מבוצעות בשכבת ה־Service.
+בדיקות עסקיות מתבצעות בשכבת Service.
 
 לדוגמה:
 
-* בדיקת נתונים חסרים
-* בדיקת קיום אירוע
-* בדיקת קיום מושב
-* בדיקה שהמושב פנוי
-* בדיקת הרשאות
-* מניעת הזמנה כפולה
+* נתונים חסרים
+* אירוע שאינו קיים
+* מושב שאינו קיים
+* מושב שאינו פנוי
+* הזמנה כפולה
+* הרשאות משתמש
 
 ---
 
@@ -234,7 +229,7 @@ EventId + SeatId
 
 ה־API אינו חושף ישירות את ה־Entities של בסיס הנתונים.
 
-המערכת משתמשת ב־DTOs להעברת מידע בין ה־API לשכבת השירות.
+המערכת משתמשת ב־DTOs להעברת מידע בין שכבות.
 
 המיפוי בין DTOs ל־Entities מתבצע באמצעות AutoMapper.
 
@@ -242,7 +237,7 @@ EventId + SeatId
 
 ## Async
 
-פעולות I/O במערכת מבוצעות בצורה אסינכרונית.
+פעולות I/O מבוצעות בצורה אסינכרונית.
 
 לדוגמה:
 
@@ -252,7 +247,7 @@ await repository.Add(...);
 await repository.Save(...);
 ```
 
-פעולות אלו תומכות גם ב־`CancellationToken` כאשר הדבר נדרש.
+פעולות Database תומכות ב־`CancellationToken` במקומות שבהם הוא נדרש.
 
 ---
 
@@ -270,7 +265,11 @@ ISeatRepository
 IEventSeatRepository
 ```
 
-המימושים נמצאים בשכבת Data.
+המימושים נמצאים בשכבת:
+
+```text
+SystemSalesTicketsInfrastructure
+```
 
 השירותים מקבלים את ה־Repositories באמצעות Dependency Injection.
 
@@ -292,7 +291,7 @@ Error
 
 ### Logging Middleware
 
-מתעד את הבקשות והתגובות ומאפשר מעקב אחר פעילות ה־API.
+מתעד בקשות ומאפשר מעקב אחר פעילות ה־API.
 
 ### Performance Middleware
 
@@ -310,11 +309,12 @@ Error
 
 רמות הלוג העיקריות:
 
-text
+```text
 Debug
 Information
 Warning
 Error
+```
 
 דוגמאות:
 
@@ -334,7 +334,7 @@ Error
 
 קיים endpoint:
 
-```text
+```http
 GET /health
 ```
 
@@ -344,17 +344,11 @@ GET /health
 
 ## Swagger
 
-בסביבת Development ניתן להשתמש ב־Swagger לצורך בדיקה ותיעוד של ה־API.
+בסביבת Development ניתן להשתמש ב־Swagger לצורך תיעוד ובדיקת ה־API.
 
-Swagger כולל תמיכה ב־JWT Bearer.
+Swagger מוגדר עם תמיכה ב־JWT Bearer.
 
-לאחר קבלת Token ניתן להזין אותו באמצעות:
-
-```text
-Authorize
-```
-
-בפורמט:
+לאחר קבלת Token ניתן להשתמש ב־`Authorize` ולהזין:
 
 ```text
 Bearer <JWT>
@@ -374,20 +368,23 @@ Bearer <JWT>
 נבדקים בין היתר:
 
 * הצלחת פעולות
-* כשלי Validation עסקיים
 * משאבים שאינם קיימים
-* משאבים שכבר נתפסו
-* התנהגות משתמשים
-* Authentication-related logic
+* משאבים שכבר תפוסים
+* פעולות משתמשים
+* Login
+* הרשאות
+* טיפול בהתנגשות
 * Optimistic Concurrency
 
-### Concurrency Test
+### Concurrency Tests
 
-קיים Test המדגים מצב שבו שני משתמשים מנסים להזמין את אותו EventSeat:
+בדיקות ה־Concurrency משתמשות ב־SQLite In-Memory כדי לבודד את הבדיקות מבסיס הנתונים המקומי.
+
+נבדק תרחיש שבו שני Contexts טוענים את אותו `EventSeat`:
 
 ```text
-User 1 → Success
-User 2 → Concurrency Conflict
+Context 1 → Update → Success
+Context 2 → Update → DbUpdateConcurrencyException
 ```
 
 ---
@@ -396,7 +393,7 @@ User 2 → Concurrency Conflict
 
 השירותים וה־Repositories נרשמים באמצעות Dependency Injection ב־`Program.cs`.
 
-דוגמה:
+לדוגמה:
 
 ```csharp
 builder.Services.AddScoped<IEventService, EventService>();
@@ -405,7 +402,7 @@ builder.Services.AddScoped<ISeatService, SeatService>();
 builder.Services.AddScoped<IUserService, UserService>();
 ```
 
-גם `IPasswordHasher<User>` נרשם דרך DI:
+גם PasswordHasher נרשם באמצעות DI:
 
 ```csharp
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -421,114 +418,140 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 הגדרות מקומיות כגון:
 
-* Connection String
+* Connection Strings
 * JWT Key
+* הגדרות Development
 
-צריכות להינתן באמצעות Configuration / User Secrets / Environment Variables.
+צריכות להישמר באמצעות Configuration או User Secrets.
 
-אין להעלות ל־Git סיסמאות, מפתחות JWT או Connection Strings המכילים credentials.
+קבצי Configuration המכילים מידע רגיש אינם מיועדים להיכלל ב־Repository.
+
+---
+
+## HTTP Status Codes
+
+ה־API משתמש בקודי HTTP בהתאם לתוצאת הפעולה.
+
+דוגמאות:
+
+```text
+200 OK
+201 Created
+204 No Content
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+409 Conflict
+500 Internal Server Error
+```
+
+במקרה של Concurrency Conflict מוחזר:
+
+```text
+409 Conflict
+```
+
+---
+
+## Error Handling
+
+שגיאות לא צפויות מטופלות באמצעות Global Exception Middleware.
+
+הלקוח מקבל תשובת שגיאה כללית ואינו מקבל פרטי Exception פנימיים.
+
+לדוגמה:
+
+```json
+{
+  "message": "An unexpected error occurred. Please try again later.",
+  "statusCode": 500
+}
+```
+
+---
+
+## Git
+
+הפרויקט משתמש ב־`.gitignore` כדי למנוע העלאה של קבצים שאינם צריכים להיות ב־Repository.
+
+בין היתר:
+
+```text
+.vs/
+bin/
+obj/
+appsettings.json
+appsettings.Development.json
+logs/
+*.log
+```
+
+אין להעלות ל־Git סיסמאות, JWT Keys, Connection Strings או מידע רגיש אחר.
 
 ---
 
 ## Running the Project
 
-### 1. Clone
+### דרישות
 
-```bash
-git clone <repository-url>
-```
+* .NET 8 SDK
+* PostgreSQL
+* Visual Studio / Rider / VS Code
 
-### 2. Configure PostgreSQL
+### הפעלה
 
-יש לוודא ש־PostgreSQL מותקן ופועל.
+יש להגדיר את ה־Connection String ואת הגדרות ה־JWT באמצעות Configuration / User Secrets.
 
-יש להגדיר את `DefaultConnection` בסביבת הפיתוח המקומית.
-
-### 3. Configure JWT
-
-יש להגדיר:
-
-```text
-JWT:Key
-JWT:Issuer
-JWT:Audience
-```
-
-באמצעות User Secrets או Configuration מתאים.
-
-### 4. Apply Migrations
+לאחר מכן:
 
 ```powershell
-Update-Database
+dotnet restore
+dotnet build
+dotnet run --project SystemSalesTickets
 ```
 
-### 5. Run
+Swagger זמין בסביבת Development.
 
-```bash
-dotnet run
-```
-
-או להפעיל את הפרויקט דרך Visual Studio.
-
-### 6. Swagger
-
-בסביבת Development ניתן לפתוח את כתובת ה־Swagger שה־API מציג בעת ההרצה.
-
----
-
-## Main API Areas
-
-המערכת מספקת endpoints עבור:
-
-### Authentication
+Health Check:
 
 ```text
-POST /api/Auth/Login
+/health
 ```
 
-### Users
-
-ניהול משתמשים והרשאות.
-
-### Events
-
-יצירה ושליפה של אירועים.
-
-### Seats
-
-ניהול מושבים.
-
-### Orders
-
-יצירת הזמנות ובדיקת זמינות מושבים.
-
 ---
 
-## Important Design Principles
+## Project Architecture
 
-הפרויקט מקפיד על:
+המערכת בנויה בארכיטקטורה שכבתית:
 
-* Layered Architecture
-* Dependency Injection
-* Repository Pattern
-* DTO Pattern
-* AutoMapper
-* Async/Await
-* Entity Framework Core
-* PostgreSQL
-* JWT Authentication
-* Role-Based Authorization
-* Optimistic Concurrency
-* Global Exception Handling
-* Correlation ID
-* Structured Logging
-* Unit Testing
-* Secure password hashing
+```text
+                ┌──────────────────────┐
+                │         API          │
+                │ Controllers/Middleware│
+                └──────────┬───────────┘
+                           │
+                           ▼
+                ┌──────────────────────┐
+                │       Service        │
+                │   Business Logic     │
+                └──────────┬───────────┘
+                           │
+                           ▼
+                ┌──────────────────────┐
+                │        Core          │
+                │ Models / DTOs / APIs │
+                └──────────┬───────────┘
+                           │
+                           ▼
+                ┌──────────────────────┐
+                │        Data          │
+                │ EF Core / PostgreSQL │
+                └──────────────────────┘
+```
 
----
+ה־Core אינו תלוי בשכבות החיצוניות.
 
-## Project Status
+ה־Data וה־Service משתמשים ב־Core.
 
-ה־Server כולל את שכבות ה־API, Service, Data ו־Core, כולל Authentication, Authorization, Database, Logging, Concurrency ו־Tests.
-
-ה־React Client מפותח בנפרד ומתחבר ל־Web API.
+ה־API מחבר בין השכבות באמצעות Dependency Injection.
