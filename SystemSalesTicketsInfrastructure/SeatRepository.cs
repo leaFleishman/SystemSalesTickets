@@ -1,4 +1,5 @@
-﻿using SystemSalesTickets.Core.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 
 namespace SystemSalesTickets.Data
@@ -11,7 +12,13 @@ namespace SystemSalesTickets.Data
             : base(dataContext)
         {
         }
+        public async Task<List<Seat>> GetAllSeats(CancellationToken cancellationToken = default)
 
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
 
     }
 }

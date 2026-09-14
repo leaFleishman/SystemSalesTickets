@@ -36,12 +36,9 @@ namespace SystemSalesTickets.Service.Service
 
             await _eventRepository.Add(tmp, cancellationToken);
 
-            var seats = await _seatRepository.GetAllAsync(
-                1,
-                int.MaxValue,
-                cancellationToken);
+            var seats = await _seatRepository.GetAllSeats(cancellationToken);
 
-            foreach (var seat in seats.Data)
+            foreach (var seat in seats)
             {
                 await _eventSeatRepository.Add(
                     new EventSeat

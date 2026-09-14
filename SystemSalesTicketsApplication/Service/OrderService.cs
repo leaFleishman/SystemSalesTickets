@@ -28,9 +28,7 @@ namespace SystemSalesTickets.Service.Service
             _eventSeatRepository = eventSeatRepository;
         }
 
-        public async Task<OrderResultDTO> AddOrder(
-    OrderDTO orderDto,
-    CancellationToken cancellationToken = default)
+        public async Task<OrderResultDTO> AddOrder(OrderDTO orderDto, CancellationToken cancellationToken = default)
         {
             try
             {
