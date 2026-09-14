@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SystemSalesTickets.Core;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
@@ -75,7 +75,7 @@ namespace SystemSalesTickets.Service.Service
                     Order = _mapper.Map<OrderLogDTO>(newOrder)
                 };
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (ConcurrencyException ex)
             {
                 _logger.LogWarning(
                     ex,

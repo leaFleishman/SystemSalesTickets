@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Core.Models;
+using System.Data;
 
 namespace SystemSalesTickets.Data
 {
@@ -23,9 +24,17 @@ namespace SystemSalesTickets.Data
 
         public async Task Save(CancellationToken cancellationToken = default)
         {
-            await _datacontext.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await _datacontext.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new ConcurrencyException(
+                    "A concurrency conflict occurred.",
+                    ex);
+            }
         }
-
         public Task Update(T entity, CancellationToken cancellationToken = default)
         {
             _dbSet.Update(entity);
