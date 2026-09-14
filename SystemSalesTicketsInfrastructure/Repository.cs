@@ -26,9 +26,10 @@ namespace SystemSalesTickets.Data
             await _datacontext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task Update(T entity, CancellationToken cancellationToken = default)
+        public Task Update(T entity, CancellationToken cancellationToken = default)
         {
             _dbSet.Update(entity);
+            return Task.CompletedTask;
         }
 
         public async Task<bool> Delete(int id, CancellationToken cancellationToken = default)

@@ -9,7 +9,6 @@ namespace SystemSalesTickets.Service.Service
 {
     public class SeatService : ISeatService
     {
-        //private static int counter = new Random().Next();
         private readonly ISeatRepository _seatRepository;
         private readonly ILogger<SeatService> _logger;
 
@@ -38,13 +37,12 @@ namespace SystemSalesTickets.Service.Service
             var res= await _seatRepository.GetById(id, cancellationToken);
             return _mapper.Map<SeatLogDTO>(res);
         }
-
         public async Task<SeatLogDTO> Add(SeatDTO seat, CancellationToken cancellationToken = default)
         {
             var tmp = _mapper.Map<Seat>(seat);
-            //tmp.SeatId=counter++;
             var res = await _seatRepository.Add(tmp, cancellationToken);
-          await  _seatRepository.Save(cancellationToken);
+            tmp.Id = res.Id;        
+            await _seatRepository.Save(cancellationToken);
             return _mapper.Map<SeatLogDTO>(res);
         }
 

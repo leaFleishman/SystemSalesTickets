@@ -14,7 +14,7 @@ namespace SystemSalesTickets.Service.Service
         private readonly PasswordHasher<User> _passwordHasher = new();
         private readonly IUserRepository _userRepository;
         private readonly ILogger<UserService> _logger;
-        public UserService(IUserRepository userRepository, IMapper mapper, ILogger<UserService> logger)
+        public UserService(IUserRepository userRepository, IMapper mapper, ILogger<UserService> logger, IPasswordHasher<User> @object)
         {
             _userRepository = userRepository;
             _mapper = mapper;
