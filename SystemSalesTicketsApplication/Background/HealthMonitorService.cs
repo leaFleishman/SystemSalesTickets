@@ -1,19 +1,20 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SystemSalesTickets.Data;
 
 namespace SystemSalesTickets.Service.Background;
 
 public class HealthMonitorService : BackgroundService
 {
-    private readonly HealthCheckService _healthCheckService;
+    private readonly DataContext _dbContext;
     private readonly ILogger<HealthMonitorService> _logger;
 
     public HealthMonitorService(
-        HealthCheckService healthCheckService,
+        DataContext dbContext,
         ILogger<HealthMonitorService> logger)
     {
-        _healthCheckService = healthCheckService;
+        _dbContext = dbContext;
         _logger = logger;
     }
 
@@ -24,33 +25,25 @@ public class HealthMonitorService : BackgroundService
         {
             try
             {
-                var result = await _healthCheckService.CheckHealthAsync(
+                var canConnect = await _dbContext.Database.CanConnectAsync(
                     stoppingToken);
 
-                if (result.Status == HealthStatus.Healthy)
+                if (canConnect)
                 {
                     _logger.LogInformation(
-                        "Health Check: System is Healthy");
+                        "Health Check: Database connection is Healthy");
                 }
                 else
                 {
-                    foreach (var entry in result.Entries)
-                    {
-                        _logger.LogError(
-                            entry.Value.Exception,
-                            "Health Check failed: {Name} | Status: {Status} | Description: {Description} | Data: {Data}",
-                            entry.Key,
-                            entry.Value.Status,
-                            entry.Value.Description,
-                            string.Join(", ", entry.Value.Data.Select(x => $"{x.Key}={x.Value}")));
-                    }
+                    _logger.LogError(
+                        "Health Check: Database connection returned false");
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(
                     ex,
-                    "Health Check failed");
+                    "Health Check failed: Database connection error");
             }
 
             await Task.Delay(
