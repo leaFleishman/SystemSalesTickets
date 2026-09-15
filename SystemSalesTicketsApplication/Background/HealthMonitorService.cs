@@ -34,9 +34,15 @@ public class HealthMonitorService : BackgroundService
                 }
                 else
                 {
-                    _logger.LogWarning(
-                        "Health Check: System status is {Status}",
-                        result.Status);
+                    foreach (var entry in result.Entries)
+                    {
+                        _logger.LogError(
+                            entry.Value.Exception,
+                            "Health Check failed: {Name} | Status: {Status} | Description: {Description}",
+                            entry.Key,
+                            entry.Value.Status,
+                            entry.Value.Description);
+                    }
                 }
             }
             catch (Exception ex)
