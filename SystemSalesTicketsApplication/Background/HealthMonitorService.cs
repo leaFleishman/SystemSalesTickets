@@ -38,10 +38,11 @@ public class HealthMonitorService : BackgroundService
                     {
                         _logger.LogError(
                             entry.Value.Exception,
-                            "Health Check failed: {Name} | Status: {Status} | Description: {Description}",
+                            "Health Check failed: {Name} | Status: {Status} | Description: {Description} | Data: {Data}",
                             entry.Key,
                             entry.Value.Status,
-                            entry.Value.Description);
+                            entry.Value.Description,
+                            string.Join(", ", entry.Value.Data.Select(x => $"{x.Key}={x.Value}")));
                     }
                 }
             }
