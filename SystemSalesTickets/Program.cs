@@ -1,3 +1,4 @@
+using SystemSalesTickets;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
 using Microsoft.EntityFrameworkCore;
