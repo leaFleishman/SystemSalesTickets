@@ -17,10 +17,12 @@ namespace SystemSalesTickets.Data
             int seatId,
             CancellationToken cancellationToken = default)
         {
-            return await _dbSet.FirstOrDefaultAsync(
-                es => es.EventId == eventId &&
-                      es.SeatId == seatId,
-                cancellationToken);
+            return await _dbSet
+                .Include(es => es.Event)
+                .FirstOrDefaultAsync(
+                    es => es.EventId == eventId &&
+                          es.SeatId == seatId,
+                    cancellationToken);
         }
 
         public async Task<IEnumerable<EventSeat>> GetAllByEvent(

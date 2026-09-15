@@ -4,6 +4,8 @@ namespace SystemSalesTickets.Core.DTOs
 {
     public class OrderDTO
     {
+        public int Id { get; set; }
+
         [Range(1, int.MaxValue)]
 
         public int EventId { get; set; }

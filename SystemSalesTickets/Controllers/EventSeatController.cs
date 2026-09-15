@@ -19,9 +19,7 @@ namespace SystemSalesTickets.Api.Controllers
             _logger = logger;
         }
 
-        // Any authenticated user needs this to see which seats are actually
-        // bookable for a given event — this is what the seat picker on the
-        // event detail page calls.
+        
         [HttpGet("event/{eventId:int}")]
         [Authorize]
         public async Task<IActionResult> GetSeatsForEvent([FromRoute] int eventId, CancellationToken cancellationToken)
@@ -33,10 +31,7 @@ namespace SystemSalesTickets.Api.Controllers
             return Ok(seats);
         }
 
-        // Links an existing seat to an existing event. Needed because seats
-        // created after an event already exists are never auto-linked to it
-        // (only seats that exist at the moment an event is created get
-        // linked automatically, in EventService.Add).
+        
         [HttpPost]
         [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<IActionResult> AddEventSeat([FromBody] AddEventSeatDTO dto, CancellationToken cancellationToken)
@@ -50,6 +45,23 @@ namespace SystemSalesTickets.Api.Controllers
                 OrderResultStatus.NotFound => NotFound(result.Message),
                 OrderResultStatus.Conflict => Conflict(result.Message),
                 OrderResultStatus.Success => Ok(result.EventSeat),
+                _ => BadRequest()
+            };
+        }
+
+        // Links every seat that isn't already linked to this event, in one go.
+        [HttpPost("event/{eventId:int}/link-all")]
+        [Authorize(Roles = nameof(UserRole.Manager))]
+        public async Task<IActionResult> LinkAllSeatsToEvent([FromRoute] int eventId, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("LinkAllSeatsToEvent request received for EventId {EventId}", eventId);
+
+            var result = await _eventSeatService.LinkAllSeatsToEvent(eventId, cancellationToken);
+
+            return result.Status switch
+            {
+                OrderResultStatus.NotFound => NotFound(result.Message),
+                OrderResultStatus.Success => Ok(new { linkedCount = result.LinkedCount }),
                 _ => BadRequest()
             };
         }

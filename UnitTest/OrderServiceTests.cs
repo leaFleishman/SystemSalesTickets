@@ -84,7 +84,8 @@ namespace UnitTest
                 EventId = 1,
                 SeatId = 1,
                 IsAvailable = false,
-                Version = Guid.NewGuid()
+                Version = Guid.NewGuid(),
+                Event = new Event { Id = 1, Name = "Concert A" }
             };
 
             _eventSeatRepositoryMock
@@ -131,7 +132,8 @@ namespace UnitTest
                 EventId = 1,
                 SeatId = 2,
                 IsAvailable = true,
-                Version = Guid.NewGuid()
+                Version = Guid.NewGuid(),
+                Event = new Event { Id = 1, Name = "Concert A" }
             };
 
             var newOrder = new Order
@@ -216,7 +218,8 @@ namespace UnitTest
                 EventId = 1,
                 SeatId = 2,
                 IsAvailable = true,
-                Version = Guid.NewGuid()
+                Version = Guid.NewGuid(),
+                Event = new Event { Id = 1, Name = "Concert A" }
             };
 
             var newOrder = new Order

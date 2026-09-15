@@ -90,5 +90,45 @@ namespace SystemSalesTickets.Service.Service
                 }
             };
         }
+        public async Task<LinkAllSeatsResultDTO> LinkAllSeatsToEvent(int eventId, CancellationToken cancellationToken = default)
+        {
+            var ev = await _eventRepository.GetById(eventId, cancellationToken);
+            if (ev == null)
+            {
+                _logger.LogWarning("LinkAllSeatsToEvent failed: Event {EventId} not found", eventId);
+                return new LinkAllSeatsResultDTO { Status = OrderResultStatus.NotFound, Message = "Event not found" };
+            }
+
+            var allSeats = await _seatRepository.GetAllSeats(cancellationToken);
+            var existingLinks = await _eventSeatRepository.GetAllByEvent(eventId, cancellationToken);
+            var alreadyLinkedSeatIds = existingLinks.Select(es => es.SeatId).ToHashSet();
+
+            var seatsToLink = allSeats.Where(s => !alreadyLinkedSeatIds.Contains(s.Id)).ToList();
+
+            foreach (var seat in seatsToLink)
+            {
+                await _eventSeatRepository.Add(
+                    new EventSeat
+                    {
+                        EventId = eventId,
+                        SeatId = seat.Id,
+                        IsAvailable = true
+                    },
+                    cancellationToken);
+            }
+
+            if (seatsToLink.Count > 0)
+            {
+                await _eventSeatRepository.Save(cancellationToken);
+            }
+
+            _logger.LogInformation("Linked {Count} seats to Event {EventId}", seatsToLink.Count, eventId);
+
+            return new LinkAllSeatsResultDTO
+            {
+                Status = OrderResultStatus.Success,
+                LinkedCount = seatsToLink.Count
+            };
+        }
     }
 }

@@ -59,6 +59,12 @@ namespace SystemSalesTickets.Service.Service
                 eventSeat.IsAvailable = false;
 
                 var newOrder = _mapper.Map<Order>(orderDto);
+                // Order.EventName and Order.OrderDate are required columns
+                // (see the seed data) but nothing populated them here, so
+                // every order was failing on a NOT NULL constraint at the
+                // database — surfaced to the client as a generic 500.
+                newOrder.EventName = eventSeat.Event.Name;
+                newOrder.OrderDate = DateTime.UtcNow;
 
                 await _orderRepository.Add(
                     newOrder,

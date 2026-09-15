@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SystemSalesTickets.Core;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Core.Models;
 using System.Data;

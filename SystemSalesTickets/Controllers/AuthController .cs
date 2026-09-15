@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using SystemSalesTickets.Core.DTOs;
-using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
 
 [Route("api/[controller]")]

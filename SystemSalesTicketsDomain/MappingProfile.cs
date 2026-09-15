@@ -13,7 +13,12 @@ namespace SystemSalesTickets.Core
             CreateMap<EventDTO, Event>().ReverseMap();
             CreateMap<OrderDTO, Order>().ReverseMap();
             CreateMap<UserLogDTO, User>().ReverseMap();
-            CreateMap<OrderLogDTO, Order>().ReverseMap();
+            CreateMap<Order, OrderLogDTO>()
+                .ForMember(dest => dest.EventDTO, opt => opt.MapFrom(src => src.Event))
+                .ForMember(dest => dest.SeatDTO, opt => opt.MapFrom(src => src.Seat));
+            CreateMap<OrderLogDTO, Order>()
+                .ForMember(dest => dest.Event, opt => opt.Ignore())
+                .ForMember(dest => dest.Seat, opt => opt.Ignore());
             CreateMap<SeatLogDTO, Seat>().ReverseMap();
             CreateMap<EventSeat, EventSeatDTO>()
                 .ForMember(dest => dest.Row, opt => opt.MapFrom(src => src.Seat.Row))
