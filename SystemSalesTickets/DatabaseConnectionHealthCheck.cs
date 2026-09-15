@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using SystemSalesTickets.Data;
 
@@ -23,7 +24,8 @@ public class DatabaseConnectionHealthCheck : IHealthCheck
             var dbContext = scope.ServiceProvider
                 .GetRequiredService<DataContext>();
 
-            await dbContext.Database.OpenConnectionAsync(cancellationToken);
+            await dbContext.Database.GetDbConnection()
+                .OpenAsync(cancellationToken);
 
             return HealthCheckResult.Healthy(
                 "Database connection successful");
