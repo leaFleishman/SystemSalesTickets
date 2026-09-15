@@ -5,11 +5,11 @@ namespace SystemSalesTickets;
 
 public class DatabaseConnectionHealthCheck : IHealthCheck
 {
-    private readonly DataContext _dbContext;
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public DatabaseConnectionHealthCheck(DataContext dbContext)
+    public DatabaseConnectionHealthCheck(IServiceScopeFactory scopeFactory)
     {
-        _dbContext = dbContext;
+        _scopeFactory = scopeFactory;
     }
 
     public async Task<HealthCheckResult> CheckHealthAsync(
@@ -18,7 +18,13 @@ public class DatabaseConnectionHealthCheck : IHealthCheck
     {
         try
         {
-            var canConnect = await _dbContext.Database.CanConnectAsync(cancellationToken);
+            using var scope = _scopeFactory.CreateScope();
+
+            var dbContext = scope.ServiceProvider
+                .GetRequiredService<DataContext>();
+
+            var canConnect = await dbContext.Database
+                .CanConnectAsync(cancellationToken);
 
             return canConnect
                 ? HealthCheckResult.Healthy("Database connection successful")
