@@ -23,12 +23,10 @@ public class DatabaseConnectionHealthCheck : IHealthCheck
             var dbContext = scope.ServiceProvider
                 .GetRequiredService<DataContext>();
 
-            var canConnect = await dbContext.Database
-                .CanConnectAsync(cancellationToken);
+            await dbContext.Database.OpenConnectionAsync(cancellationToken);
 
-            return canConnect
-                ? HealthCheckResult.Healthy("Database connection successful")
-                : HealthCheckResult.Unhealthy("Database connection failed");
+            return HealthCheckResult.Healthy(
+                "Database connection successful");
         }
         catch (Exception ex)
         {
