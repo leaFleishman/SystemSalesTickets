@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("ClientPolicy", policy =>
     {
         policy
-            .WithOrigins("https://systemsalestickets-client.onrender.com")
+            .WithOrigins("https://systemsalestickets-3.onrender.com")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
