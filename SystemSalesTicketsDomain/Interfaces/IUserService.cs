@@ -11,6 +11,7 @@ namespace SystemSalesTickets.Core.Interfaces
         Task<UserLogDTO> GetUserById(int id, CancellationToken cancellationToken = default);
         Task<User> Login(LoginRequestDTO loginModel, CancellationToken cancellationToken = default);
         Task<UserDTO> MakeUserManager(int id, CancellationToken cancellationToken = default);
+        Task<UserDTO> MakeUserRegular(int id, CancellationToken cancellationToken = default);
 
     }
 }

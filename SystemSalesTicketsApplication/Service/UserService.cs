@@ -75,6 +75,14 @@ namespace SystemSalesTickets.Service.Service
 
             return _mapper.Map<UserDTO>(user);
         }
+
+        public async Task<UserDTO> MakeUserRegular(int id, CancellationToken cancellationToken = default)
+        {
+            var user = await _userRepository.MakeUserRegular(id, cancellationToken);
+            await _userRepository.Save(cancellationToken);
+
+            return _mapper.Map<UserDTO>(user);
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
@@ -12,11 +13,13 @@ namespace SystemSalesTickets.Api.Controllers
     {
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        public UserController(IUserService userService, ILogger<UserController> logger, IConfiguration configuration)
         {
             _userService = userService;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -69,6 +72,40 @@ namespace SystemSalesTickets.Api.Controllers
 
             _logger.LogInformation("User {UserId} was successfully promoted to Manager", id);
 
+            return Ok(user);
+        }
+
+        // Reverts a Manager back to a regular User.
+        // Only the original administrator (email taken from "OriginalAdmin:Email",
+        // default admin@example.com) may call this.
+        [HttpPut("demote")]
+        [Authorize(Roles = nameof(UserRole.Manager))]
+        public async Task<ActionResult> MakeUserRegular([FromQuery] int id, CancellationToken cancellationToken)
+        {
+            var callerIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(callerIdClaim, out var callerId))
+                return Unauthorized();
+
+            var originalAdminEmail = _configuration["OriginalAdmin:Email"] ?? "admin@example.com";
+            var caller = await _userService.GetUserById(callerId, cancellationToken);
+            if (caller == null || !string.Equals(caller.Email, originalAdminEmail, StringComparison.OrdinalIgnoreCase))
+            {
+                _logger.LogWarning("User {UserId} tried to demote a manager but is not the original admin", callerId);
+                return Forbid();
+            }
+
+            if (id == callerId)
+                return BadRequest("The original administrator cannot be demoted.");
+
+            var target = await _userService.GetUserById(id, cancellationToken);
+            if (target == null)
+            {
+                _logger.LogWarning("User {UserId} was not found, demotion failed", id);
+                return NotFound();
+            }
+
+            var user = await _userService.MakeUserRegular(id, cancellationToken);
+            _logger.LogInformation("User {UserId} was demoted to regular user by {AdminId}", id, callerId);
             return Ok(user);
         }
 

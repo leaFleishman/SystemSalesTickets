@@ -10,5 +10,6 @@ namespace SystemSalesTickets.Core.Repository
         Task<User> GetById(int id, CancellationToken cancellationToken = default);
         Task<User> Login(LoginRequestDTO loginModel, CancellationToken cancellationToken = default);
         Task<User> MakeUserManager(int id, CancellationToken cancellationToken = default);
+        Task<User> MakeUserRegular(int id, CancellationToken cancellationToken = default);
     }
 }
