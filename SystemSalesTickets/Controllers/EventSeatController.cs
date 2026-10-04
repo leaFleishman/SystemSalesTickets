@@ -19,7 +19,7 @@ namespace SystemSalesTickets.Api.Controllers
             _logger = logger;
         }
 
-        
+
         [HttpGet("event/{eventId:int}")]
         [Authorize]
         public async Task<IActionResult> GetSeatsForEvent([FromRoute] int eventId, CancellationToken cancellationToken)
@@ -31,7 +31,7 @@ namespace SystemSalesTickets.Api.Controllers
             return Ok(seats);
         }
 
-        
+
         [HttpPost]
         [Authorize(Roles = nameof(UserRole.Manager))]
         public async Task<IActionResult> AddEventSeat([FromBody] AddEventSeatDTO dto, CancellationToken cancellationToken)
@@ -45,6 +45,24 @@ namespace SystemSalesTickets.Api.Controllers
                 OrderResultStatus.NotFound => NotFound(result.Message),
                 OrderResultStatus.Conflict => Conflict(result.Message),
                 OrderResultStatus.Success => Ok(result.EventSeat),
+                _ => BadRequest()
+            };
+        }
+
+        // Removes a seat's association with an event (blocked if the seat already has an order).
+        [HttpDelete("event/{eventId:int}/seat/{seatId:int}")]
+        [Authorize(Roles = nameof(UserRole.Manager))]
+        public async Task<IActionResult> RemoveEventSeat([FromRoute] int eventId, [FromRoute] int seatId, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("RemoveEventSeat request received for EventId {EventId}, SeatId {SeatId}", eventId, seatId);
+
+            var result = await _eventSeatService.RemoveEventSeat(eventId, seatId, cancellationToken);
+
+            return result.Status switch
+            {
+                OrderResultStatus.NotFound => NotFound(result.Message),
+                OrderResultStatus.Conflict => Conflict(result.Message),
+                OrderResultStatus.Success => NoContent(),
                 _ => BadRequest()
             };
         }

@@ -7,5 +7,6 @@ namespace SystemSalesTickets.Core.Interfaces
         Task<IEnumerable<EventSeatDTO>> GetSeatsForEvent(int eventId, CancellationToken cancellationToken = default);
         Task<EventSeatResultDTO> AddEventSeat(AddEventSeatDTO dto, CancellationToken cancellationToken = default);
         Task<LinkAllSeatsResultDTO> LinkAllSeatsToEvent(int eventId, CancellationToken cancellationToken = default);
+        Task<EventSeatResultDTO> RemoveEventSeat(int eventId, int seatId, CancellationToken cancellationToken = default);
     }
 }

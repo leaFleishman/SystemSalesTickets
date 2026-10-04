@@ -62,7 +62,7 @@ public class AuthController : ControllerBase
             issuer: _configuration.GetValue<string>("JWT:Issuer"),
             audience: _configuration.GetValue<string>("JWT:Audience"),
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(6),
+            expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int?>("JWT:ExpirationMinutes") ?? 480),
             signingCredentials: signinCredentials
         );
 

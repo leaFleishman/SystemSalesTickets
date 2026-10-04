@@ -12,17 +12,20 @@ namespace SystemSalesTickets.Service.Service
         private readonly IEventSeatRepository _eventSeatRepository;
         private readonly IEventRepository _eventRepository;
         private readonly ISeatRepository _seatRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly ILogger<EventSeatService> _logger;
 
         public EventSeatService(
             IEventSeatRepository eventSeatRepository,
             IEventRepository eventRepository,
             ISeatRepository seatRepository,
+            IOrderRepository orderRepository,
             ILogger<EventSeatService> logger)
         {
             _eventSeatRepository = eventSeatRepository;
             _eventRepository = eventRepository;
             _seatRepository = seatRepository;
+            _orderRepository = orderRepository;
             _logger = logger;
         }
 
@@ -90,6 +93,30 @@ namespace SystemSalesTickets.Service.Service
                 }
             };
         }
+        public async Task<EventSeatResultDTO> RemoveEventSeat(int eventId, int seatId, CancellationToken cancellationToken = default)
+        {
+            var eventSeat = await _eventSeatRepository.GetByEventAndSeat(eventId, seatId, cancellationToken);
+            if (eventSeat == null)
+            {
+                _logger.LogWarning("RemoveEventSeat failed: Seat {SeatId} is not linked to Event {EventId}", seatId, eventId);
+                return new EventSeatResultDTO { Status = OrderResultStatus.NotFound, Message = "This seat is not linked to the event" };
+            }
+
+            // A seat that already has an order for this event can't be unlinked.
+            if (await _orderRepository.ExistsForEventAndSeat(eventId, seatId, cancellationToken))
+            {
+                _logger.LogWarning("RemoveEventSeat conflict: Seat {SeatId} already has an order for Event {EventId}", seatId, eventId);
+                return new EventSeatResultDTO { Status = OrderResultStatus.Conflict, Message = "This seat already has an order for the event and cannot be removed" };
+            }
+
+            _eventSeatRepository.Remove(eventSeat);
+            await _eventSeatRepository.Save(cancellationToken);
+
+            _logger.LogInformation("Seat {SeatId} unlinked from Event {EventId}", seatId, eventId);
+
+            return new EventSeatResultDTO { Status = OrderResultStatus.Success };
+        }
+
         public async Task<LinkAllSeatsResultDTO> LinkAllSeatsToEvent(int eventId, CancellationToken cancellationToken = default)
         {
             var ev = await _eventRepository.GetById(eventId, cancellationToken);

@@ -35,5 +35,10 @@ namespace SystemSalesTickets.Data
                 .OrderBy(es => es.SeatId)
                 .ToListAsync(cancellationToken);
         }
+
+        public void Remove(EventSeat eventSeat)
+        {
+            _dbSet.Remove(eventSeat);
+        }
     }
 }

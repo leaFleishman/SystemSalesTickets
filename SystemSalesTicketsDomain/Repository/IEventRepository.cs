@@ -19,5 +19,7 @@ namespace SystemSalesTickets.Core.Repository
         Task<IEnumerable<EventSeat>> GetAllByEvent(
             int eventId,
             CancellationToken cancellationToken = default);
+
+        void Remove(EventSeat eventSeat);
     }
 }
