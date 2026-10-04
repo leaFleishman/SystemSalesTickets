@@ -70,7 +70,7 @@ namespace SystemSalesTickets.Data
                 new User
                 {
                     Role = UserRole.Manager,
-                    Email = "admin@example.com",
+                    Email = "15000",
                     Phone = "0556667788",
                     Password = "AQAAAAIAAYagAAAAEA1k61jf211sNrnVlnardNcGL3S3o4S7xxODit7eCsR8LChzkSZzH1LEABC8M47emg==",
                     Id = 1,

@@ -45,7 +45,7 @@ namespace SystemSalesTickets.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Events",
                 columns: new[] { "EventId", "Date", "Name", "NumberOfSeats", "Price" },
-                values: new object[] { 1, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Concert A", 2500, 15000m });
+                values: new object[] { 1, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Concert A", 2500, 25 });
 
             migrationBuilder.InsertData(
                 table: "Seat",
