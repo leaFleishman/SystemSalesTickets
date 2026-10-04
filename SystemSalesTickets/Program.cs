@@ -21,6 +21,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ClientPolicy", policy =>
+    {
+        policy
+            .WithOrigins("https://systemsalestickets-client.onrender.com")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 builder.Services.AddHealthChecks()
     .AddCheck<DatabaseConnectionHealthCheck>("DatabaseConnection");
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -124,6 +134,9 @@ app.UseExceptionHandlingMiddleware();
 app.UsePerformanceMiddleware();
 app.UseMiddleware<LoggingMiddleware>();
 app.UseHttpsRedirection();
+
+app.UseCors("ClientPolicy");
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHealthChecks("/health");
