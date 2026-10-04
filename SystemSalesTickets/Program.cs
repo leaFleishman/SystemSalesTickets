@@ -31,7 +31,7 @@ builder.Services.AddHostedService<HealthMonitorService>();
 
 builder.Services.AddScoped<IEventService, EventService>();
 
-builder.Services.AddScoped<IOrderService, OrderService>(); 
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddScoped<ISeatService, SeatService>();
 
@@ -104,6 +104,15 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+// Apply EF migrations on startup when RunMigrations=true (set as an env var in the cloud).
+// Off by default, so local runs never touch the database schema unexpectedly.
+if (app.Configuration.GetValue<bool>("RunMigrations"))
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
