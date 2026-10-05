@@ -192,6 +192,27 @@ namespace UnitTest
         }
 
         [Fact]
+        public async Task GetById_WhenSeatDoesNotExist_ReturnsMappedNull()
+        {
+            const int id = 999;
+
+            _seatRepositoryMock
+                .Setup(x => x.GetById(id, It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Seat?)null);
+
+            _mapperMock
+                .Setup(x => x.Map<SeatLogDTO>(null))
+                .Returns((SeatLogDTO?)null);
+
+            var result = await _service.GetById(id, CancellationToken.None);
+
+            Assert.Null(result);
+            _seatRepositoryMock.Verify(
+                x => x.GetById(id, It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
         public async Task DeleteSeatAsync_WhenSeatExists_ReturnsTrue()
         {
             const int id = 1;
