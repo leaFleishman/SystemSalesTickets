@@ -13,6 +13,8 @@ namespace SystemSalesTickets.Service.Service
     {
         private readonly IEventSeatRepository _eventSeatRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IOrderConfirmationEmailService _orderConfirmationEmailService;
         private readonly ILogger<OrderService> _logger;
         private readonly IMapper _mapper;
 
@@ -20,15 +22,21 @@ namespace SystemSalesTickets.Service.Service
             IOrderRepository orderRepository,
             IMapper mapper,
             ILogger<OrderService> logger,
-            IEventSeatRepository eventSeatRepository)
+            IEventSeatRepository eventSeatRepository,
+            IUserRepository userRepository,
+            IOrderConfirmationEmailService orderConfirmationEmailService)
         {
             _orderRepository = orderRepository;
             _mapper = mapper;
             _logger = logger;
             _eventSeatRepository = eventSeatRepository;
+            _userRepository = userRepository;
+            _orderConfirmationEmailService = orderConfirmationEmailService;
         }
 
-        public async Task<OrderResultDTO> AddOrder(OrderDTO orderDto, CancellationToken cancellationToken = default)
+        public async Task<OrderResultDTO> AddOrder(
+            OrderDTO orderDto,
+            CancellationToken cancellationToken = default)
         {
             try
             {
@@ -59,10 +67,8 @@ namespace SystemSalesTickets.Service.Service
                 eventSeat.IsAvailable = false;
 
                 var newOrder = _mapper.Map<Order>(orderDto);
-                // Order.EventName and Order.OrderDate are required columns
-                // (see the seed data) but nothing populated them here, so
-                // every order was failing on a NOT NULL constraint at the
-                // database — surfaced to the client as a generic 500.
+
+                // חובה למלא את השדות האלה לפני השמירה
                 newOrder.EventName = eventSeat.Event.Name;
                 newOrder.OrderDate = DateTime.UtcNow;
 
@@ -72,6 +78,57 @@ namespace SystemSalesTickets.Service.Service
 
                 await _orderRepository.Save(
                     cancellationToken);
+
+                // ההזמנה נשמרה בהצלחה.
+                // עכשיו מביאים את המשתמש כדי לקבל את כתובת המייל
+                // ולא מסתמכים על User navigation שלא נטען.
+                var user = await _userRepository.GetById(
+                    orderDto.UserId,
+                    cancellationToken);
+
+                if (user != null &&
+                    !string.IsNullOrWhiteSpace(user.Email))
+                {
+                    // מכינים את הנתונים הדרושים למייל.
+                    // ה-Order עצמו עדיין לא מכיל User/Seat/מבנה מלא,
+                    // לכן נטען כאן את הנתונים הדרושים.
+                    newOrder.User = user;
+                    newOrder.Event = eventSeat.Event;
+
+                    // אם EventSeatRepository טוען את Seat,
+                    // הוא יהיה זמין כאן.
+                    newOrder.Seat = eventSeat.Seat;
+
+                    try
+                    {
+                        await _orderConfirmationEmailService.SendAsync(
+                            newOrder,
+                            user.Email,
+                            user.UserName,
+                            cancellationToken);
+
+                        _logger.LogInformation(
+                            "Order confirmation email sent for OrderId {OrderId} to {Email}",
+                            newOrder.Id,
+                            user.Email);
+                    }
+                    catch (Exception ex)
+                    {
+                        // ההזמנה כבר נשמרה בהצלחה.
+                        // כשל בשליחת המייל לא אמור להפוך את ההזמנה ל-500.
+                        _logger.LogError(
+                            ex,
+                            "Failed to send order confirmation email for OrderId {OrderId}",
+                            newOrder.Id);
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning(
+                        "Could not send order confirmation email for OrderId {OrderId}: user {UserId} was not found or has no email",
+                        newOrder.Id,
+                        orderDto.UserId);
+                }
 
                 return new OrderResultDTO
                 {

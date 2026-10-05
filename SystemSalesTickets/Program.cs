@@ -39,6 +39,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHostedService<HealthMonitorService>();
 
+builder.Services.AddScoped<
+    IOrderConfirmationEmailService,
+    OrderConfirmationEmailService>();
+
 
 // Event reminder emails (sent ~24h before an event)
 builder.Services.Configure<EmailSettings>(

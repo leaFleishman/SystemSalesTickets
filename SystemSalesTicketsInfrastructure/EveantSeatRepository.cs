@@ -11,7 +11,6 @@ namespace SystemSalesTickets.Data
             : base(context)
         {
         }
-
         public async Task<EventSeat?> GetByEventAndSeat(
             int eventId,
             int seatId,
@@ -19,6 +18,7 @@ namespace SystemSalesTickets.Data
         {
             return await _dbSet
                 .Include(es => es.Event)
+                .Include(es => es.Seat)
                 .FirstOrDefaultAsync(
                     es => es.EventId == eventId &&
                           es.SeatId == seatId,

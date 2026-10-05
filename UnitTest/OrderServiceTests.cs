@@ -4,6 +4,7 @@ using Moq;
 using SystemSalesTickets.Core;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
+using SystemSalesTickets.Core.Interfaces;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Core.Repository;
 using SystemSalesTickets.Service.Service;
@@ -17,11 +18,17 @@ namespace UnitTest
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<ILogger<OrderService>> _loggerMock;
         private readonly OrderService _service;
+        private readonly Mock<IUserRepository> _userRepositoryMock;
 
+        private readonly Mock<IOrderConfirmationEmailService>
+            _orderConfirmationEmailServiceMock;
         public OrderServiceTests()
         {
             _orderRepositoryMock = new Mock<IOrderRepository>();
             _eventSeatRepositoryMock = new Mock<IEventSeatRepository>();
+            _userRepositoryMock = new Mock<IUserRepository>();
+            _orderConfirmationEmailServiceMock =
+                new Mock<IOrderConfirmationEmailService>();
             _mapperMock = new Mock<IMapper>();
             _loggerMock = new Mock<ILogger<OrderService>>();
 
@@ -29,9 +36,10 @@ namespace UnitTest
                 _orderRepositoryMock.Object,
                 _mapperMock.Object,
                 _loggerMock.Object,
-                _eventSeatRepositoryMock.Object);
+                _eventSeatRepositoryMock.Object,
+                _userRepositoryMock.Object,
+                _orderConfirmationEmailServiceMock.Object);
         }
-
         [Fact]
         public async Task AddOrder_WhenEventSeatDoesNotExist_ReturnsSeatNotFound()
         {
