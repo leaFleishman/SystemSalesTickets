@@ -46,7 +46,7 @@ builder.Services.Configure<EmailSettings>(
 builder.Services.Configure<ReminderSettings>(
     builder.Configuration.GetSection(ReminderSettings.SectionName));
 
-builder.Services.AddHttpClient<IEmailService, BrevoEmailService>();
+builder.Services.AddHttpClient<IEmailService, GoogleAppsScriptEmailService>();
 
 builder.Services.AddScoped<IEventReminderService, EventReminderService>();
 builder.Services.AddHostedService<EventReminderBackgroundService>();
