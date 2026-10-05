@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SystemSalesTickets.Core.Interfaces;
@@ -71,7 +72,7 @@ namespace SystemSalesTickets.Service.Service
                 stopwatch.Stop();
 
                 _logger.LogInformation(
-                    "Google Apps Script email request finished in {ElapsedMs} ms with status {StatusCode}: {Response}",
+                    "Google Apps Script email request finished in {ElapsedMs} ms with HTTP {StatusCode}: {Response}",
                     stopwatch.ElapsedMilliseconds,
                     (int)response.StatusCode,
                     responseBody);
@@ -81,6 +82,35 @@ namespace SystemSalesTickets.Service.Service
                     throw new HttpRequestException(
                         $"Google Apps Script email gateway returned {(int)response.StatusCode} ({response.StatusCode}).");
                 }
+
+                try
+                {
+                    using var json = JsonDocument.Parse(responseBody);
+
+                    if (json.RootElement.TryGetProperty("status", out var statusElement) &&
+                        statusElement.TryGetInt32(out var gatewayStatus) &&
+                        gatewayStatus != 200)
+                    {
+                        var message =
+                            json.RootElement.TryGetProperty("message", out var messageElement)
+                                ? messageElement.GetString()
+                                : "Unknown gateway error";
+
+                        throw new HttpRequestException(
+                            $"Google Apps Script email gateway returned status {gatewayStatus}: {message}");
+                    }
+                }
+                catch (JsonException)
+                {
+                    _logger.LogWarning(
+                        "Google Apps Script returned a non-JSON response with HTTP {StatusCode}.",
+                        (int)response.StatusCode);
+                }
+
+                _logger.LogInformation(
+                    "Email '{Subject}' accepted by Google Apps Script for {Address}",
+                    subject,
+                    toAddress);
             }
             catch (OperationCanceledException) when (
                 timeoutCts.IsCancellationRequested &&
