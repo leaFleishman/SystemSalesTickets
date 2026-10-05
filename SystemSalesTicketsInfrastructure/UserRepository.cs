@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Models;
@@ -38,6 +37,15 @@ namespace SystemSalesTickets.Data
             if (user == null)
                 return null;
             user.Role = UserRole.User;
+            await Update(user, cancellationToken);
+            return user;
+        }
+        public async Task<User> SetBlocked(int id, bool isBlocked, CancellationToken cancellationToken = default)
+        {
+            var user = await _dbSet.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            if (user == null)
+                return null;
+            user.IsBlocked = isBlocked;
             await Update(user, cancellationToken);
             return user;
         }

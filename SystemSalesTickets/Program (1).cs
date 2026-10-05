@@ -14,7 +14,7 @@ using SystemSalesTickets.API.Middleware;
 using Microsoft.AspNetCore.Identity;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Service.Background;
-
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 

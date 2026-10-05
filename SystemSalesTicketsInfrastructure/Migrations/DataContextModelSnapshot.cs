@@ -23,267 +23,272 @@ namespace SystemSalesTickets.Data.Migrations
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("Date")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("character varying(50)");
 
-                    b.Property<int>("NumberOfSeats")
-                        .HasColumnType("integer");
+                b.Property<int>("NumberOfSeats")
+                    .HasColumnType("integer");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
+                b.Property<double>("Price")
+                    .HasColumnType("double precision");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Date")
-                        .IsUnique();
+                b.HasIndex("Date")
+                    .IsUnique();
 
-                    b.ToTable("Events");
+                b.ToTable("Events");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Date = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Concert A",
-                            NumberOfSeats = 2500,
-                            Price = 15000.0
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        Date = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        Name = "Concert A",
+                        NumberOfSeats = 2500,
+                        Price = 15000.0
+                    });
+            });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.EventSeat", b =>
-                {
-                    b.Property<int>("EventId")
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("EventId")
+                    .HasColumnType("integer");
 
-                    b.Property<int>("SeatId")
-                        .HasColumnType("integer");
+                b.Property<int>("SeatId")
+                    .HasColumnType("integer");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean");
+                b.Property<bool>("IsAvailable")
+                    .HasColumnType("boolean");
 
-                    b.Property<Guid>("Version")
-                        .IsConcurrencyToken()
-                        .HasColumnType("uuid");
+                b.Property<Guid>("Version")
+                    .IsConcurrencyToken()
+                    .HasColumnType("uuid");
 
-                    b.HasKey("EventId", "SeatId");
+                b.HasKey("EventId", "SeatId");
 
-                    b.HasIndex("SeatId");
+                b.HasIndex("SeatId");
 
-                    b.ToTable("EventSeats");
+                b.ToTable("EventSeats");
 
-                    b.HasData(
-                        new
-                        {
-                            EventId = 1,
-                            SeatId = 1,
-                            IsAvailable = false,
-                            Version = new Guid("11111111-1111-1111-1111-111111111111")
-                        },
-                        new
-                        {
-                            EventId = 1,
-                            SeatId = 2,
-                            IsAvailable = true,
-                            Version = new Guid("22222222-2222-2222-2222-222222222222")
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        EventId = 1,
+                        SeatId = 1,
+                        IsAvailable = false,
+                        Version = new Guid("11111111-1111-1111-1111-111111111111")
+                    },
+                    new
+                    {
+                        EventId = 1,
+                        SeatId = 2,
+                        IsAvailable = true,
+                        Version = new Guid("22222222-2222-2222-2222-222222222222")
+                    });
+            });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("integer");
+                b.Property<int>("EventId")
+                    .HasColumnType("integer");
 
-                    b.Property<string>("EventName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("EventName")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("OrderDate")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("SeatId")
-                        .HasColumnType("integer");
+                b.Property<int>("SeatId")
+                    .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                b.Property<int>("UserId")
+                    .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("SeatId");
+                b.HasIndex("SeatId");
 
-                    b.HasIndex("UserId");
+                b.HasIndex("UserId");
 
-                    b.HasIndex("EventId", "SeatId")
-                        .IsUnique();
+                b.HasIndex("EventId", "SeatId")
+                    .IsUnique();
 
-                    b.ToTable("Orders");
+                b.ToTable("Orders");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EventId = 1,
-                            EventName = "Concert A",
-                            OrderDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            SeatId = 1,
-                            UserId = 2
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        EventId = 1,
+                        EventName = "Concert A",
+                        OrderDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        SeatId = 1,
+                        UserId = 2
+                    });
+            });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.Seat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Line")
-                        .HasColumnType("integer");
+                b.Property<int>("Line")
+                    .HasColumnType("integer");
 
-                    b.Property<int>("Row")
-                        .HasColumnType("integer");
+                b.Property<int>("Row")
+                    .HasColumnType("integer");
 
-                    b.Property<Guid>("Version")
-                        .IsConcurrencyToken()
-                        .HasColumnType("uuid");
+                b.Property<Guid>("Version")
+                    .IsConcurrencyToken()
+                    .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Seat", (string)null);
+                b.ToTable("Seat", (string)null);
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Line = 1,
-                            Row = 1,
-                            Version = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Line = 12,
-                            Row = 12,
-                            Version = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        Line = 1,
+                        Row = 1,
+                        Version = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+                    },
+                    new
+                    {
+                        Id = 2,
+                        Line = 12,
+                        Row = 12,
+                        Version = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
+                    });
+            });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<bool>("IsBlocked")
+                    .HasColumnType("boolean");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
+                b.Property<string>("Phone")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                b.Property<int>("Role")
+                    .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                b.Property<string>("UserName")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("character varying(50)");
 
-                    b.ToTable("Users");
+                b.HasKey("Id");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "admin@example.com",
-                            Password = "AQAAAAIAAYagAAAAEA1k61jf211sNrnVlnardNcGL3S3o4S7xxODit7eCsR8LChzkSZzH1LEABC8M47emg==",
-                            Phone = "0556667788",
-                            Role = 2,
-                            UserName = "Avi"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "user@example.com",
-                            Password = "AQAAAAIAAYagAAAAEEgW8PRhBaBx46pxAz/cboT2Ca/gB+JZ3XxBtqCudaDHMLhbhUNrKRHHtnfoDkHuUA==",
-                            Phone = "0556367788",
-                            Role = 1,
-                            UserName = "Moshe"
-                        });
-                });
+                b.ToTable("Users");
+
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        Email = "admin@example.com",
+                        IsBlocked = false,
+                        Password = "AQAAAAIAAYagAAAAEA1k61jf211sNrnVlnardNcGL3S3o4S7xxODit7eCsR8LChzkSZzH1LEABC8M47emg==",
+                        Phone = "0556667788",
+                        Role = 2,
+                        UserName = "Avi"
+                    },
+                    new
+                    {
+                        Id = 2,
+                        Email = "user@example.com",
+                        IsBlocked = false,
+                        Password = "AQAAAAIAAYagAAAAEEgW8PRhBaBx46pxAz/cboT2Ca/gB+JZ3XxBtqCudaDHMLhbhUNrKRHHtnfoDkHuUA==",
+                        Phone = "0556367788",
+                        Role = 1,
+                        UserName = "Moshe"
+                    });
+            });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.EventSeat", b =>
-                {
-                    b.HasOne("SystemSalesTickets.Core.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("SystemSalesTickets.Core.Models.Event", "Event")
+                    .WithMany()
+                    .HasForeignKey("EventId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("SystemSalesTickets.Core.Models.Seat", "Seat")
-                        .WithMany()
-                        .HasForeignKey("SeatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("SystemSalesTickets.Core.Models.Seat", "Seat")
+                    .WithMany()
+                    .HasForeignKey("SeatId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Event");
+                b.Navigation("Event");
 
-                    b.Navigation("Seat");
-                });
+                b.Navigation("Seat");
+            });
 
             modelBuilder.Entity("SystemSalesTickets.Core.Models.Order", b =>
-                {
-                    b.HasOne("SystemSalesTickets.Core.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("SystemSalesTickets.Core.Models.Event", "Event")
+                    .WithMany()
+                    .HasForeignKey("EventId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("SystemSalesTickets.Core.Models.Seat", "Seat")
-                        .WithMany()
-                        .HasForeignKey("SeatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("SystemSalesTickets.Core.Models.Seat", "Seat")
+                    .WithMany()
+                    .HasForeignKey("SeatId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("SystemSalesTickets.Core.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("SystemSalesTickets.Core.Models.User", "User")
+                    .WithMany()
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Event");
+                b.Navigation("Event");
 
-                    b.Navigation("Seat");
+                b.Navigation("Seat");
 
-                    b.Navigation("User");
-                });
+                b.Navigation("User");
+            });
 #pragma warning restore 612, 618
         }
     }

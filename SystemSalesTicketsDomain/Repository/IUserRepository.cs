@@ -11,5 +11,6 @@ namespace SystemSalesTickets.Core.Repository
         Task<User> Login(LoginRequestDTO loginModel, CancellationToken cancellationToken = default);
         Task<User> MakeUserManager(int id, CancellationToken cancellationToken = default);
         Task<User> MakeUserRegular(int id, CancellationToken cancellationToken = default);
+        Task<User> SetBlocked(int id, bool isBlocked, CancellationToken cancellationToken = default);
     }
 }

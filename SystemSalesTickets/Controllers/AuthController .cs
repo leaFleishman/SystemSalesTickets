@@ -35,6 +35,12 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
+        // NEW: a blocked user cannot get a token
+        if (user.IsBlocked)
+        {
+            _logger.LogWarning("Login rejected: UserId {UserId} is blocked", user.Id);
+            return StatusCode(403, new { message = "Your account has been blocked. Please contact an administrator." });
+        }
 
         var claims = new List<Claim>
         {

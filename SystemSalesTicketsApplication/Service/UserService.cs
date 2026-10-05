@@ -83,6 +83,25 @@ namespace SystemSalesTickets.Service.Service
 
             return _mapper.Map<UserDTO>(user);
         }
+        public async Task<UserDTO> BlockUser(int id, CancellationToken cancellationToken = default)
+        {
+            var user = await _userRepository.SetBlocked(id, true, cancellationToken);
+            if (user == null)
+                return null;
+
+            await _userRepository.Save(cancellationToken);
+            return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<UserDTO> UnblockUser(int id, CancellationToken cancellationToken = default)
+        {
+            var user = await _userRepository.SetBlocked(id, false, cancellationToken);
+            if (user == null)
+                return null;
+
+            await _userRepository.Save(cancellationToken);
+            return _mapper.Map<UserDTO>(user);
+        }
     }
 }
 

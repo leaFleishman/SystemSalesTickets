@@ -14,7 +14,7 @@ namespace SystemSalesTickets.Core.Models
 
         public UserRole Role { get; set; }
 
-        [ Required(ErrorMessage = "Phone is required")]
+        [Required(ErrorMessage = "Phone is required")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
@@ -22,5 +22,7 @@ namespace SystemSalesTickets.Core.Models
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+
+        public bool IsBlocked { get; set; }
     }
 }
