@@ -1,20 +1,20 @@
 namespace SystemSalesTickets.Core.Settings
 {
     /// <summary>
-    /// HTTPS email API configuration.
+    /// Google Apps Script email gateway configuration.
     /// Bound from the "Email" section of appsettings / environment variables.
-    /// Keep the API key out of source control.
+    /// Keep the shared secret out of source control.
     /// </summary>
     public class EmailSettings
     {
         public const string SectionName = "Email";
 
-        public string ApiKey { get; set; } = string.Empty;
-        public string FromAddress { get; set; } = string.Empty;
+        public string ApiUrl { get; set; } = string.Empty;
+        public string Secret { get; set; } = string.Empty;
         public string FromName { get; set; } = "SystemSalesTickets";
 
         public bool IsConfigured =>
-            !string.IsNullOrWhiteSpace(ApiKey) &&
-            !string.IsNullOrWhiteSpace(FromAddress);
+            !string.IsNullOrWhiteSpace(ApiUrl) &&
+            !string.IsNullOrWhiteSpace(Secret);
     }
 }
