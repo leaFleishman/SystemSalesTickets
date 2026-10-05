@@ -46,7 +46,14 @@ builder.Services.Configure<EmailSettings>(
 builder.Services.Configure<ReminderSettings>(
     builder.Configuration.GetSection(ReminderSettings.SectionName));
 
-builder.Services.AddHttpClient<IEmailService, GoogleAppsScriptEmailService>();
+builder.Services.AddHttpClient<IEmailService, GoogleAppsScriptEmailService>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        // Google Apps Script ContentService returns a redirect.
+        // Do not automatically follow it, because following a 302 can turn
+        // the original POST into a GET.
+        AllowAutoRedirect = false
+    });
 
 builder.Services.AddScoped<IEventReminderService, EventReminderService>();
 builder.Services.AddHostedService<EventReminderBackgroundService>();
