@@ -14,6 +14,7 @@ using SystemSalesTickets.API.Middleware;
 using Microsoft.AspNetCore.Identity;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Service.Background;
+using SystemSalesTickets.Core.Settings;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,13 @@ builder.Services.AddHealthChecks()
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHostedService<HealthMonitorService>();
+
+// Event reminder emails (sent ~24h before an event)
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection(EmailSettings.SectionName));
+builder.Services.Configure<ReminderSettings>(builder.Configuration.GetSection(ReminderSettings.SectionName));
+builder.Services.AddSingleton<IEmailService, SmtpEmailService>();
+builder.Services.AddScoped<IEventReminderService, EventReminderService>();
+builder.Services.AddHostedService<EventReminderBackgroundService>();
 
 
 builder.Services.AddScoped<IEventService, EventService>();

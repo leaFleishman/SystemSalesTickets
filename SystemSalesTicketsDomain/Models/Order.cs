@@ -18,6 +18,9 @@ namespace SystemSalesTickets.Core.Models
         [Required]
         public DateTime OrderDate { get; set; }
 
+        /// <summary>UTC time the pre-event reminder email was handled. Null = not yet reminded.</summary>
+        public DateTime? ReminderSentAt { get; set; }
+
         public User User { get; set; }
 
         public Event Event { get; set; }

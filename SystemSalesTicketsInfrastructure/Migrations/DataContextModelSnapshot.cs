@@ -118,6 +118,9 @@ namespace SystemSalesTickets.Data.Migrations
                 b.Property<DateTime>("OrderDate")
                     .HasColumnType("timestamp with time zone");
 
+                b.Property<DateTime?>("ReminderSentAt")
+                    .HasColumnType("timestamp with time zone");
+
                 b.Property<int>("SeatId")
                     .HasColumnType("integer");
 

@@ -23,6 +23,22 @@ namespace SystemSalesTickets.Data
                 cancellationToken);
         }
 
+        public async Task<List<Order>> GetOrdersPendingReminder(
+            DateTime fromUtc,
+            DateTime toUtc,
+            CancellationToken cancellationToken = default)
+        {
+            // Tracked on purpose: the reminder job sets ReminderSentAt and calls Save().
+            return await _dbSet
+                .Include(o => o.User)
+                .Include(o => o.Event)
+                .Include(o => o.Seat)
+                .Where(o => o.ReminderSentAt == null
+                            && o.Event.Date > fromUtc
+                            && o.Event.Date <= toUtc)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<Order?> GetById(int id, CancellationToken cancellationToken = default)
         {
             return await _dbSet
