@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -45,29 +46,56 @@ namespace SystemSalesTickets.Service.Service
                 textBody = textBody ?? string.Empty
             };
 
-            using var response = await _httpClient.PostAsJsonAsync(
-                _settings.ApiUrl,
-                payload,
-                cancellationToken);
+            var stopwatch = Stopwatch.StartNew();
 
-            var responseBody =
-                await response.Content.ReadAsStringAsync(cancellationToken);
+            _logger.LogInformation(
+                "Starting Google Apps Script email request for {Address}, subject '{Subject}'",
+                toAddress,
+                subject);
 
-            if (!response.IsSuccessStatusCode)
+            using var timeoutCts =
+                CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
+
+            try
             {
-                _logger.LogError(
-                    "Google Apps Script email gateway failed with status {StatusCode}: {Response}",
+                using var response = await _httpClient.PostAsJsonAsync(
+                    _settings.ApiUrl,
+                    payload,
+                    timeoutCts.Token);
+
+                var responseBody =
+                    await response.Content.ReadAsStringAsync(timeoutCts.Token);
+
+                stopwatch.Stop();
+
+                _logger.LogInformation(
+                    "Google Apps Script email request finished in {ElapsedMs} ms with status {StatusCode}: {Response}",
+                    stopwatch.ElapsedMilliseconds,
                     (int)response.StatusCode,
                     responseBody);
 
-                throw new HttpRequestException(
-                    $"Google Apps Script email gateway returned {(int)response.StatusCode} ({response.StatusCode}).");
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException(
+                        $"Google Apps Script email gateway returned {(int)response.StatusCode} ({response.StatusCode}).");
+                }
             }
+            catch (OperationCanceledException) when (
+                timeoutCts.IsCancellationRequested &&
+                !cancellationToken.IsCancellationRequested)
+            {
+                stopwatch.Stop();
 
-            _logger.LogInformation(
-                "Email '{Subject}' accepted by Google Apps Script for {Address}",
-                subject,
-                toAddress);
+                _logger.LogError(
+                    "Google Apps Script email request timed out after {ElapsedMs} ms for {Address}",
+                    stopwatch.ElapsedMilliseconds,
+                    toAddress);
+
+                throw new TimeoutException(
+                    "Google Apps Script email request timed out after 10 seconds.");
+            }
         }
     }
 }
