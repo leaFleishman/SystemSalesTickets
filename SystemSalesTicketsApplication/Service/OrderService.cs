@@ -54,6 +54,15 @@ namespace SystemSalesTickets.Service.Service
                     };
                 }
 
+                if (eventSeat.Event?.IsCancelled == true)
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.Conflict,
+                        Message = "This event was cancelled"
+                    };
+                }
+
                 if (!eventSeat.IsAvailable)
                 {
                     return new OrderResultDTO

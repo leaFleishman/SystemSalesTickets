@@ -52,6 +52,7 @@ builder.Services.AddScoped<IEventReminderService, EventReminderService>();
 builder.Services.AddHostedService<EventReminderBackgroundService>();
 
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IEventCancellationNotifier, EventCancellationNotifier>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ISeatService, SeatService>();
 builder.Services.AddScoped<IUserService, UserService>();

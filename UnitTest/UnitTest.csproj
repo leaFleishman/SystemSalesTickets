@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SystemSalesTicketsApplication\SystemSalesTickets.Service.csproj" />
     <ProjectReference Include="..\SystemSalesTicketsInfrastructure\SystemSalesTickets.Data.csproj" />
+    <ProjectReference Include="..\SystemSalesTickets\SystemSalesTickets.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

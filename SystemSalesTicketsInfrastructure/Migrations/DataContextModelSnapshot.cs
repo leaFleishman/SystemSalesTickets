@@ -30,8 +30,18 @@ namespace SystemSalesTickets.Data.Migrations
 
                 NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                b.Property<string>("CancellationReason")
+                    .HasMaxLength(500)
+                    .HasColumnType("character varying(500)");
+
+                b.Property<DateTime?>("CancelledAt")
+                    .HasColumnType("timestamp with time zone");
+
                 b.Property<DateTime>("Date")
                     .HasColumnType("timestamp with time zone");
+
+                b.Property<bool>("IsCancelled")
+                    .HasColumnType("boolean");
 
                 b.Property<string>("Name")
                     .IsRequired()
@@ -56,6 +66,7 @@ namespace SystemSalesTickets.Data.Migrations
                     {
                         Id = 1,
                         Date = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        IsCancelled = false,
                         Name = "Concert A",
                         NumberOfSeats = 2500,
                         Price = 15000.0

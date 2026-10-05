@@ -1,4 +1,4 @@
-﻿using SystemSalesTickets.Core.DTOs;
+using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Models;
 
 namespace SystemSalesTickets.Core.Repository
@@ -6,6 +6,9 @@ namespace SystemSalesTickets.Core.Repository
     public interface IEventRepository : IRepository<Event>
     {
         public Task<Event> GetEventByName(string name, CancellationToken cancellationToken = default);
+
+        /// <summary>True if another event (any id except excludeEventId) already starts at exactly this date.</summary>
+        Task<bool> DateInUse(DateTime date, int excludeEventId, CancellationToken cancellationToken = default);
     }
 
 

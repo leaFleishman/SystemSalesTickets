@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace SystemSalesTickets.Core.Models
 {
@@ -21,5 +21,14 @@ namespace SystemSalesTickets.Core.Models
 
         public int NumberOfSeats { get; set; }
 
+        /// <summary>True once an administrator cancelled the event. Cancelled events accept no new orders.</summary>
+        public bool IsCancelled { get; set; }
+
+        /// <summary>UTC time of the cancellation. Null while the event is active.</summary>
+        public DateTime? CancelledAt { get; set; }
+
+        /// <summary>Optional explanation shown to customers.</summary>
+        [StringLength(500)]
+        public string? CancellationReason { get; set; }
     }
 }

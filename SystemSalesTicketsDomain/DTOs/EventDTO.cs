@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace SystemSalesTickets.Core.DTOs
 {
@@ -24,6 +24,13 @@ namespace SystemSalesTickets.Core.DTOs
 
         public int NumberOfSeats { get; set; }
 
+        // Read-only status fields. They are returned to clients, but the server
+        // ignores whatever a client sends here when creating an event
+        // (cancelling goes through PUT api/Event/{id}/cancel).
+        public bool IsCancelled { get; set; }
 
+        public DateTime? CancelledAt { get; set; }
+
+        public string? CancellationReason { get; set; }
     }
 }
