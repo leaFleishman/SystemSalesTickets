@@ -19,8 +19,6 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
@@ -34,7 +32,6 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddHealthChecks()
     .AddCheck<DatabaseConnectionHealthCheck>("DatabaseConnection");
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHostedService<HealthMonitorService>();
@@ -43,27 +40,21 @@ builder.Services.AddScoped<
     IOrderConfirmationEmailService,
     OrderConfirmationEmailService>();
 
-
-// Event reminder emails (sent ~24h before an event)
+// Email and event reminder configuration
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection(EmailSettings.SectionName));
 
 builder.Services.Configure<ReminderSettings>(
     builder.Configuration.GetSection(ReminderSettings.SectionName));
 
-builder.Services.AddHttpClient<IEmailService, ResendEmailService>();
+builder.Services.AddScoped<IEmailService, GmailEmailService>();
 
 builder.Services.AddScoped<IEventReminderService, EventReminderService>();
-
 builder.Services.AddHostedService<EventReminderBackgroundService>();
 
-
 builder.Services.AddScoped<IEventService, EventService>();
-
 builder.Services.AddScoped<IOrderService, OrderService>();
-
 builder.Services.AddScoped<ISeatService, SeatService>();
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventSeatService, EventSeatService>();
 builder.Services.AddScoped<IEventSeatRepository, EventSeatRepository>();
@@ -74,18 +65,14 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();
-
-
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
-
 
 builder.Services.AddAuthentication(options =>
 {
@@ -105,6 +92,7 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
         };
     });
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -134,8 +122,6 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Apply EF migrations on startup when RunMigrations=true (set as an env var in the cloud).
-// Off by default, so local runs never touch the database schema unexpectedly.
 if (app.Configuration.GetValue<bool>("RunMigrations"))
 {
     using var scope = app.Services.CreateScope();
@@ -143,7 +129,6 @@ if (app.Configuration.GetValue<bool>("RunMigrations"))
     db.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -161,5 +146,3 @@ app.UseAuthorization();
 app.MapHealthChecks("/health");
 app.MapControllers();
 app.Run();
-
-
