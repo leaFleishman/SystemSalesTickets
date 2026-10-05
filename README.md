@@ -76,6 +76,7 @@ SystemSalesTickets
 │   ├── OrderServiceTests.cs
 │   ├── SeatServiceTests.cs
 │   ├── UserServiceTests.cs
+│   ├── EventSeatServiceTests.cs
 │   ├── ConcurrencyTests.cs
 │   └── UnitTest.csproj
 │
@@ -221,7 +222,9 @@ EventId + SeatId
 * מושב שאינו קיים
 * מושב שאינו פנוי
 * הזמנה כפולה
-* הרשאות משתמש
+* הרשאות
+* שינוי תפקיד משתמש וחסימה/ביטול חסימה
+* קישור והסרת מושבים מאירוע משתמש
 
 ---
 
@@ -363,7 +366,7 @@ Bearer <JWT>
 * xUnit
 * Moq
 
-הבדיקות מתמקדות בעיקר בשכבת Service.
+הבדיקות מכסות את שכבת Service, כולל EventSeatService, וכן תרחישי Optimistic Concurrency.
 
 נבדקים בין היתר:
 
