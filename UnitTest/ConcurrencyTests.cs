@@ -105,5 +105,32 @@ namespace UnitTest
                 eventSeat2.Version,
                 savedEventSeat.Version);
         }
+        
+        [Fact]
+        public async Task EnsureCreated_CreatesInitialEventSeat()
+        {
+            await using var connection =
+                new SqliteConnection("DataSource=:memory:");
+
+            await connection.OpenAsync();
+
+            var options = new DbContextOptionsBuilder<DataContext>()
+                .UseSqlite(connection)
+                .Options;
+
+            await using (var setupContext = new DataContext(options))
+            {
+                await setupContext.Database.EnsureCreatedAsync();
+            }
+
+            await using var context = new DataContext(options);
+
+            var eventSeat = await context.EventSeats
+                .SingleAsync(x => x.EventId == 1 && x.SeatId == 2);
+
+            Assert.True(eventSeat.IsAvailable);
+            Assert.NotEqual(Guid.Empty, eventSeat.Version);
+        }
+
     }
 }
