@@ -182,6 +182,38 @@ namespace UnitTest
         }
 
         [Fact]
+        public async Task Add_WhenRepositoryThrows_DoesNotContinueToCreateSeats()
+        {
+            var eventDto = new EventDTO
+            {
+                Name = "Concert",
+                Date = new DateTime(2026, 1, 1),
+                Price = 100,
+                NumberOfSeats = 2
+            };
+
+            var eventModel = new Event { Name = "Concert" };
+
+            _mapper
+                .Setup(x => x.Map<Event>(eventDto))
+                .Returns(eventModel);
+
+            _eventRepository
+                .Setup(x => x.Add(eventModel, It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new Exception("Database error"));
+
+            await Assert.ThrowsAsync<Exception>(
+                () => _service.Add(eventDto, CancellationToken.None));
+
+            _seatRepository.Verify(
+                x => x.GetAllSeats(It.IsAny<CancellationToken>()),
+                Times.Never);
+            _eventRepository.Verify(
+                x => x.Save(It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
         public async Task GetAll_ShouldReturnAllEvents()
         {
             var events = new List<Event>
