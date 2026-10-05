@@ -40,7 +40,7 @@ public class EventReminderBackgroundService : BackgroundService
         if (!_emailSettings.IsConfigured)
         {
             _logger.LogWarning(
-                "Event reminder job not started: email is not configured (Email:Host / Email:FromAddress)");
+     "Event reminder job not started: email is not configured (Email:ApiKey / Email:FromAddress)");
             return;
         }
 

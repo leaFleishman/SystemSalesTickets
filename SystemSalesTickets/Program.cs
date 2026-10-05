@@ -39,11 +39,18 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHostedService<HealthMonitorService>();
 
+
 // Event reminder emails (sent ~24h before an event)
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection(EmailSettings.SectionName));
-builder.Services.Configure<ReminderSettings>(builder.Configuration.GetSection(ReminderSettings.SectionName));
-builder.Services.AddSingleton<IEmailService, SmtpEmailService>();
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection(EmailSettings.SectionName));
+
+builder.Services.Configure<ReminderSettings>(
+    builder.Configuration.GetSection(ReminderSettings.SectionName));
+
+builder.Services.AddHttpClient<IEmailService, ResendEmailService>();
+
 builder.Services.AddScoped<IEventReminderService, EventReminderService>();
+
 builder.Services.AddHostedService<EventReminderBackgroundService>();
 
 
@@ -150,3 +157,5 @@ app.UseAuthorization();
 app.MapHealthChecks("/health");
 app.MapControllers();
 app.Run();
+
+
