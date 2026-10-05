@@ -430,6 +430,130 @@ namespace UnitTest
         }
 
         [Fact]
+        public async Task MakeUserRegular_ReturnsUserDTO()
+        {
+            const int id = 1;
+            var user = new User { Id = id, UserName = "TestUser" };
+            var expected = new UserDTO { UserName = "TestUser" };
+
+            _userRepositoryMock
+                .Setup(x => x.MakeUserRegular(id, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(user);
+            _userRepositoryMock
+                .Setup(x => x.Save(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+            _mapperMock
+                .Setup(x => x.Map<UserDTO>(user))
+                .Returns(expected);
+
+            var result = await _service.MakeUserRegular(id, CancellationToken.None);
+
+            Assert.Equal(expected, result);
+            _userRepositoryMock.Verify(
+                x => x.MakeUserRegular(id, It.IsAny<CancellationToken>()),
+                Times.Once);
+            _userRepositoryMock.Verify(
+                x => x.Save(It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task BlockUser_WhenUserExists_ReturnsBlockedUser()
+        {
+            const int id = 1;
+            var user = new User { Id = id, UserName = "TestUser" };
+            var expected = new UserDTO { UserName = "TestUser" };
+
+            _userRepositoryMock
+                .Setup(x => x.SetBlocked(id, true, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(user);
+            _userRepositoryMock
+                .Setup(x => x.Save(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+            _mapperMock
+                .Setup(x => x.Map<UserDTO>(user))
+                .Returns(expected);
+
+            var result = await _service.BlockUser(id, CancellationToken.None);
+
+            Assert.Equal(expected, result);
+            _userRepositoryMock.Verify(
+                x => x.SetBlocked(id, true, It.IsAny<CancellationToken>()),
+                Times.Once);
+            _userRepositoryMock.Verify(
+                x => x.Save(It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task BlockUser_WhenUserDoesNotExist_ReturnsNullAndDoesNotSave()
+        {
+            const int id = 999;
+
+            _userRepositoryMock
+                .Setup(x => x.SetBlocked(id, true, It.IsAny<CancellationToken>()))
+                .ReturnsAsync((User?)null);
+
+            var result = await _service.BlockUser(id, CancellationToken.None);
+
+            Assert.Null(result);
+            _userRepositoryMock.Verify(
+                x => x.SetBlocked(id, true, It.IsAny<CancellationToken>()),
+                Times.Once);
+            _userRepositoryMock.Verify(
+                x => x.Save(It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
+        public async Task UnblockUser_WhenUserExists_ReturnsUnblockedUser()
+        {
+            const int id = 1;
+            var user = new User { Id = id, UserName = "TestUser" };
+            var expected = new UserDTO { UserName = "TestUser" };
+
+            _userRepositoryMock
+                .Setup(x => x.SetBlocked(id, false, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(user);
+            _userRepositoryMock
+                .Setup(x => x.Save(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+            _mapperMock
+                .Setup(x => x.Map<UserDTO>(user))
+                .Returns(expected);
+
+            var result = await _service.UnblockUser(id, CancellationToken.None);
+
+            Assert.Equal(expected, result);
+            _userRepositoryMock.Verify(
+                x => x.SetBlocked(id, false, It.IsAny<CancellationToken>()),
+                Times.Once);
+            _userRepositoryMock.Verify(
+                x => x.Save(It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task UnblockUser_WhenUserDoesNotExist_ReturnsNullAndDoesNotSave()
+        {
+            const int id = 999;
+
+            _userRepositoryMock
+                .Setup(x => x.SetBlocked(id, false, It.IsAny<CancellationToken>()))
+                .ReturnsAsync((User?)null);
+
+            var result = await _service.UnblockUser(id, CancellationToken.None);
+
+            Assert.Null(result);
+            _userRepositoryMock.Verify(
+                x => x.SetBlocked(id, false, It.IsAny<CancellationToken>()),
+                Times.Once);
+            _userRepositoryMock.Verify(
+                x => x.Save(It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
         public async Task AddUser_HashesPasswordBeforeSaving()
         {
             var userDto = new RegisterRequestDTO
