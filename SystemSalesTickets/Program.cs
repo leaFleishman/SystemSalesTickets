@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Identity;
 using SystemSalesTickets.Core.Models;
 using SystemSalesTickets.Service.Background;
 using SystemSalesTickets.Core.Settings;
-using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +46,7 @@ builder.Services.Configure<EmailSettings>(
 builder.Services.Configure<ReminderSettings>(
     builder.Configuration.GetSection(ReminderSettings.SectionName));
 
-builder.Services.AddScoped<IEmailService, GmailEmailService>();
+builder.Services.AddHttpClient<IEmailService, BrevoEmailService>();
 
 builder.Services.AddScoped<IEventReminderService, EventReminderService>();
 builder.Services.AddHostedService<EventReminderBackgroundService>();
