@@ -44,10 +44,9 @@ public class AuthController : ControllerBase
 
         var claims = new List<Claim>
         {
-           new Claim(ClaimTypes.Role, user.Role.ToString()),
-
-               new Claim(   ClaimTypes.NameIdentifier,
-              user.Id.ToString())
+            new Claim(ClaimTypes.Role, user.Role.ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.UserName)
         };
 
         var key = _configuration.GetValue<string>("JWT:Key");
