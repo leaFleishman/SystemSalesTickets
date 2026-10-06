@@ -31,9 +31,7 @@ namespace SystemSalesTickets.Data
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                throw new ConcurrencyException(
-                    "A concurrency conflict occurred.",
-                    ex);
+                throw;
             }
         }
         public Task Update(T entity, CancellationToken cancellationToken = default)
