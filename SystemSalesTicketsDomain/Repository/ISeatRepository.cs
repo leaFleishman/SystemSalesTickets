@@ -7,6 +7,11 @@ namespace SystemSalesTickets.Core.Repository
         Task<List<Seat>> GetAllSeats(
             CancellationToken cancellationToken = default);
 
+        Task<bool> ExistsAsync(
+            int row,
+            int line,
+            CancellationToken cancellationToken = default);
+
         Task<PagedResponse<Seat>> GetAllAsync(
             int pageNumber = 1,
             int pageSize = 20,
