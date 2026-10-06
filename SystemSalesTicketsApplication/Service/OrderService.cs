@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core;
 using SystemSalesTickets.Core.DTOs;
@@ -89,7 +90,7 @@ namespace SystemSalesTickets.Service.Service
                     Order = _mapper.Map<OrderLogDTO>(newOrder)
                 };
             }
-            catch (ConcurrencyException ex)
+            catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogWarning(ex, "Concurrency conflict for Seat {SeatId}, Event {EventId}", orderDto.SeatId, orderDto.EventId);
                 return new OrderResultDTO { Status = OrderResultStatus.Conflict, Message = "Seat was just booked by someone else, please try again" };
