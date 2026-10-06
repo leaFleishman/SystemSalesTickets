@@ -15,6 +15,11 @@ namespace SystemSalesTickets.Core.Interfaces
             int id,
             CancellationToken cancellationToken = default);
 
+        Task<bool> ExistsAsync(
+            int row,
+            int line,
+            CancellationToken cancellationToken = default);
+
         Task<SeatLogDTO> Add(
             SeatDTO seat,
             CancellationToken cancellationToken = default);
