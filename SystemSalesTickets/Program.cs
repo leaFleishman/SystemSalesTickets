@@ -51,6 +51,8 @@ builder.Services.AddHttpClient<IEmailService, GoogleAppsScriptEmailService>();
 builder.Services.AddScoped<IEventReminderService, EventReminderService>();
 builder.Services.AddHostedService<EventReminderBackgroundService>();
 
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEventCancellationNotifier, EventCancellationNotifier>();
 builder.Services.AddScoped<IOrderService, OrderService>();
