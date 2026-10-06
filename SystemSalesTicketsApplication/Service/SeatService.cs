@@ -50,10 +50,31 @@ namespace SystemSalesTickets.Service.Service
             return _mapper.Map<SeatLogDTO>(res);
         }
 
+        public async Task<bool> ExistsAsync(
+            int row,
+            int line,
+            CancellationToken cancellationToken = default)
+        {
+            return await _seatRepository.ExistsAsync(
+                row,
+                line,
+                cancellationToken);
+        }
+
         public async Task<SeatLogDTO> Add(
             SeatDTO seat,
             CancellationToken cancellationToken = default)
         {
+            if (await ExistsAsync(seat.Row, seat.Line, cancellationToken))
+            {
+                _logger.LogWarning(
+                    "Duplicate seat rejected. Row {Row}, Line {Line}",
+                    seat.Row,
+                    seat.Line);
+
+                return null;
+            }
+
             var tmp = _mapper.Map<Seat>(seat);
             var res = await _seatRepository.Add(tmp, cancellationToken);
             tmp.Id = res.Id;
