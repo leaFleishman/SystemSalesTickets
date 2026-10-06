@@ -25,14 +25,7 @@ namespace SystemSalesTickets.Data
 
         public async Task Save(CancellationToken cancellationToken = default)
         {
-            try
-            {
-                await _datacontext.SaveChangesAsync(cancellationToken);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                throw;
-            }
+            await _datacontext.SaveChangesAsync(cancellationToken);
         }
         public Task Update(T entity, CancellationToken cancellationToken = default)
         {
