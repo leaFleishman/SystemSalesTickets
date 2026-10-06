@@ -61,6 +61,34 @@ namespace SystemSalesTickets.Data
             return await _dbSet.CountAsync(o => o.EventId == eventId, cancellationToken);
         }
 
+        public async Task<List<Order>> GetOrdersByUser(
+            int userId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Include(o => o.Event)
+                .Include(o => o.Seat)
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.Event.Date)
+                .ThenByDescending(o => o.Id)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<Order?> GetByIdForCancellation(
+            int id,
+            CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .Include(o => o.Event)
+                .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+        }
+
+        public void Remove(Order order)
+        {
+            _dbSet.Remove(order);
+        }
+
         public async Task<Order?> GetById(int id, CancellationToken cancellationToken = default)
         {
             return await _dbSet

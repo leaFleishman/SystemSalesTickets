@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using SystemSalesTickets.Core.DTOs;
 using SystemSalesTickets.Core.Enums;
 using SystemSalesTickets.Core.Interfaces;
@@ -105,6 +106,60 @@ namespace SystemSalesTickets.Api.Controllers
                 id);
 
             return Ok(order);
+        }
+
+        /// <summary>The logged-in customer's bookings (event name, date/time, price, seat).</summary>
+        [Authorize]
+        [HttpGet("my")]
+        public async Task<ActionResult<IReadOnlyList<MyOrderDTO>>> GetMyOrders(CancellationToken cancellationToken)
+        {
+            if (!TryGetCurrentUserId(out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var orders = await _orderService.GetMyOrders(userId, cancellationToken);
+
+            _logger.LogInformation("GetMyOrders returned {Count} orders for user {UserId}", orders.Count, userId);
+
+            return Ok(orders);
+        }
+
+        /// <summary>Cancels one of the caller's own bookings; allowed only more than 24h before the event.</summary>
+        [Authorize]
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> CancelOrder([FromRoute] int id, CancellationToken cancellationToken)
+        {
+            if (!TryGetCurrentUserId(out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _orderService.CancelOrder(id, userId, cancellationToken);
+
+            switch (result.Status)
+            {
+                case OrderResultStatus.NotFound:
+                    _logger.LogWarning("CancelOrder failed for OrderId {OrderId}: {Message}", id, result.Message);
+                    return NotFound(result.Message);
+
+                case OrderResultStatus.Conflict:
+                    _logger.LogWarning("CancelOrder rejected for OrderId {OrderId}: {Message}", id, result.Message);
+                    return Conflict(result.Message);
+
+                case OrderResultStatus.Success:
+                    return NoContent();
+
+                default:
+                    return BadRequest();
+            }
+        }
+
+        // The user id always comes from the signed token, never from the request.
+        private bool TryGetCurrentUserId(out int userId)
+        {
+            var raw = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.TryParse(raw, out userId);
         }
     }
 }

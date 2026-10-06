@@ -17,5 +17,14 @@ namespace SystemSalesTickets.Core.Repository
 
         Task<int> CountByEvent(int eventId, CancellationToken cancellationToken = default);
 
+        /// <summary>All bookings of a customer (newest first), with Event and Seat loaded (not tracked).</summary>
+        Task<List<Order>> GetOrdersByUser(int userId, CancellationToken cancellationToken = default);
+
+        /// <summary>One order with Event loaded, tracked so it can be removed in the same unit of work.</summary>
+        Task<Order?> GetByIdForCancellation(int id, CancellationToken cancellationToken = default);
+
+        /// <summary>Marks the order for deletion. Call Save() to commit.</summary>
+        void Remove(Order order);
+
     }
 }
