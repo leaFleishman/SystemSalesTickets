@@ -205,7 +205,7 @@ namespace SystemSalesTickets.Service.Service
                     Message = "Order cancelled"
                 };
             }
-            catch (ConcurrencyException ex)
+            catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogWarning(ex, "Concurrency conflict while cancelling order {OrderId}", orderId);
                 return new OrderResultDTO
