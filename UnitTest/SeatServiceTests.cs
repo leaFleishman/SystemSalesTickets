@@ -46,7 +46,7 @@ namespace UnitTest
             };
 
             _seatRepositoryMock
-                .Setup(x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()))
+                .Setup(x => x.GetAllAsync(1, 20, null, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new PagedResponse<Seat>(seats, 1, 20, seats.Count));
 
             _mapperMock
@@ -59,11 +59,54 @@ namespace UnitTest
             Assert.Equal(expected, result.Data);
 
             _seatRepositoryMock.Verify(
-                x => x.GetAllAsync(1, 20, It.IsAny<CancellationToken>()),
+                x => x.GetAllAsync(1, 20, null, It.IsAny<CancellationToken>()),
                 Times.Once);
 
             _mapperMock.Verify(
                 x => x.Map<IEnumerable<SeatDTO>>(seats),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task GetAll_WithRowFilter_PassesRowToRepository()
+        {
+            const int requestedRow = 5;
+
+            var seats = new List<Seat>
+            {
+                new Seat { Id = 10, Row = 5, Line = 1 },
+                new Seat { Id = 11, Row = 5, Line = 2 }
+            };
+
+            var expected = new List<SeatDTO>
+            {
+                new SeatDTO { Row = 5, Line = 1 },
+                new SeatDTO { Row = 5, Line = 2 }
+            };
+
+            _seatRepositoryMock
+                .Setup(x => x.GetAllAsync(
+                    1,
+                    12,
+                    requestedRow,
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new PagedResponse<Seat>(seats, 1, 12, seats.Count));
+
+            _mapperMock
+                .Setup(x => x.Map<IEnumerable<SeatDTO>>(seats))
+                .Returns(expected);
+
+            var result = await _service.GetAll(1, 12, requestedRow);
+
+            Assert.Equal(expected, result.Data);
+            Assert.All(result.Data, seat => Assert.Equal(5, seat.Row));
+
+            _seatRepositoryMock.Verify(
+                x => x.GetAllAsync(
+                    1,
+                    12,
+                    requestedRow,
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
