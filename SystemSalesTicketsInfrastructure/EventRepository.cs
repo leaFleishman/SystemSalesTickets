@@ -13,16 +13,35 @@ namespace SystemSalesTickets.Data
             _dataContext = context;
         }
 
+        public async Task<PagedResponse<Event>> GetUpcomingAsync(
+            DateTime fromUtc,
+            int pageNumber = 1,
+            int pageSize = 20,
+            CancellationToken cancellationToken = default)
+        {
+            var query = _dataContext.Events
+                .AsNoTracking()
+                .Where(e => e.Date > fromUtc)
+                .OrderBy(e => e.Date);
+
+            var count = await query.CountAsync(cancellationToken);
+
+            var items = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            return new PagedResponse<Event>(items, pageNumber, pageSize, count);
+        }
+
         public async Task<Event> GetEventByName(string name, CancellationToken cancellationToken = default)
         {
             return await _dataContext.Events.AsNoTracking()
-
-                   .FirstOrDefaultAsync(e => e.Name == name, cancellationToken);
+                .FirstOrDefaultAsync(e => e.Name == name, cancellationToken);
         }
 
         public async Task<bool> DateInUse(DateTime date, int excludeEventId, CancellationToken cancellationToken = default)
         {
-            // Events.Date has a unique index, so two events can never share a start time.
             return await _dataContext.Events.AsNoTracking()
                 .AnyAsync(e => e.Date == date && e.Id != excludeEventId, cancellationToken);
         }
