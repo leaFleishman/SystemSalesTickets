@@ -89,11 +89,26 @@ namespace SystemSalesTickets.Api.Controllers
 
             _logger.LogInformation("Add seat request received");
 
+            if (await _seatService.ExistsAsync(
+                seat.Row,
+                seat.Line,
+                cancellationToken))
+            {
+                _logger.LogWarning(
+                    "Duplicate seat rejected. Row {Row}, Line {Line}",
+                    seat.Row,
+                    seat.Line);
+
+                return Conflict(
+                    $"מושב שורה {seat.Row}, מקום {seat.Line} כבר קיים.");
+            }
+
             var result = await _seatService.Add(seat, cancellationToken);
 
             if (result == null)
             {
-                return BadRequest("Failed to create seat.");
+                return Conflict(
+                    $"מושב שורה {seat.Row}, מקום {seat.Line} כבר קיים.");
             }
 
             _logger.LogInformation(
