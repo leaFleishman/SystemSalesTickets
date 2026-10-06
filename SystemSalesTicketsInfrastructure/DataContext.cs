@@ -21,7 +21,6 @@ namespace SystemSalesTickets.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // אינדקס ייחודי למניעת הזמנה כפולה ברמת המסד
             modelBuilder.Entity<Order>()
                 .HasIndex(o => new { o.EventId, o.SeatId })
                 .IsUnique();
@@ -33,12 +32,14 @@ namespace SystemSalesTickets.Data
             modelBuilder.Entity<Seat>()
                 .ToTable("Seat");
 
-            // Optimistic Concurrency עבור Seat
+            modelBuilder.Entity<Seat>()
+                .HasIndex(s => new { s.Row, s.Line })
+                .IsUnique();
+
             modelBuilder.Entity<Seat>()
                 .Property(s => s.Version)
                 .IsConcurrencyToken();
 
-            // EventSeat - מפתח מורכב
             modelBuilder.Entity<EventSeat>()
                 .HasKey(es => new { es.EventId, es.SeatId });
 
@@ -46,26 +47,22 @@ namespace SystemSalesTickets.Data
                 .Property(es => es.IsAvailable)
                 .IsRequired();
 
-            // Optimistic Concurrency עבור EventSeat
             modelBuilder.Entity<EventSeat>()
                 .Property(es => es.Version)
                 .IsConcurrencyToken();
 
-            // קשר Event -> EventSeat
             modelBuilder.Entity<EventSeat>()
                 .HasOne(es => es.Event)
                 .WithMany()
                 .HasForeignKey(es => es.EventId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // קשר Seat -> EventSeat
             modelBuilder.Entity<EventSeat>()
                 .HasOne(es => es.Seat)
                 .WithMany()
                 .HasForeignKey(es => es.SeatId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Seed Users
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
@@ -87,7 +84,6 @@ namespace SystemSalesTickets.Data
                 }
             );
 
-            // Seed Seats
             modelBuilder.Entity<Seat>().HasData(
                 new Seat
                 {
@@ -105,7 +101,6 @@ namespace SystemSalesTickets.Data
                 }
             );
 
-            // Seed Event
             modelBuilder.Entity<Event>().HasData(
                 new Event
                 {
@@ -125,8 +120,6 @@ namespace SystemSalesTickets.Data
                 }
             );
 
-            // Seed EventSeats
-            // Seat 1 כבר תפוס על ידי Order 1
             modelBuilder.Entity<EventSeat>().HasData(
                 new EventSeat
                 {
@@ -148,14 +141,13 @@ namespace SystemSalesTickets.Data
                 }
             );
 
-            // Seed Order
             modelBuilder.Entity<Order>().HasData(
                 new Order
                 {
                     Id = 1,
                     EventId = 1,
                     UserId = 2,
-                    SeatId = 1,      
+                    SeatId = 1,
 
                     EventName = "Concert A",
                     OrderDate = new DateTime(
@@ -174,7 +166,6 @@ namespace SystemSalesTickets.Data
         public override async Task<int> SaveChangesAsync(
             CancellationToken cancellationToken = default)
         {
-            // עדכון Version של Seats ששונו
             var modifiedSeats = ChangeTracker
                 .Entries<Seat>()
                 .Where(e => e.State == EntityState.Modified);
