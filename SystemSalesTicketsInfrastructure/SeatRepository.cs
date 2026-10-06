@@ -22,6 +22,18 @@ namespace SystemSalesTickets.Data
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<bool> ExistsAsync(
+            int row,
+            int line,
+            CancellationToken cancellationToken = default)
+        {
+            return await _dataContext.Seats
+                .AsNoTracking()
+                .AnyAsync(
+                    s => s.Row == row && s.Line == line,
+                    cancellationToken);
+        }
+
         public async Task<PagedResponse<Seat>> GetAllAsync(
             int pageNumber = 1,
             int pageSize = 20,
