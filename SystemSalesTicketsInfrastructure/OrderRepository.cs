@@ -7,43 +7,22 @@ namespace SystemSalesTickets.Data
 {
     public class OrderRepository : Repository<Order>, IOrderRepository
     {
+        public OrderRepository(DataContext context) : base(context) { }
 
-        public OrderRepository(DataContext context)
-            : base(context)
-        {
-        }
+        public async Task<bool> ExistsForEventAndSeat(int eventId, int Id, CancellationToken cancellationToken = default)
+            => await _dbSet.AnyAsync(order => order.EventId == eventId && order.SeatId == Id, cancellationToken);
 
-        public async Task<bool> ExistsForEventAndSeat(
-            int eventId,
-            int Id,
-            CancellationToken cancellationToken = default)
+        public async Task<List<Order>> GetOrdersPendingReminder(DateTime fromUtc, DateTime toUtc, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AnyAsync(
-                order => order.EventId == eventId && order.SeatId == Id,
-                cancellationToken);
-        }
-
-        public async Task<List<Order>> GetOrdersPendingReminder(
-            DateTime fromUtc,
-            DateTime toUtc,
-            CancellationToken cancellationToken = default)
-        {
-            // Tracked on purpose: the reminder job sets ReminderSentAt and calls Save().
-            // Cancelled events never get a reminder.
             return await _dbSet
                 .Include(o => o.User)
                 .Include(o => o.Event)
                 .Include(o => o.Seat)
-                .Where(o => o.ReminderSentAt == null
-                            && !o.Event.IsCancelled
-                            && o.Event.Date > fromUtc
-                            && o.Event.Date <= toUtc)
+                .Where(o => o.ReminderSentAt == null && !o.Event.IsCancelled && o.Event.Date > fromUtc && o.Event.Date <= toUtc)
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<List<Order>> GetOrdersByEvent(
-            int eventId,
-            CancellationToken cancellationToken = default)
+        public async Task<List<Order>> GetOrdersByEvent(int eventId, CancellationToken cancellationToken = default)
         {
             return await _dbSet
                 .AsNoTracking()
@@ -54,16 +33,10 @@ namespace SystemSalesTickets.Data
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<int> CountByEvent(
-            int eventId,
-            CancellationToken cancellationToken = default)
-        {
-            return await _dbSet.CountAsync(o => o.EventId == eventId, cancellationToken);
-        }
+        public async Task<int> CountByEvent(int eventId, CancellationToken cancellationToken = default)
+            => await _dbSet.CountAsync(o => o.EventId == eventId, cancellationToken);
 
-        public async Task<List<Order>> GetOrdersByUser(
-            int userId,
-            CancellationToken cancellationToken = default)
+        public async Task<List<Order>> GetOrdersByUser(int userId, CancellationToken cancellationToken = default)
         {
             return await _dbSet
                 .AsNoTracking()
@@ -75,19 +48,16 @@ namespace SystemSalesTickets.Data
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Order?> GetByIdForCancellation(
-            int id,
-            CancellationToken cancellationToken = default)
+        public async Task<Order?> GetByIdForCancellation(int id, CancellationToken cancellationToken = default)
         {
             return await _dbSet
                 .Include(o => o.Event)
+                .Include(o => o.User)
+                .Include(o => o.Seat)
                 .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
         }
 
-        public void Remove(Order order)
-        {
-            _dbSet.Remove(order);
-        }
+        public void Remove(Order order) => _dbSet.Remove(order);
 
         public async Task<Order?> GetById(int id, CancellationToken cancellationToken = default)
         {
@@ -95,10 +65,7 @@ namespace SystemSalesTickets.Data
                 .AsNoTracking()
                 .Include(o => o.Event)
                 .Include(o => o.Seat)
-                .FirstOrDefaultAsync(
-                    o => o.Id == id,
-                    cancellationToken);
+                .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
         }
-
     }
 }
