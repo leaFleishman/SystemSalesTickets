@@ -32,7 +32,7 @@
 * ASP.NET Core Identity PasswordHasher
 * xUnit
 * Moq
-* SQLite In-Memory עבור בדיקות Concurrency
+* SQLite In-Memory לבדיקות Concurrency מבודדות
 * NLog
 * Swagger / OpenAPI
 
@@ -69,6 +69,7 @@ SystemSalesTickets
 ├── SystemSalesTicketsApplication
 │   ├── Service
 │   ├── Background
+│   │   └── EventReminderBackgroundService
 │   └── SystemSalesTickets.Service.csproj
 │
 ├── UnitTest
@@ -108,6 +109,17 @@ SystemSalesTickets
 **UnitTest**
 
 מכיל את בדיקות היחידה ובדיקות ה־Optimistic Concurrency.
+
+---
+
+## ניהול אירועים ומושבים
+
+* אירועים שכבר התחילו אינם מוצגים ברשימת האירועים הרגילה.
+* אירוע שבוטל מסומן בסטטוס ביטול ואינו ניתן לעריכה או לביטול מחדש.
+* מנהל יכול ליצור, לערוך ולבטל אירועים ולנהל מושבים.
+* בעת עריכת אירוע לא ניתן להקטין את מספר המקומות מתחת למספר הכרטיסים שכבר הוזמנו.
+* רשימת המושבים תומכת בפגינציה ובסינון לפי שורה.
+* בפרטי האירוע ניתן להציג את מספר הכרטיסים שכבר הוזמנו.
 
 ---
 
@@ -170,7 +182,7 @@ Add-Migration MigrationName
 Update-Database
 ```
 
-ה־Connection String מוגדר באמצעות Configuration ואינו נשמר ב־Git.
+ה־Connection String מוגדר באמצעות Configuration ואינו נשמר ב־Git. בסביבת הענן ניתן להגדיר את ערכי ה־Configuration באמצעות Environment Variables.
 
 ---
 
@@ -197,7 +209,7 @@ User 1 → Update → Success
 User 2 → Update → Concurrency Conflict
 ```
 
-ה־Concurrency exception מטופלת במערכת ומוחזרת ללקוח כ־HTTP `409 Conflict`.
+ה־`DbUpdateConcurrencyException` מועברת משכבת ה־Data לשכבת ה־Service, שבה היא נתפסת ומטופלת. ה־Service מחזיר תוצאת Conflict, וה־Controller ממפה אותה ל־HTTP `409 Conflict`.
 
 בנוסף קיים Unique Index על:
 
@@ -359,6 +371,27 @@ Bearer <JWT>
 
 ---
 
+## Email Notifications
+
+המערכת כוללת שליחת אישור הזמנה וביטול הזמנה בדוא״ל לאחר הפעולה. בנוסף קיים Background Service שבודק אחת ל־15 דקות הזמנות של אירועים המתקרבים בתוך חלון התזכורת ושולח תזכורת מרוכזת ללקוח עם פרטי האירוע והמושבים.
+
+השליחה מתבצעת דרך Email Gateway חיצוני באמצעות `HttpClient`. פרטי הגישה מוגדרים ב־Configuration/Environment Variables ואינם נשמרים בקוד.
+
+הגדרות עיקריות:
+
+```text
+Email:ApiUrl
+Email:Secret
+Reminder:Enabled
+Reminder:HoursBeforeEvent
+Reminder:CheckIntervalMinutes
+Reminder:TimeZoneId
+```
+
+כשל בשליחת מייל אינו מבטל הזמנה או ביטול שכבר נשמרו בהצלחה. תזכורת שלא נשלחה בהצלחה נשארת לטיפול בהרצה הבאה.
+
+---
+
 ## Tests
 
 הפרויקט כולל Unit Tests באמצעות:
@@ -381,7 +414,7 @@ Bearer <JWT>
 
 ### Concurrency Tests
 
-בדיקות ה־Concurrency משתמשות ב־SQLite In-Memory כדי לבודד את הבדיקות מבסיס הנתונים המקומי.
+בדיקות ה־Concurrency משתמשות ב־SQLite In-Memory לצורך בדיקה מבודדת ומהירה. נוצרו שני `DbContext` נפרדים הטוענים את אותו `EventSeat`, כך שה־Context הראשון מצליח לשמור והשני מקבל `DbUpdateConcurrencyException`.
 
 נבדק תרחיש שבו שני Contexts טוענים את אותו `EventSeat`:
 
@@ -516,6 +549,8 @@ dotnet run --project SystemSalesTickets
 
 Swagger זמין בסביבת Development.
 
+בסביבת Production ניתן להפעיל Migration אוטומטי באמצעות `RunMigrations=true` בהתאם להגדרות הסביבה.
+
 Health Check:
 
 ```text
@@ -558,3 +593,17 @@ Health Check:
 ה־Data וה־Service משתמשים ב־Core.
 
 ה־API מחבר בין השכבות באמצעות Dependency Injection.
+
+---
+
+## Deployment
+
+השרת ניתן לפריסה כשירות Web בענן והקליינט נמצא ב־Repository נפרד. כתובת ה־API של סביבת Render והגדרות הסביבה אינן נדרשות להישמר בקוד; יש להגדירן דרך Environment Variables.
+
+המערכת כוללת גם CORS עבור הקליינט הפרוס.
+
+---
+
+## Client
+
+הקליינט הוא פרויקט React/Vite נפרד ומספק את הממשק למשתמשים ולמנהלים. הוא כולל התחברות/הרשמה, רשימת אירועים עם Pagination, בחירת מושבים, הזמנות, טיפול ב־409, וניהול אירועים ומושבים עבור Manager.
