@@ -9,5 +9,11 @@ namespace SystemSalesTickets.Core.Interfaces
             string email,
             string? userName,
             CancellationToken cancellationToken = default);
+
+        Task SendCancellationAsync(
+            Order order,
+            string email,
+            string? userName,
+            CancellationToken cancellationToken = default);
     }
 }
