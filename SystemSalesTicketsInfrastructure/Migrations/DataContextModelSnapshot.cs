@@ -181,6 +181,9 @@ namespace SystemSalesTickets.Data.Migrations
 
                 b.HasKey("Id");
 
+                b.HasIndex("Row", "Line")
+                    .IsUnique();
+
                 b.ToTable("Seat", (string)null);
 
                 b.HasData(
