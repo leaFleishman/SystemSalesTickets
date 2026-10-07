@@ -21,7 +21,7 @@ namespace SystemSalesTickets.Data.Migrations
                     seats[id - 1, 1] = line;
                     seats[id - 1, 2] = row;
                     seats[id - 1, 3] =
-                        new Guid($"000000{id:D8}-0000-0000-0000-000000000000");
+                        Guid.Parse($"00000000-0000-0000-0000-{id:D12}");
 
                     id++;
                 }
