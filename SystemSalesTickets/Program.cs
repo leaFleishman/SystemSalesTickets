@@ -32,7 +32,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddHealthChecks()
     .AddCheck<DatabaseConnectionHealthCheck>("DatabaseConnection");
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddHostedService<HealthMonitorService>();
 
 builder.Services.AddScoped<

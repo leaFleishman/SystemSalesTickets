@@ -83,22 +83,14 @@ namespace SystemSalesTickets.Data
                     UserName = "Moshe"
                 }
             );
-
             modelBuilder.Entity<Seat>().HasData(
-                new Seat
+                Enumerable.Range(1, 100).Select(i => new Seat
                 {
-                    Id = 1,
-                    Row = 1,
-                    Line = 1,
-                    Version = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
-                },
-                new Seat
-                {
-                    Id = 2,
-                    Row = 12,
-                    Line = 12,
-                    Version = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
-                }
+                    Id = i,
+                    Row = ((i - 1) / 10) + 1,
+                    Line = ((i - 1) % 10) + 1,
+                    Version = Guid.Parse($"{i:D8}-0000-0000-0000-000000000000")
+                }).ToArray()
             );
 
             modelBuilder.Entity<Event>().HasData(
