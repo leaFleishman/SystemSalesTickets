@@ -13,9 +13,9 @@ namespace SystemSalesTickets.Data.Migrations
 
             int id = 1;
 
-            for (int row = 1; row <= 17; row++)
+            for (int row = 1; row <= 10; row++)
             {
-                for (int line = 1; line <= 10; line++)
+                for (int line = 1; line <= 17; line++)
                 {
                     seats[id - 1, 0] = id;
                     seats[id - 1, 1] = line;

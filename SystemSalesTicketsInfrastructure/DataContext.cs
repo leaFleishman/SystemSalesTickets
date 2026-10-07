@@ -1,47 +1,182 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SystemSalesTickets.Core.Enums;
+using SystemSalesTickets.Core.Models;
 
-#nullable disable
-
-namespace SystemSalesTickets.Data.Migrations
+namespace SystemSalesTickets.Data
 {
-    public partial class Add100Seats : Migration
+    public class DataContext : DbContext
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
         {
-            var seats = new object[170, 4];
-
-            int id = 1;
-
-            for (int row = 1; row <= 10; row++)
-            {
-                for (int line = 1; line <= 17; line++)
-                {
-                    seats[id - 1, 0] = id;
-                    seats[id - 1, 1] = line;
-                    seats[id - 1, 2] = row;
-                    seats[id - 1, 3] =
-                        Guid.Parse($"00000000-0000-0000-0000-{id:D12}");
-
-                    id++;
-                }
-            }
-
-            migrationBuilder.InsertData(
-                table: "Seats",
-                columns: new[] { "Id", "Line", "Row", "Version" },
-                values: seats);
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
+        public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Seat> Seats { get; set; }
+        public DbSet<EventSeat> EventSeats { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            for (int id = 170; id >= 1; id--)
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Order>()
+                .HasIndex(o => new { o.EventId, o.SeatId })
+                .IsUnique();
+
+            modelBuilder.Entity<Event>()
+                .HasIndex(e => e.Date)
+                .IsUnique();
+
+            modelBuilder.Entity<Seat>()
+                .ToTable("Seat");
+
+            modelBuilder.Entity<Seat>()
+                .HasIndex(s => new { s.Row, s.Line })
+                .IsUnique();
+
+            modelBuilder.Entity<Seat>()
+                .Property(s => s.Version)
+                .IsConcurrencyToken();
+
+            modelBuilder.Entity<EventSeat>()
+                .HasKey(es => new { es.EventId, es.SeatId });
+
+            modelBuilder.Entity<EventSeat>()
+                .Property(es => es.IsAvailable)
+                .IsRequired();
+
+            modelBuilder.Entity<EventSeat>()
+                .Property(es => es.Version)
+                .IsConcurrencyToken();
+
+            modelBuilder.Entity<EventSeat>()
+                .HasOne(es => es.Event)
+                .WithMany()
+                .HasForeignKey(es => es.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EventSeat>()
+                .HasOne(es => es.Seat)
+                .WithMany()
+                .HasForeignKey(es => es.SeatId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Role = UserRole.Manager,
+                    Email = "15000",
+                    Phone = "0556667788",
+                    Password = "AQAAAAIAAYagAAAAEA1k61jf211sNrnVlnardNcGL3S3o4S7xxODit7eCsR8LChzkSZzH1LEABC8M47emg==",
+                    Id = 1,
+                    UserName = "Avi"
+                },
+                new User
+                {
+                    Role = UserRole.User,
+                    Email = "user@example.com",
+                    Phone = "0556367788",
+                    Password = "AQAAAAIAAYagAAAAEEgW8PRhBaBx46pxAz/cboT2Ca/gB+JZ3XxBtqCudaDHMLhbhUNrKRHHtnfoDkHuUA==",
+                    Id = 2,
+                    UserName = "Moshe"
+                }
+            );
+            modelBuilder.Entity<Seat>().HasData(
+                Enumerable.Range(1, 100).Select(i => new Seat
+                {
+                    Id = i,
+                    Row = ((i - 1) / 10) + 1,
+                    Line = ((i - 1) % 10) + 1,
+                    Version = Guid.Parse($"{i:D8}-0000-0000-0000-000000000000")
+                }).ToArray()
+            );
+
+            modelBuilder.Entity<Event>().HasData(
+                new Event
+                {
+                    Id = 1,
+                    Date = new DateTime(
+                        2026,
+                        1,
+                        1,
+                        0,
+                        0,
+                        0,
+                        DateTimeKind.Utc
+                    ),
+                    Name = "Concert A",
+                    NumberOfSeats = 2500,
+                    Price = 20
+                }
+            );
+
+            modelBuilder.Entity<EventSeat>().HasData(
+                new EventSeat
+                {
+                    EventId = 1,
+                    SeatId = 1,
+                    IsAvailable = false,
+                    Version = Guid.Parse(
+                        "11111111-1111-1111-1111-111111111111"
+                    )
+                },
+                new EventSeat
+                {
+                    EventId = 1,
+                    SeatId = 2,
+                    IsAvailable = true,
+                    Version = Guid.Parse(
+                        "22222222-2222-2222-2222-222222222222"
+                    )
+                }
+            );
+
+            modelBuilder.Entity<Order>().HasData(
+                new Order
+                {
+                    Id = 1,
+                    EventId = 1,
+                    UserId = 2,
+                    SeatId = 1,
+
+                    EventName = "Concert A",
+                    OrderDate = new DateTime(
+                        2026,
+                        1,
+                        1,
+                        0,
+                        0,
+                        0,
+                        DateTimeKind.Utc
+                    )
+                }
+            );
+        }
+
+        public override async Task<int> SaveChangesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            var modifiedSeats = ChangeTracker
+                .Entries<Seat>()
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in modifiedSeats)
             {
-                migrationBuilder.DeleteData(
-                    table: "Seats",
-                    keyColumn: "Id",
-                    keyValue: id);
+                entry.Property(s => s.Version).CurrentValue = Guid.NewGuid();
             }
+
+            var modifiedEventSeats = ChangeTracker
+                .Entries<EventSeat>()
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in modifiedEventSeats)
+            {
+                entry.Property(es => es.Version).CurrentValue = Guid.NewGuid();
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }
