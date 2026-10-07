@@ -9,7 +9,7 @@ namespace SystemSalesTickets.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var seats = new object[100, 4];
+            var seats = new object[170, 4];
 
             int id = 1;
 
