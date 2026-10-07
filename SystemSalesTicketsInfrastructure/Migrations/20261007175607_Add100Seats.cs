@@ -13,7 +13,7 @@ namespace SystemSalesTickets.Data.Migrations
 
             int id = 1;
 
-            for (int row = 1; row <= 10; row++)
+            for (int row = 1; row <= 17; row++)
             {
                 for (int line = 1; line <= 10; line++)
                 {
@@ -35,7 +35,7 @@ namespace SystemSalesTickets.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            for (int id = 100; id >= 1; id--)
+            for (int id = 170; id >= 1; id--)
             {
                 migrationBuilder.DeleteData(
                     table: "Seat",
