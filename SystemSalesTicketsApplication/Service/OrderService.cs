@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SystemSalesTickets.Core;
@@ -16,6 +16,7 @@ namespace SystemSalesTickets.Service.Service
 
         private readonly TimeProvider _timeProvider;
         private readonly IEventSeatRepository _eventSeatRepository;
+        private readonly IEventRepository? _eventRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
         private readonly IOrderConfirmationEmailService _orderConfirmationEmailService;
@@ -29,7 +30,8 @@ namespace SystemSalesTickets.Service.Service
             IEventSeatRepository eventSeatRepository,
             IUserRepository userRepository,
             IOrderConfirmationEmailService orderConfirmationEmailService,
-            TimeProvider? timeProvider = null)
+            TimeProvider? timeProvider = null,
+            IEventRepository? eventRepository = null)
         {
             _timeProvider = timeProvider ?? TimeProvider.System;
             _orderRepository = orderRepository;
@@ -38,25 +40,69 @@ namespace SystemSalesTickets.Service.Service
             _eventSeatRepository = eventSeatRepository;
             _userRepository = userRepository;
             _orderConfirmationEmailService = orderConfirmationEmailService;
+            _eventRepository = eventRepository;
         }
 
-        public async Task<OrderResultDTO> AddOrder(OrderDTO orderDto, CancellationToken cancellationToken = default)
+        public async Task<OrderResultDTO> AddOrder(
+            OrderDTO orderDto,
+            CancellationToken cancellationToken = default)
         {
             try
             {
-                var eventSeat = await _eventSeatRepository.GetByEventAndSeat(orderDto.EventId, orderDto.SeatId, cancellationToken);
-                if (eventSeat == null)
-                    return new OrderResultDTO { Status = OrderResultStatus.NotFound, Message = "Seat not found" };
+                var eventSeat = await _eventSeatRepository.GetByEventAndSeat(
+                    orderDto.EventId,
+                    orderDto.SeatId,
+                    cancellationToken);
 
-                if (eventSeat.Event?.IsCancelled == true)
-                    return new OrderResultDTO { Status = OrderResultStatus.Conflict, Message = "This event was cancelled" };
+                if (eventSeat == null)
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.NotFound,
+                        Message = "Seat not found"
+                    };
+                }
+
+                // Load the event independently of EventSeat.Event. The navigation property
+                // may not be loaded, so it must not be the only source for cancellation status.
+                Event? currentEvent = _eventRepository != null
+                    ? await _eventRepository.GetById(orderDto.EventId, cancellationToken)
+                    : eventSeat.Event;
+
+                if (currentEvent == null)
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.NotFound,
+                        Message = "Event not found"
+                    };
+                }
+
+                // Check cancellation before checking whether the seat is occupied.
+                if (currentEvent.IsCancelled)
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.Conflict,
+                        Message = "This event was cancelled"
+                    };
+                }
 
                 if (!eventSeat.IsAvailable)
-                    return new OrderResultDTO { Status = OrderResultStatus.Conflict, Message = "Seat is already occupied" };
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.Conflict,
+                        Message = "Seat is already occupied"
+                    };
+                }
 
+                // Ensure downstream code uses the same event whose status was checked.
+                eventSeat.Event = currentEvent;
                 eventSeat.IsAvailable = false;
+
                 var newOrder = _mapper.Map<Order>(orderDto);
-                newOrder.EventName = eventSeat.Event.Name;
+                newOrder.EventName = currentEvent.Name;
                 newOrder.OrderDate = DateTime.UtcNow;
 
                 await _orderRepository.Add(newOrder, cancellationToken);
@@ -66,22 +112,36 @@ namespace SystemSalesTickets.Service.Service
                 if (user != null && !string.IsNullOrWhiteSpace(user.Email))
                 {
                     newOrder.User = user;
-                    newOrder.Event = eventSeat.Event;
+                    newOrder.Event = currentEvent;
                     newOrder.Seat = eventSeat.Seat;
 
                     try
                     {
-                        await _orderConfirmationEmailService.SendAsync(newOrder, user.Email, user.UserName, cancellationToken);
-                        _logger.LogInformation("Order confirmation email sent for OrderId {OrderId} to {Email}", newOrder.Id, user.Email);
+                        await _orderConfirmationEmailService.SendAsync(
+                            newOrder,
+                            user.Email,
+                            user.UserName,
+                            cancellationToken);
+
+                        _logger.LogInformation(
+                            "Order confirmation email sent for OrderId {OrderId} to {Email}",
+                            newOrder.Id,
+                            user.Email);
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Failed to send order confirmation email for OrderId {OrderId}", newOrder.Id);
+                        _logger.LogError(
+                            ex,
+                            "Failed to send order confirmation email for OrderId {OrderId}",
+                            newOrder.Id);
                     }
                 }
                 else
                 {
-                    _logger.LogWarning("Could not send order confirmation email for OrderId {OrderId}: user {UserId} was not found or has no email", newOrder.Id, orderDto.UserId);
+                    _logger.LogWarning(
+                        "Could not send order confirmation email for OrderId {OrderId}: user {UserId} was not found or has no email",
+                        newOrder.Id,
+                        orderDto.UserId);
                 }
 
                 return new OrderResultDTO
@@ -92,24 +152,48 @@ namespace SystemSalesTickets.Service.Service
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                _logger.LogWarning(ex, "Concurrency conflict for Seat {SeatId}, Event {EventId}", orderDto.SeatId, orderDto.EventId);
-                return new OrderResultDTO { Status = OrderResultStatus.Conflict, Message = "Seat was just booked by someone else, please try again" };
+                _logger.LogWarning(
+                    ex,
+                    "Concurrency conflict for Seat {SeatId}, Event {EventId}",
+                    orderDto.SeatId,
+                    orderDto.EventId);
+
+                return new OrderResultDTO
+                {
+                    Status = OrderResultStatus.Conflict,
+                    Message = "Seat was just booked by someone else, please try again"
+                };
             }
         }
 
-        public async Task<PagedResponse<OrderDTO>> GetAllOrders(int pageNumber = 1, int pageSize = 20, CancellationToken cancellationToken = default)
+        public async Task<PagedResponse<OrderDTO>> GetAllOrders(
+            int pageNumber = 1,
+            int pageSize = 20,
+            CancellationToken cancellationToken = default)
         {
-            var result = await _orderRepository.GetAllAsync(pageNumber, pageSize, cancellationToken);
-            return new PagedResponse<OrderDTO>(_mapper.Map<IEnumerable<OrderDTO>>(result.Data), result.PageNumber, result.PageSize, result.TotalRecords);
+            var result = await _orderRepository.GetAllAsync(
+                pageNumber,
+                pageSize,
+                cancellationToken);
+
+            return new PagedResponse<OrderDTO>(
+                _mapper.Map<IEnumerable<OrderDTO>>(result.Data),
+                result.PageNumber,
+                result.PageSize,
+                result.TotalRecords);
         }
 
-        public async Task<OrderLogDTO> GetOrderById(int id, CancellationToken cancellationToken = default)
+        public async Task<OrderLogDTO> GetOrderById(
+            int id,
+            CancellationToken cancellationToken = default)
         {
             var order = await _orderRepository.GetById(id, cancellationToken);
             return _mapper.Map<OrderLogDTO>(order);
         }
 
-        public async Task<IReadOnlyList<MyOrderDTO>> GetMyOrders(int userId, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<MyOrderDTO>> GetMyOrders(
+            int userId,
+            CancellationToken cancellationToken = default)
         {
             var orders = await _orderRepository.GetOrdersByUser(userId, cancellationToken);
             var nowUtc = _timeProvider.GetUtcNow().UtcDateTime;
@@ -137,26 +221,53 @@ namespace SystemSalesTickets.Service.Service
             }).ToList();
         }
 
-        public async Task<OrderResultDTO> CancelOrder(int orderId, int userId, CancellationToken cancellationToken = default)
+        public async Task<OrderResultDTO> CancelOrder(
+            int orderId,
+            int userId,
+            CancellationToken cancellationToken = default)
         {
             try
             {
                 var order = await _orderRepository.GetByIdForCancellation(orderId, cancellationToken);
 
                 if (order == null || order.UserId != userId)
-                    return new OrderResultDTO { Status = OrderResultStatus.NotFound, Message = "Order not found" };
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.NotFound,
+                        Message = "Order not found"
+                    };
+                }
 
                 if (order.Event.IsCancelled)
-                    return new OrderResultDTO { Status = OrderResultStatus.Conflict, Message = "This event was cancelled" };
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.Conflict,
+                        Message = "This event was cancelled"
+                    };
+                }
 
                 var nowUtc = _timeProvider.GetUtcNow().UtcDateTime;
                 var deadline = ToUtc(order.Event.Date) - CancellationWindow;
                 if (nowUtc >= deadline)
-                    return new OrderResultDTO { Status = OrderResultStatus.Conflict, Message = "Orders can only be cancelled more than 24 hours before the event" };
+                {
+                    return new OrderResultDTO
+                    {
+                        Status = OrderResultStatus.Conflict,
+                        Message = "Orders can only be cancelled more than 24 hours before the event"
+                    };
+                }
 
-                var eventSeat = await _eventSeatRepository.GetByEventAndSeat(order.EventId, order.SeatId, cancellationToken);
+                var eventSeat = await _eventSeatRepository.GetByEventAndSeat(
+                    order.EventId,
+                    order.SeatId,
+                    cancellationToken);
+
                 if (eventSeat != null)
+                {
                     eventSeat.IsAvailable = true;
+                }
 
                 _orderRepository.Remove(order);
                 await _orderRepository.Save(cancellationToken);
@@ -197,7 +308,10 @@ namespace SystemSalesTickets.Service.Service
 
                 _logger.LogInformation(
                     "Order {OrderId} of user {UserId} was cancelled (Event {EventId}, Seat {SeatId})",
-                    orderId, userId, order.EventId, order.SeatId);
+                    orderId,
+                    userId,
+                    order.EventId,
+                    order.SeatId);
 
                 return new OrderResultDTO
                 {
@@ -207,7 +321,11 @@ namespace SystemSalesTickets.Service.Service
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                _logger.LogWarning(ex, "Concurrency conflict while cancelling order {OrderId}", orderId);
+                _logger.LogWarning(
+                    ex,
+                    "Concurrency conflict while cancelling order {OrderId}",
+                    orderId);
+
                 return new OrderResultDTO
                 {
                     Status = OrderResultStatus.Conflict,
